@@ -12,7 +12,7 @@ using cinder::app::RendererGl;
 
 namespace myapp {
 
-const int kSamples = 8;
+const int kSamples = 10;
 const int kWidth = 600;
 const int kHeight = 600;
 

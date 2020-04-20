@@ -24,9 +24,12 @@ class MyApp : public cinder::app::App {
   void update() override;
   void draw() override;
   void keyDown(cinder::app::KeyEvent) override;
+  void mouseDrag(cinder::app::MouseEvent event) override;
 
  private:
-  void DrawBall() const;
+  void DrawBall();
+  void DrawSurfaces();
+  void DrawEndPoint();
 
  private:
   myapp::Engine engine_;
