@@ -3,9 +3,9 @@
 #define FINALPROJECT_MYLIBRARY_EXAMPLE_H_
 
 
-namespace mylibrary {
+namespace myapp {
 
-}  // namespace mylibrary
+}  // namespace falling_fun
 
 
 #endif // FINALPROJECT_MYLIBRARY_EXAMPLE_H_

@@ -4,9 +4,18 @@
 #define FINALPROJECT_APPS_MYAPP_H_
 
 #include <cinder/app/App.h>
-
+#include <cinder/gl/gl.h>
+#include <mylibrary/engine.h>
 
 namespace myapp {
+
+enum class GameState {
+  kGameStart,
+  kDrawing,
+  kBallMoving,
+  kCountDown,
+  kGameOver,
+};
 
 class MyApp : public cinder::app::App {
  public:
@@ -15,8 +24,18 @@ class MyApp : public cinder::app::App {
   void update() override;
   void draw() override;
   void keyDown(cinder::app::KeyEvent) override;
+
+ private:
+  void DrawBall() const;
+
+ private:
+  myapp::Engine engine_;
+  GameState current_state_;
+  std::chrono::time_point<std::chrono::system_clock> start_time_;
+  cinder::Timer game_timer;
 };
 
-}  // namespace myapp
+
+}  // namespace falling_fun
 
 #endif  // FINALPROJECT_APPS_MYAPP_H_

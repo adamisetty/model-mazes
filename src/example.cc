@@ -2,6 +2,6 @@
 
 #include <mylibrary/example.h>
 
-namespace mylibrary {
+namespace falling_fun {
 
-}  // namespace mylibrary
+}  // namespace falling_fun
