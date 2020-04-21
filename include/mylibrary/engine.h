@@ -26,8 +26,12 @@ class Engine {
     vector<vector<size_t>> GetSurfaces();
     void AddSurfaces(int x, int y);
     vector<double> GetEndPoint();
-    void CreateCircle();
+    void CreateShapes();
+    void InitializeBodies();
     b2CircleShape GetCircle();
+    b2PolygonShape GetGround();
+    b2Body* GetCirclePtr();
+    b2Body* GetGroundPtr();
     b2World* myWorld;
 
   private:
@@ -38,7 +42,11 @@ class Engine {
     vector<double> end_point_;
     b2Vec2 gravity = {0, -9.8};
     b2CircleShape circle;
+    //b2EdgeShape edge;
+    b2PolygonShape edgeShape;
 
+    b2Body* circleBody;
+    b2Body* groundBody;
 };
 
 }   //namespace falling_fun
