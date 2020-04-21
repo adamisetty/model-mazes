@@ -8,12 +8,24 @@ namespace myapp {
  const size_t radius = 20;
 
   Engine::Engine(size_t board_size)
-  : ball_{board_size} {
+  : ball_{board_size},
+   myWorld{new b2World(gravity)} {
     size_ = board_size;
     ball_rad = ball_.GetRadius();
-    double end_x = ((rand() % 10) + 1)/10.0;
-    end_point_.push_back(end_x * (board_size - radius));
-    end_point_.push_back(buffer);
+
+    double end_x = ((rand() % radius) + radius) * buffer;
+    end_point_.push_back(board_size - (end_x + buffer));
+    end_point_.push_back(board_size - buffer);
+    CreateCircle();
+}
+
+void Engine::CreateCircle() {
+  circle.m_p.Set(40.0f, 30.0f);
+  circle.m_radius = 0.5f;
+}
+
+b2CircleShape Engine::GetCircle() {
+    return circle;
 }
 
 myapp::Ball Engine::GetBall() {

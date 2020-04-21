@@ -5,10 +5,14 @@
 #ifndef FINALPROJECT_ENGINE_CC_H
 #define FINALPROJECT_ENGINE_CC_H
 #include "ball.h"
+//#include <Box2D/Dynamics/b2World.h>
+//#include <Box2D/Dynamics/b2Body.h>
+//#include <Box2D/Dynamics/b2World.cpp>
 
 #include <vector>
 #include <string>
 #include <random>
+#include <Box2D/Box2D.h>
 
 using namespace std;
 
@@ -22,6 +26,9 @@ class Engine {
     vector<vector<size_t>> GetSurfaces();
     void AddSurfaces(int x, int y);
     vector<double> GetEndPoint();
+    void CreateCircle();
+    b2CircleShape GetCircle();
+    b2World* myWorld;
 
   private:
     myapp::Ball ball_;
@@ -29,6 +36,9 @@ class Engine {
     size_t ball_rad;
     vector<vector<size_t>> surfaces_;
     vector<double> end_point_;
+    b2Vec2 gravity = {0, -9.8};
+    b2CircleShape circle;
+
 };
 
 }   //namespace falling_fun

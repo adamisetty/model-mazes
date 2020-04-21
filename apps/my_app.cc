@@ -1,4 +1,4 @@
-// Copyright (c) 2020 [Your Name]. All rights reserved.
+// Copyright (c) 2020 Ankitha Damisetty. All rights reserved.
 
 #include "my_app.h"
 
@@ -48,7 +48,7 @@ void MyApp::draw() {
   if (current_state_ == GameState::kDrawing) {
     DrawBall();
   }
-  
+
   DrawSurfaces();
   DrawEndPoint();
 }
@@ -66,8 +66,11 @@ void MyApp::mouseDrag(cinder::app::MouseEvent event) {
 void MyApp::DrawBall() {
   cinder::gl::color(0, 1, 1);
   vector<size_t> curr_position = engine_.GetBall().GetLocation();
-  cinder::gl::drawSolidCircle(vec2(curr_position[0], curr_position[1])
-          ,engine_.GetBall().GetRadius());
+  //cinder::gl::drawSolidCircle(vec2(curr_position[0], curr_position[1])
+    //      ,engine_.GetBall().GetRadius());
+  b2Vec2 pos = engine_.GetCircle().m_p;
+  vec2 center = vec2(pos.x, pos.y);
+  cinder::gl::drawSolidCircle(vec2(center[0], center[1]),engine_.GetBall().GetRadius());
 }
 
 void MyApp::DrawSurfaces() {
@@ -82,6 +85,6 @@ void MyApp::DrawEndPoint() {
   vector<double> end = engine_.GetEndPoint();
   size_t rad = engine_.GetBall().GetRadius();
   cinder::gl::color(1, 0, 0);
-  cinder::gl::drawSolidRect(Rectf(end[0] - rad, end[0], end[1] + rad, end[1] + 2.5));
+  cinder::gl::drawSolidRect(Rectf(end[0] - rad, end[1], end[0] + rad, end[1] + 2.5));
 }
 }  // namespace myapp
