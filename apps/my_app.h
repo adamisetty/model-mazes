@@ -38,6 +38,7 @@ class MyApp : public cinder::app::App {
   GameState current_state_;
   std::chrono::time_point<std::chrono::system_clock> start_time_;
   cinder::Timer game_timer;
+  b2Vec2 ball_velocity = {0, 5};
 };
 
 
