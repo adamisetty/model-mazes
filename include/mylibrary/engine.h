@@ -40,7 +40,7 @@ class Engine {
     size_t ball_rad;
     vector<vector<size_t>> surfaces_;
     vector<double> end_point_;
-    b2Vec2 gravity = {0, 4.8};
+    b2Vec2 gravity = {10, 0};
     b2CircleShape circle;
     //b2EdgeShape edge;
     b2PolygonShape edgeShape;

@@ -9,7 +9,7 @@ namespace myapp {
 
   Engine::Engine(size_t board_size)
   : ball_{board_size},
-   myWorld{new b2World(gravity)} {
+   myWorld{new b2World(b2Vec2(0, 10))} {
     size_ = board_size;
     ball_rad = ball_.GetRadius();
 
@@ -18,9 +18,8 @@ namespace myapp {
     end_point_.push_back(board_size - buffer);
     CreateShapes();
     InitializeBodies();
-    ball_velocity.y = -20;
-    ball_velocity.x = -10;
-    circleBody->SetLinearVelocity(ball_velocity);
+//    circleBody->SetLinearVelocity(ball_velocity);
+ //   circleBody->ApplyForceToCenter(b2Vec2(0, 0));
 }
 
 void Engine::CreateShapes() {
@@ -43,7 +42,6 @@ void Engine::InitializeBodies() {
   circleDef.position.Set(circle.m_p.x, circle.m_p.y);
   circleDef.linearDamping = 0.0f;
   circleDef.angularDamping = 0.01f;
-  circleDef.gravityScale = -1.0f;
   circleBody = myWorld->CreateBody(&circleDef);
   circleBody->SetType(b2_dynamicBody);
 
@@ -56,7 +54,7 @@ void Engine::InitializeBodies() {
   ball_velocity = circleBody->GetLinearVelocity();
 
   b2BodyDef groundDef;
-  groundDef.position.Set(295.0f,585.0f);
+  groundDef.position.Set(295.0f,285.0f);
   groundDef.type = b2_staticBody;
   groundBody = myWorld->CreateBody(&groundDef);
   //default is static body, so no need to set type

@@ -35,10 +35,6 @@ void MyApp::setup() {
 }
 
 void MyApp::update() {
-    b2Vec2 curr_vel = engine_.GetCirclePtr()->GetLinearVelocity();
-    curr_vel.x = 0;
-    curr_vel.y = 25;
-    engine_.GetCirclePtr()->SetLinearVelocity(curr_vel);
     engine_.myWorld->Step(1/30.0f, 8, 3);
     if (current_state_ == GameState::kDrawing && game_timer.getSeconds() > kDrawTime) {
     current_state_ = GameState::kBallMoving;
@@ -55,7 +51,7 @@ void MyApp::draw() {
   }
 
   DrawSurfaces();
-  DrawEndPoint();
+  //DrawEndPoint();
 }
 
 void MyApp::keyDown(KeyEvent event) { }
@@ -70,14 +66,8 @@ void MyApp::mouseDrag(cinder::app::MouseEvent event) {
 
 void MyApp::DrawBall() {
   cinder::gl::color(0, 1, 1);
-  vector<size_t> curr_position = engine_.GetBall().GetLocation();
-  //cinder::gl::drawSolidCircle(vec2(curr_position[0], curr_position[1])
-    //      ,engine_.GetBall().GetRadius());
-  //b2Vec2 pos = engine_.GetCircle().m_p;
-  //vec2 center = vec2(pos.x, pos.y);
-  //cinder::gl::drawSolidCircle(vec2(center[0], center[1]),engine_.GetBall().GetRadius());
-  b2Vec2 zero = {0,0};
-  if (engine_.GetCirclePtr()->GetLinearVelocity().y != 0) {
+  b2Vec2 vel = engine_.GetCirclePtr()->GetLinearVelocity();
+  if (vel.y != 0) {
       b2Vec2 loc = engine_.GetCirclePtr()->GetPosition();
       vec2 lo = vec2(loc.x, loc.y);
       cinder::gl::drawSolidCircle(vec2(lo[0], lo[1]),engine_.GetBall().GetRadius());
@@ -94,7 +84,7 @@ void MyApp::DrawSurfaces() {
   cinder::gl::color(1, 0, 0);
   b2Vec2 pos1 = engine_.GetGround().m_vertices[0];
   b2Vec2 pos2 = engine_.GetGroundPtr()->GetPosition();
-  cinder::gl::drawSolidRect(Rectf(pos2.x - 20, pos2.y, pos2.x + 20, pos2.y + 20));
+  cinder::gl::drawSolidRect(Rectf(pos2.x - 200, pos2.y, pos2.x + 200, pos2.y + 20));
 }
 
 void MyApp::DrawEndPoint() {
