@@ -9,61 +9,73 @@ namespace myapp {
 
   Engine::Engine(size_t board_size)
   : ball_{board_size},
-   myWorld{new b2World(b2Vec2(0, 10))} {
+    myWorld{new b2World(b2Vec2(0, 10))} {
     size_ = board_size;
     ball_rad = ball_.GetRadius();
 
     double end_x = ((rand() % radius) + radius) * buffer;
     end_point_.push_back(board_size - (end_x + buffer));
     end_point_.push_back(board_size - buffer);
-    CreateShapes();
+    //CreateShapes();
     InitializeBodies();
-//    circleBody->SetLinearVelocity(ball_velocity);
- //   circleBody->ApplyForceToCenter(b2Vec2(0, 0));
 }
 
 void Engine::CreateShapes() {
-  circle.m_p.Set(200.0f, 200.0f);
-  circle.m_radius = 20.0f;
 
-  int32 rect = 4;
-  b2Vec2 vertices[4];
-  vertices[0].Set(10.0f, 580.0f);
-  vertices[1].Set(600.0f, 580.0f);
-  vertices[2].Set(600.0f, 590.0f);
-  vertices[3].Set(10.0f, 590.0f);
-  edgeShape.Set(vertices, rect);
-  //edge.Set(b2Vec2(5.0f, 100.0f), b2Vec2(100.0f, 100.0f));
 }
 
 void Engine::InitializeBodies() {
-  b2BodyDef circleDef;
-  //circleDef.type = b2_dynamicBody;
-  circleDef.position.Set(circle.m_p.x, circle.m_p.y);
-  circleDef.linearDamping = 0.0f;
-  circleDef.angularDamping = 0.01f;
-  circleBody = myWorld->CreateBody(&circleDef);
-  circleBody->SetType(b2_dynamicBody);
+  InitializeCircle();
+  InitializeBorders();
+}
 
-  b2FixtureDef fixtureDef;
-  fixtureDef.shape = &circle;
-  fixtureDef.density = 1.0f;
-  //makes the ball slightly bouncy
-  fixtureDef.restitution = 0.2f;
-  circleBody->CreateFixture(&fixtureDef);
-  ball_velocity = circleBody->GetLinearVelocity();
+void Engine::InitializeCircle() {
+    circle.m_p.Set(100.0f, 100.0f);
+    circle.m_radius = 10.0f;
+    //circle.m_p.Set(0, 0);
 
-  b2BodyDef groundDef;
-  groundDef.position.Set(295.0f,285.0f);
-  groundDef.type = b2_staticBody;
-  groundBody = myWorld->CreateBody(&groundDef);
-  //default is static body, so no need to set type
+    b2BodyDef circleDef;
+    circleDef.type = b2_dynamicBody;
+    //circleDef.position.Set(circle.m_p.x, circle.m_p.y);
+    circleDef.linearDamping = 0.0f;
+    circleDef.angularDamping = 0.01f;
+    circleDef.active = true;
+    circleBody = myWorld->CreateBody(&circleDef);
+    circleBody->SetTransform(b2Vec2(circle.m_p.x, circle.m_p.y), 0);
+    //circleBody->SetType(b2_dynamicBody);
 
-  b2FixtureDef groundFixDef;
-  groundFixDef.shape = &edgeShape;
-  groundFixDef.restitution = 0.0f;
-  groundFixDef.density = 1.0f;
-  groundBody->CreateFixture(&groundFixDef);
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &circle;
+    fixtureDef.density = 1.0f;
+    //makes the ball slightly bouncy
+    fixtureDef.restitution = 0.2f;
+    circleBody->CreateFixture(&fixtureDef);
+    ball_velocity = circleBody->GetLinearVelocity();
+}
+
+void Engine::InitializeBorders() {
+    int32 rect = 4;
+    b2Vec2 vertices[4];
+    vertices[0].Set(0.0f, 580.0f);
+    vertices[1].Set(600.0f, 580.0f);
+    vertices[2].Set(600.0f, 590.0f);
+    vertices[3].Set(0.0f, 590.0f);
+    edgeShape.Set(vertices, rect);
+
+    b2BodyDef groundDef;
+    groundDef.position.Set(300.0f,285.0f);
+    groundDef.type = b2_staticBody;
+    groundDef.active = true;
+    groundBody = myWorld->CreateBody(&groundDef);
+    //default is static body, so no need to set type
+
+    b2FixtureDef groundFixDef;
+    groundFixDef.shape = &edgeShape;
+    groundFixDef.restitution = 0.0f;
+    groundFixDef.density = 1.0f;
+    groundBody->CreateFixture(&groundFixDef);
+
+    edge.Set(b2Vec2(5, 5), b2Vec2(40, 50));
 }
 
 b2CircleShape Engine::GetCircle() {
@@ -76,6 +88,10 @@ b2Body* Engine::GetCirclePtr() {
 
 b2PolygonShape Engine::GetGround() {
   return edgeShape;
+}
+
+b2EdgeShape Engine::GetEdge() {
+   return edge;
 }
 
 b2Body* Engine::GetGroundPtr() {
