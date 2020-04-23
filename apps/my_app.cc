@@ -82,7 +82,7 @@ void MyApp::DrawSurfaces() {
   }
 
   cinder::gl::color(1, 0, 0);
-  b2Vec2 pos1 = engine_.GetGround().m_vertices[0];
+ // b2Vec2 pos1 = engine_.GetGround().m_vertices[0];
   b2Vec2 pos2 = engine_.GetGroundPtr()->GetPosition();
   cinder::gl::drawSolidRect(Rectf(pos2.x - 200, pos2.y, pos2.x + 200, pos2.y + 20));
 }
