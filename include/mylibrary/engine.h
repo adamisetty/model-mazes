@@ -25,20 +25,23 @@ class Engine {
     myapp::Ball GetBall();
     vector<vector<size_t>> GetSurfaces();
     void AddSurfaces(int x, int y);
+    vector<b2Vec2> GetEndPoints();
+    void AddEndpoints(b2Vec2 x);
     vector<double> GetEndPoint();
     b2CircleShape GetCircle();
     b2PolygonShape GetGround();
     b2EdgeShape GetEdge();
     b2Body* GetCirclePtr();
     b2Body* GetGroundPtr();
+    void MoveBall();
     b2World* myWorld;
+    void CreateEdges();
 
   private:
     void CreateShapes();
     void InitializeBodies();
     void InitializeCircle();
     void InitializeBorders();
-    void CreateEdges();
 
   private:
     myapp::Ball ball_;
@@ -55,6 +58,7 @@ class Engine {
     b2Body* circleBody;
     b2Body* groundBody;
     vector<b2EdgeShape> edges;
+    vector<b2Vec2> edge_endpoints;
 };
 
 }   //namespace falling_fun

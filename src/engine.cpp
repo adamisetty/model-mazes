@@ -35,7 +35,7 @@ void Engine::InitializeCircle() {
     //circle.m_p.Set(0, 0);
 
     b2BodyDef circleDef;
-    circleDef.type = b2_dynamicBody;
+    circleDef.type = b2_staticBody;
     //circleDef.position.Set(circle.m_p.x, circle.m_p.y);
     circleDef.linearDamping = 0.0f;
     circleDef.angularDamping = 0.01f;
@@ -78,6 +78,20 @@ void Engine::InitializeBorders() {
     edge.Set(b2Vec2(5, 5), b2Vec2(40, 50));
 }
 
+void Engine::CreateEdges() {
+  b2EdgeShape edgeShape1;
+  edgeShape1.Set(edge_endpoints[0], edge_endpoints[1]);
+
+  b2BodyDef edgeDef;
+  edgeDef.type = b2_staticBody;
+  b2Vec2 mid_point = b2Vec2((edge_endpoints[0].x + edge_endpoints[1].x)/2,
+          (edge_endpoints[0].y + edge_endpoints[1].y)/2);
+  edgeDef.position.Set(mid_point.x, mid_point.y);
+  b2Body* this_edge;
+  this_edge = myWorld->CreateBody(&edgeDef);
+
+}
+
 b2CircleShape Engine::GetCircle() {
   return circle;
 }
@@ -110,10 +124,24 @@ vector<double> Engine::GetEndPoint() {
   return end_point_;
 }
 
+vector<b2Vec2> Engine::GetEndPoints() {
+  return edge_endpoints;
+}
+
 void Engine::AddSurfaces(int x, int y) {
   vector<size_t> adding;
   adding.push_back(x);
   adding.push_back(y);
   surfaces_.push_back(adding);
 }
+
+void Engine::AddEndpoints(b2Vec2 x) {
+   edge_endpoints.push_back(x);
+
+}
+
+void Engine::MoveBall() {
+  circleBody->SetType(b2_dynamicBody);
+}
+
 }

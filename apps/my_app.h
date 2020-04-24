@@ -25,6 +25,7 @@ class MyApp : public cinder::app::App {
   void update() override;
   void draw() override;
   void keyDown(cinder::app::KeyEvent) override;
+  void mouseDown(cinder::app::MouseEvent event) override;
   void mouseDrag(cinder::app::MouseEvent event) override;
 
 
@@ -38,6 +39,8 @@ class MyApp : public cinder::app::App {
   GameState current_state_;
   std::chrono::time_point<std::chrono::system_clock> start_time_;
   cinder::Timer game_timer;
+  bool flag_ball_move = false;
+  bool flag_edges_created = false;
   b2Vec2 ball_velocity = {0, 5};
 };
 

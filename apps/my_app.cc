@@ -19,7 +19,7 @@ using std::string;
 using cinder::Rectf;
 using cinder::vec2;
 
-const double kDrawTime = 2;
+const double kDrawTime = 10;
 const seconds kLevelTime = seconds(30);
 const size_t app_size_ = 600;
 
@@ -57,6 +57,11 @@ void MyApp::draw() {
 
 void MyApp::keyDown(KeyEvent event) { }
 
+void MyApp::mouseDown(cinder::app::MouseEvent event) {
+  b2Vec2 clicked_pos = b2Vec2(event.getX(), event.getY());
+  engine_.AddEndpoints(clicked_pos);
+}
+
 void MyApp::mouseDrag(cinder::app::MouseEvent event) {
   if (current_state_ == GameState::kDrawing) {
     int x = event.getX();
@@ -75,6 +80,11 @@ void MyApp::DrawBall() {
       cinder::gl::drawSolidCircle(vec2(lo[0], lo[1]),engine_.GetCircle().m_radius);
   }
 
+  if (current_state_ == GameState::kBallMoving && !flag_ball_move) {
+    flag_ball_move = true;
+    engine_.MoveBall();
+  }
+
   if (current_state_ == GameState::kDrawing) {
       //vector<size_t> curr_position = engine_.GetBall().GetLocation();
       cinder::gl::drawSolidCircle(vec2(100.0f, 100.0f)
@@ -87,11 +97,22 @@ void MyApp::DrawBall() {
 }
 
 void MyApp::DrawSurfaces() {
-  vector<vector<size_t>> drawn_surfaces = engine_.GetSurfaces();
-  for (vector<size_t> pixel: drawn_surfaces) {
-    cinder::gl::color(0, 0.5, 1);
-    cinder::gl::drawSolidCircle(vec2(pixel[0], pixel[1]), 1);
-  }
+
+   if (current_state_ == GameState::kDrawing) {
+       vector<vector<size_t>> drawn_surfaces = engine_.GetSurfaces();
+       for (vector<size_t> pixel: drawn_surfaces) {
+           cinder::gl::color(0, 0.5, 1);
+           cinder::gl::drawSolidCircle(vec2(pixel[0], pixel[1]), 1);
+       }
+   } else {
+       cinder::gl::color(0, 0.5, 1);
+       vector<b2Vec2> edge_endpoints = engine_.GetEndPoints();
+       for (size_t ind = 0; ind < edge_endpoints.size()/2; ind = ind + 2) {
+         b2Vec2 point_1 = edge_endpoints[ind];
+         b2Vec2 point_2 = edge_endpoints[ind + 1];
+         cinder::gl::drawLine(vec2(point_1.x, point_1.y), vec2(point_2.x, point_2.y));
+       }
+   }
 
   cinder::gl::color(1, 0, 0);
   b2Vec2 pos2 = engine_.GetGroundPtr()->GetPosition();
