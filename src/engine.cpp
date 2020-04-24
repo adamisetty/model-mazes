@@ -32,7 +32,6 @@ void Engine::InitializeBodies() {
 void Engine::InitializeCircle() {
     circle.m_p.Set(100.0f, 100.0f);
     circle.m_radius = 10.0f;
-    //circle.m_p.Set(0, 0);
 
     b2BodyDef circleDef;
     circleDef.type = b2_staticBody;
@@ -67,18 +66,17 @@ void Engine::InitializeBorders() {
     groundDef.type = b2_staticBody;
     groundDef.active = true;
     groundBody = myWorld->CreateBody(&groundDef);
-    //default is static body, so no need to set type
 
     b2FixtureDef groundFixDef;
     groundFixDef.shape = &edgeShape;
     groundFixDef.restitution = 0.0f;
     groundFixDef.density = 1.0f;
     groundBody->CreateFixture(&groundFixDef);
-
-    edge.Set(b2Vec2(5, 5), b2Vec2(40, 50));
 }
 
 void Engine::CreateEdges() {
+  //NEED TO LOOP THROUGH ALL EDGES STILL
+
   b2EdgeShape edgeShape1;
   edgeShape1.Set(edge_endpoints[0], edge_endpoints[1]);
 
@@ -87,9 +85,8 @@ void Engine::CreateEdges() {
   b2Vec2 mid_point = b2Vec2((edge_endpoints[0].x + edge_endpoints[1].x)/2,
           (edge_endpoints[0].y + edge_endpoints[1].y)/2);
   edgeDef.position.Set(mid_point.x, mid_point.y);
-  b2Body* this_edge;
-  this_edge = myWorld->CreateBody(&edgeDef);
-
+  myWorld->CreateBody(&edgeDef);
+  edges.push_back(edgeShape1);
 }
 
 b2CircleShape Engine::GetCircle() {
@@ -102,10 +99,6 @@ b2Body* Engine::GetCirclePtr() {
 
 b2PolygonShape Engine::GetGround() {
   return edgeShape;
-}
-
-b2EdgeShape Engine::GetEdge() {
-   return edge;
 }
 
 b2Body* Engine::GetGroundPtr() {

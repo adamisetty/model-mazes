@@ -21,7 +21,7 @@ namespace myapp {
 class Engine {
   public:
     Engine(size_t board_size);
-    void Step();
+//    void Step();
     myapp::Ball GetBall();
     vector<vector<size_t>> GetSurfaces();
     void AddSurfaces(int x, int y);
@@ -30,7 +30,6 @@ class Engine {
     vector<double> GetEndPoint();
     b2CircleShape GetCircle();
     b2PolygonShape GetGround();
-    b2EdgeShape GetEdge();
     b2Body* GetCirclePtr();
     b2Body* GetGroundPtr();
     void MoveBall();
@@ -49,11 +48,9 @@ class Engine {
     size_t ball_rad;
     vector<vector<size_t>> surfaces_;
     vector<double> end_point_;
-    b2Vec2 gravity = {10, 0};
     b2CircleShape circle;
     //b2EdgeShape edge;
     b2PolygonShape edgeShape;
-    b2EdgeShape edge;
     b2Vec2 ball_velocity;
     b2Body* circleBody;
     b2Body* groundBody;
