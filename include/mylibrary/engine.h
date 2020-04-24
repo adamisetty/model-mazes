@@ -13,6 +13,7 @@
 #include <string>
 #include <random>
 #include <Box2D/Box2D.h>
+#include <mylibrary/ball.h>
 
 using namespace std;
 
@@ -20,42 +21,14 @@ namespace myapp {
 
 class Engine {
   public:
-    Engine(size_t board_size);
-//    void Step();
-    myapp::Ball GetBall();
-    vector<vector<size_t>> GetSurfaces();
-    void AddSurfaces(int x, int y);
-    vector<b2Vec2> GetEndPoints();
-    void AddEndpoints(b2Vec2 x);
-    vector<double> GetEndPoint();
-    b2CircleShape GetCircle();
-    b2PolygonShape GetGround();
-    b2Body* GetCirclePtr();
-    b2Body* GetGroundPtr();
-    void MoveBall();
-    b2World* myWorld;
-    void CreateEdges();
+    Engine(b2World &this_wrld);
+    void Setup();
+    vector<myapp::Ball> GetAllBalls();
 
   private:
-    void CreateShapes();
-    void InitializeBodies();
-    void InitializeCircle();
-    void InitializeBorders();
-
-  private:
-    myapp::Ball ball_;
-    size_t size_;
-    size_t ball_rad;
-    vector<vector<size_t>> surfaces_;
-    vector<double> end_point_;
-    b2CircleShape circle;
-    //b2EdgeShape edge;
-    b2PolygonShape edgeShape;
-    b2Vec2 ball_velocity;
-    b2Body* circleBody;
-    b2Body* groundBody;
-    vector<b2EdgeShape> edges;
-    vector<b2Vec2> edge_endpoints;
+    b2World *my_wrld;
+    vector<myapp::Ball> all_balls;
+    void CreateBalls(size_t number);
 };
 
 }   //namespace falling_fun

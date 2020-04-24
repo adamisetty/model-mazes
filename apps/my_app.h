@@ -11,9 +11,8 @@
 namespace myapp {
 
 enum class GameState {
-  kGameStart,
   kDrawing,
-  kBallMoving,
+  kBallsMoving,
   kCountDown,
   kGameOver,
 };
@@ -36,12 +35,9 @@ class MyApp : public cinder::app::App {
 
  private:
   myapp::Engine engine_;
+  b2World my_wrld;
   GameState current_state_;
-  std::chrono::time_point<std::chrono::system_clock> start_time_;
   cinder::Timer game_timer;
-  bool flag_ball_move = false;
-  bool flag_edges_created = false;
-  b2Vec2 ball_velocity = {0, 5};
 };
 
 
