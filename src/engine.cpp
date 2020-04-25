@@ -4,7 +4,7 @@
 #include "mylibrary/engine.h"
 
 namespace myapp {
-const size_t total_num_balls = 4;
+const size_t total_num_balls = 7;
 
   Engine::Engine(b2World &this_wrld) {
     my_wrld = &this_wrld;
@@ -12,6 +12,7 @@ const size_t total_num_balls = 4;
 
   void Engine::Setup() {
     CreateBalls(total_num_balls);
+    surfaces.CreateBox(*my_wrld);
   }
 
   void Engine::CreateBalls(size_t number) {
@@ -24,5 +25,9 @@ const size_t total_num_balls = 4;
 
   vector<myapp::Ball> Engine::GetAllBalls() {
     return all_balls;
+  }
+
+  myapp::Surfaces Engine::GetSurfaces() {
+    return surfaces;
   }
 }

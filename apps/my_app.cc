@@ -49,6 +49,7 @@ void MyApp::update() {
 void MyApp::draw() {
   cinder::gl::clear();
   DrawBall();
+  DrawSurfaces();
 }
 
 void MyApp::keyDown(KeyEvent event) { }
@@ -68,8 +69,7 @@ void MyApp::DrawBall() {
 }
 
 void MyApp::DrawSurfaces() {
-
-
+  engine_.GetSurfaces().DrawBox();
 }
 
 void MyApp::DrawEndPoint() {

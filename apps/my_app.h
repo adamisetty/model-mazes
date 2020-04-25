@@ -6,6 +6,7 @@
 #include <cinder/app/App.h>
 #include <cinder/gl/gl.h>
 #include <mylibrary/engine.h>
+#include <mylibrary/surfaces.h>
 #include <Box2D/Box2D.h>
 
 namespace myapp {
