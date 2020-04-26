@@ -13,13 +13,20 @@ using namespace std;
 
 namespace myapp {
 class Surfaces{
-public:
+  public:
     Surfaces();
     void CreateBox(b2World &my_world);
     void DrawBox();
-private:
+    void DrawEdges();
+    void AddToEdges(b2Vec2 start, b2Vec2 end);
+  private:
     b2Body* groundBody;
     b2PolygonShape groundShape;
+    b2Body* leftWallBody;
+    b2PolygonShape leftWallShape;
+    b2Body* rightWallBody;
+    b2PolygonShape rightWallShape;
+    vector<b2EdgeShape> drawn_edges;
 };
 
 

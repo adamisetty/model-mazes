@@ -26,6 +26,7 @@ class MyApp : public cinder::app::App {
   void draw() override;
   void keyDown(cinder::app::KeyEvent) override;
   void mouseDown(cinder::app::MouseEvent event) override;
+  void mouseMove(cinder::app::MouseEvent event) override;
   void mouseDrag(cinder::app::MouseEvent event) override;
 
 
@@ -39,6 +40,9 @@ class MyApp : public cinder::app::App {
   b2World my_wrld;
   GameState current_state_;
   cinder::Timer game_timer;
+  size_t click_counter = 0;
+  b2Vec2 current_click;
+  b2Vec2 current_pos;
 };
 
 

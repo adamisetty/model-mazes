@@ -19,7 +19,7 @@ using std::string;
 using cinder::Rectf;
 using cinder::vec2;
 
-const double kDrawTime = 10;
+const double kDrawTime = 20;
 const seconds kLevelTime = seconds(30);
 const size_t app_size_ = 600;
 
@@ -29,7 +29,10 @@ MyApp::MyApp()
 : current_state_{GameState::kDrawing},
   my_wrld{b2Vec2(0.0f, 7.0f)},
   engine_{my_wrld}
-  {game_timer.start();}
+  {game_timer.start();
+  current_click = b2Vec2(0, 0);
+  current_pos = b2Vec2(0, 0);
+  }
 
 
 void MyApp::setup() {
@@ -50,11 +53,27 @@ void MyApp::draw() {
   cinder::gl::clear();
   DrawBall();
   DrawSurfaces();
+  DrawEndPoint();
 }
 
 void MyApp::keyDown(KeyEvent event) { }
 
 void MyApp::mouseDown(cinder::app::MouseEvent event) {
+  if (current_state_ == GameState::kDrawing) {
+    click_counter++;
+    if (click_counter % 2 == 1) {
+      current_click = b2Vec2(event.getX(), event.getY());
+      current_pos = current_click;
+    } else {
+      current_pos = b2Vec2(event.getX(), event.getY());
+      engine_.GetSurfaces().AddToEdges(current_click, current_pos);
+    }
+  }
+}
+void MyApp::mouseMove(cinder::app::MouseEvent event) {
+  if (click_counter % 2 == 1) {
+    current_pos = b2Vec2(event.getX(), event.getY());
+  }
 }
 
 void MyApp::mouseDrag(cinder::app::MouseEvent event) {
@@ -73,6 +92,11 @@ void MyApp::DrawSurfaces() {
 }
 
 void MyApp::DrawEndPoint() {
-
+  if (current_state_ == GameState::kDrawing) {
+    if (click_counter % 2 == 1) {
+      cinder::gl::color(0, 1, 0);
+      cinder::gl::drawLine(vec2(current_pos.x, current_pos.y), vec2(current_click.x, current_click.y));
+    }
+  }
 }
 }  // namespace myapp

@@ -17,21 +17,55 @@ void Surfaces::CreateBox(b2World &my_world) {
   groundBody = my_world.CreateBody(&ground_def);
   groundShape.SetAsBox(x_pos*2, myapp::Conversions::ConvertToMeters(buffer));
   groundBody->CreateFixture(&groundShape, 1.0f);
+
+  b2BodyDef left_wall_def;
+  float32 l_wall_x = myapp::Conversions::ConvertToMeters(buffer);
+  float32 l_wall_y = myapp::Conversions::ConvertToMeters(screen_size/2);
+  left_wall_def.position.Set(l_wall_x, l_wall_y);
+  leftWallBody = my_world.CreateBody(&left_wall_def);
+  leftWallShape.SetAsBox(l_wall_x, l_wall_y);
+  leftWallBody->CreateFixture(&leftWallShape, 1.0f);
+/*
+  b2BodyDef right_wall_def;
+  float32 r_wall_x =  myapp::Conversions::ConvertToMeters(350);//myapp::Conversions::ConvertToMeters(screen_size - buffer);
+  float32 r_wall_y = myapp::Conversions::ConvertToMeters(screen_size/2);
+  right_wall_def.position.Set(r_wall_x, r_wall_y);
+  rightWallBody = my_world.CreateBody(&right_wall_def);
+  rightWallShape.SetAsBox(r_wall_x, r_wall_y);
+  rightWallBody->CreateFixture(&rightWallShape, 1.0f);*/
 }
 
 void Surfaces::DrawBox() {
- // b2Vec2 corn_1 = groundShape.GetVertex(0);
- // b2Vec2 corn_2 = groundShape.GetVertex(2);
+  //Draws Ground
   b2Vec2 ground_pos = groundBody->GetPosition();
- // cinder::vec2 cinder_corn1 = cinder::vec2(corn_1.x, corn_1.y);
- // cinder::vec2 cinder_corn2 = cinder::vec2(corn_2.x, corn_2.y);
   cinder::gl::color(0, 1, 1);
   float32 c1 = myapp::Conversions::ConvertToPixels(ground_pos.x) - screen_size/2;
   float32 c2 = myapp::Conversions::ConvertToPixels(ground_pos.y) + buffer;
   float32 c3 = myapp::Conversions::ConvertToPixels(ground_pos.x) + screen_size/2;
   float32 c4 = myapp::Conversions::ConvertToPixels(ground_pos.y) - 5*buffer;
   cinder::gl::drawSolidRect(cinder::Rectf(c1, c2, c3, c4));
-//  cinder::gl::color(1, 0, 0);
-//  cinder::gl::drawSolidRect(cinder::Rectf(cinder_corn1.x, cinder_corn1.y, cinder_corn2.x, cinder_corn2.y));
+
+  //Draws left wall
+  b2Vec2 left_wall_pos = leftWallBody->GetPosition();
+  cinder::gl::color(0, 1, 1);
+  float32 l_c1 = myapp::Conversions::ConvertToPixels(left_wall_pos.x);
+  float32 l_c2 = myapp::Conversions::ConvertToPixels(left_wall_pos.y) + screen_size/2;
+  float32 l_c3 = myapp::Conversions::ConvertToPixels(left_wall_pos.x) + buffer;
+  float32 l_c4 = myapp::Conversions::ConvertToPixels(left_wall_pos.y) - screen_size/2;
+  cinder::gl::drawSolidRect(cinder::Rectf(l_c1, l_c2, l_c3, l_c4));
+/*
+  //Draws right wall
+  cinder::gl::color(0, 0, 1);
+  b2Vec2 right_wall_pos = rightWallBody->GetPosition();
+  float32 r_cl =  myapp::Conversions::ConvertToPixels(right_wall_pos.x);
+  float32 r_c2 = myapp::Conversions::ConvertToPixels(right_wall_pos.y) + screen_size/2;
+  float32 r_c3 = myapp::Conversions::ConvertToPixels(right_wall_pos.x) + buffer;
+  float32 r_c4 = myapp::Conversions::ConvertToPixels(right_wall_pos.y) - screen_size/2;
+  cinder::gl::drawSolidRect(cinder::Rectf(r_cl, r_c2, r_c3, r_c4));*/
 }
+
+void Surfaces::AddToEdges(b2Vec2 start, b2Vec2 end) {
+
+}
+
 }
