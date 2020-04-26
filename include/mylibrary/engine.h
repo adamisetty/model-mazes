@@ -4,17 +4,14 @@
 
 #ifndef FINALPROJECT_ENGINE_CC_H
 #define FINALPROJECT_ENGINE_CC_H
-#include "ball.h"
-#include "surfaces.h"
-//#include <Box2D/Dynamics/b2World.h>
-//#include <Box2D/Dynamics/b2Body.h>
-//#include <Box2D/Dynamics/b2World.cpp>
+//#include "surfaces.h"
 
 #include <vector>
 #include <string>
 #include <random>
 #include <Box2D/Box2D.h>
 #include <mylibrary/ball.h>
+#include <mylibrary/surfaces.h>
 
 using namespace std;
 

@@ -7,6 +7,7 @@
 #include <Box2D/Box2D.h>
 #include <cinder/gl/draw.h>
 #include <cinder/gl/gl.h>
+#include <mylibrary/conversions.h>
 
 #ifndef FINALPROJECT_BALL_H
 #define FINALPROJECT_BALL_H

@@ -27,7 +27,7 @@ using cinder::app::KeyEvent;
 
 MyApp::MyApp()
 : current_state_{GameState::kDrawing},
-  my_wrld{b2Vec2(0.0f, 10.0f)},
+  my_wrld{b2Vec2(0.0f, 7.0f)},
   engine_{my_wrld}
   {game_timer.start();}
 
