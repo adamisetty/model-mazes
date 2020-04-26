@@ -10,6 +10,7 @@ const size_t buffer = 5;
 Surfaces::Surfaces() {}
 
 void Surfaces::CreateBox(b2World &my_world) {
+  my_wrld = &my_world;
   b2BodyDef ground_def;
   float32 x_pos = myapp::Conversions::ConvertToMeters(screen_size/2);
   float32 y_pos = myapp::Conversions::ConvertToMeters(screen_size - buffer);
@@ -36,6 +37,11 @@ void Surfaces::CreateBox(b2World &my_world) {
 }
 
 void Surfaces::DrawBox() {
+    if (drawn_edges.size() == 0) {
+        cinder::gl::color(1, 0, 0);
+        cinder::gl::drawSolidRect(cinder::Rectf(20, 10, 50, 20));
+    }
+  DrawEdges();
   //Draws Ground
   b2Vec2 ground_pos = groundBody->GetPosition();
   cinder::gl::color(0, 1, 1);
@@ -62,10 +68,22 @@ void Surfaces::DrawBox() {
   float32 r_c3 = myapp::Conversions::ConvertToPixels(right_wall_pos.x) + buffer;
   float32 r_c4 = myapp::Conversions::ConvertToPixels(right_wall_pos.y) - screen_size/2;
   cinder::gl::drawSolidRect(cinder::Rectf(r_cl, r_c2, r_c3, r_c4));*/
+
 }
 
 void Surfaces::AddToEdges(b2Vec2 start, b2Vec2 end) {
+  b2Vec2 b2_start  = b2Vec2(Conversions::ConvertToMeters(start.x), Conversions::ConvertToMeters(start.y));
+  b2Vec2 b2_end  = b2Vec2(Conversions::ConvertToMeters(end.x), Conversions::ConvertToMeters(end.y));
+  myapp::Edge next_edge;
+  drawn_edges.push_back(next_edge);
+  next_edge.initialize(*my_wrld, b2_start, b2_end);
+}
 
+void Surfaces::DrawEdges() {
+
+  for (myapp::Edge edge: drawn_edges) {
+    edge.DrawEdge();
+  }
 }
 
 }

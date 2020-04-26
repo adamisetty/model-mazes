@@ -26,7 +26,7 @@ namespace myapp {
 
     b2FixtureDef fixDef;
     fixDef.shape = &circle;
-    fixDef.restitution = 0.5f;
+    fixDef.restitution = 0.1f;
     fixDef.density = 1.0f;
     circleBody->CreateFixture(&fixDef);
   }

@@ -53,7 +53,7 @@ void MyApp::draw() {
   cinder::gl::clear();
   DrawBall();
   DrawSurfaces();
-  DrawEndPoint();
+  DrawUserLines();
 }
 
 void MyApp::keyDown(KeyEvent event) { }
@@ -70,14 +70,11 @@ void MyApp::mouseDown(cinder::app::MouseEvent event) {
     }
   }
 }
+
 void MyApp::mouseMove(cinder::app::MouseEvent event) {
   if (click_counter % 2 == 1) {
     current_pos = b2Vec2(event.getX(), event.getY());
   }
-}
-
-void MyApp::mouseDrag(cinder::app::MouseEvent event) {
-
 }
 
 void MyApp::DrawBall() {
@@ -91,11 +88,12 @@ void MyApp::DrawSurfaces() {
   engine_.GetSurfaces().DrawBox();
 }
 
-void MyApp::DrawEndPoint() {
+void MyApp::DrawUserLines() {
   if (current_state_ == GameState::kDrawing) {
     if (click_counter % 2 == 1) {
       cinder::gl::color(0, 1, 0);
-      cinder::gl::drawLine(vec2(current_pos.x, current_pos.y), vec2(current_click.x, current_click.y));
+      cinder::gl::drawLine(vec2(current_pos.x, current_pos.y),
+              vec2(current_click.x, current_click.y));
     }
   }
 }

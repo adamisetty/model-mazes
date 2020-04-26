@@ -27,13 +27,12 @@ class MyApp : public cinder::app::App {
   void keyDown(cinder::app::KeyEvent) override;
   void mouseDown(cinder::app::MouseEvent event) override;
   void mouseMove(cinder::app::MouseEvent event) override;
-  void mouseDrag(cinder::app::MouseEvent event) override;
 
 
  private:
   void DrawBall();
   void DrawSurfaces();
-  void DrawEndPoint();
+  void DrawUserLines();
 
  private:
   myapp::Engine engine_;
@@ -46,6 +45,6 @@ class MyApp : public cinder::app::App {
 };
 
 
-}  // namespace falling_fun
+}  // namespace myapp
 
 #endif  // FINALPROJECT_APPS_MYAPP_H_
