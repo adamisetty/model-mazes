@@ -32,6 +32,8 @@ MyApp::MyApp()
   {game_timer.start();
   current_click = b2Vec2(0, 0);
   current_pos = b2Vec2(0, 0);
+  click_counter = 0;
+  add_counter = 0;
   }
 
 
@@ -61,12 +63,14 @@ void MyApp::keyDown(KeyEvent event) { }
 void MyApp::mouseDown(cinder::app::MouseEvent event) {
   if (current_state_ == GameState::kDrawing) {
     click_counter++;
-    if (click_counter % 2 == 1) {
-      current_click = b2Vec2(event.getX(), event.getY());
-      current_pos = current_click;
-    } else {
+    engine_.AddTempEdges(cinder::vec2(event.getX(), event.getY()));
+    if (click_counter % 2 == 0) {
       current_pos = b2Vec2(event.getX(), event.getY());
       engine_.GetSurfaces().AddToEdges(current_click, current_pos);
+      add_counter = add_counter + 1;
+    } else {
+      current_click = b2Vec2(event.getX(), event.getY());
+      current_pos = current_click;
     }
   }
 }
@@ -85,7 +89,26 @@ void MyApp::DrawBall() {
 }
 
 void MyApp::DrawSurfaces() {
+  if (add_counter % 2 == 1) {
+      cinder::gl::color(1, 1, 0);
+      cinder::gl::drawSolidRect(cinder::Rectf(20, 10, 50, 20));
+  } else if (add_counter %2 == 0) {
+      cinder::gl::color(1, 0, 0);
+      cinder::gl::drawSolidRect(cinder::Rectf(20, 10, 50, 20));
+  }
   engine_.GetSurfaces().DrawBox();
+
+  vector<cinder::vec2> points = engine_.GetTempEdges();
+  if (points.empty()) {
+      return;
+  }
+  for (size_t i = 1; i < points.size(); i = i + 2) {
+    cinder::gl::drawLine(points[i], points[i - 1]);
+  }
+  for (cinder::vec2 point: points) {
+    cinder::gl::color(1, 1, 0);
+    cinder::gl::drawSolidCircle(point, 2.0);
+  }
 }
 
 void MyApp::DrawUserLines() {

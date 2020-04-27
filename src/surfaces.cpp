@@ -37,10 +37,6 @@ void Surfaces::CreateBox(b2World &my_world) {
 }
 
 void Surfaces::DrawBox() {
-    if (drawn_edges.size() == 0) {
-        cinder::gl::color(1, 0, 0);
-        cinder::gl::drawSolidRect(cinder::Rectf(20, 10, 50, 20));
-    }
   DrawEdges();
   //Draws Ground
   b2Vec2 ground_pos = groundBody->GetPosition();
@@ -72,15 +68,23 @@ void Surfaces::DrawBox() {
 }
 
 void Surfaces::AddToEdges(b2Vec2 start, b2Vec2 end) {
+  edge_points.push_back(start);
+  edge_points.push_back(end);
   b2Vec2 b2_start  = b2Vec2(Conversions::ConvertToMeters(start.x), Conversions::ConvertToMeters(start.y));
   b2Vec2 b2_end  = b2Vec2(Conversions::ConvertToMeters(end.x), Conversions::ConvertToMeters(end.y));
   myapp::Edge next_edge;
-  drawn_edges.push_back(next_edge);
   next_edge.initialize(*my_wrld, b2_start, b2_end);
+  drawn_edges.push_back(next_edge);
 }
 
 void Surfaces::DrawEdges() {
-
+    if (edge_points.empty()) {
+        cinder::gl::color(0, 1, 1);
+        cinder::gl::drawSolidRect(cinder::Rectf(30, 10, 60, 20));
+    } else  {
+        cinder::gl::color(0, 0, 1);
+        cinder::gl::drawSolidRect(cinder::Rectf(30, 10, 60, 20));
+    }
   for (myapp::Edge edge: drawn_edges) {
     edge.DrawEdge();
   }

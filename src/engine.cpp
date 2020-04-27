@@ -30,4 +30,13 @@ const size_t total_num_balls = 7;
   myapp::Surfaces Engine::GetSurfaces() {
     return surfaces;
   }
+
+  vector<cinder::vec2> Engine::GetTempEdges() {
+    return points;
+  }
+
+  void Engine::AddTempEdges(cinder::vec2 point) {
+    points.push_back(point);
+  }
+
 }

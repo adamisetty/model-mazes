@@ -30,6 +30,7 @@ class Surfaces{
     b2Body* rightWallBody;
     b2PolygonShape rightWallShape;
     vector<myapp::Edge> drawn_edges;
+    vector<b2Vec2> edge_points;
 };
 
 

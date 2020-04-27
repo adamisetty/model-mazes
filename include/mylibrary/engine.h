@@ -24,12 +24,15 @@ class Engine {
     void Setup();
     vector<myapp::Ball> GetAllBalls();
     myapp::Surfaces GetSurfaces();
+    void AddTempEdges(cinder::vec2 point);
+    vector<cinder::vec2> GetTempEdges();
 
   private:
     b2World *my_wrld;
     vector<myapp::Ball> all_balls;
     void CreateBalls(size_t number);
     myapp::Surfaces surfaces;
+    vector<cinder::vec2> points;
 };
 
 }   //namespace falling_fun

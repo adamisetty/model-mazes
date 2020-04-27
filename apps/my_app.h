@@ -39,7 +39,8 @@ class MyApp : public cinder::app::App {
   b2World my_wrld;
   GameState current_state_;
   cinder::Timer game_timer;
-  size_t click_counter = 0;
+  size_t click_counter;
+  size_t add_counter;
   b2Vec2 current_click;
   b2Vec2 current_pos;
 };
