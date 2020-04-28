@@ -49,6 +49,7 @@ void MyApp::update() {
   my_wrld.Step(time_step, vel_iter, pos_iter);
   if (game_timer.getSeconds() > kDrawTime && !flag_activate_ball) {
     flag_activate_ball = true;
+    engine_.GetSurfaces().SetEdges(engine_.GetTempEdges());
     engine_.ActivateBalls();
     current_state_ = GameState::kBallsMoving;
   }
@@ -69,7 +70,6 @@ void MyApp::mouseDown(cinder::app::MouseEvent event) {
     engine_.AddTempEdges(cinder::vec2(event.getX(), event.getY()));
     if (click_counter % 2 == 0) {
       current_pos = b2Vec2(event.getX(), event.getY());
-      //engine_.GetSurfaces().AddToEdges(current_click, current_pos);
       add_counter = add_counter + 1;
     } else {
       current_click = b2Vec2(event.getX(), event.getY());

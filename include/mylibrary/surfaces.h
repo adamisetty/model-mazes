@@ -20,7 +20,6 @@ class Surfaces{
     void CreateBox(b2World &my_world);
     void DrawBox();
     void DrawEdges();
-    void AddToEdges(b2Vec2 start, b2Vec2 end);
     void SetEdges(vector<cinder::vec2> points);
   private:
     b2World *my_wrld;

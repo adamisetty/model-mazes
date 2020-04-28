@@ -22,8 +22,6 @@ namespace myapp {
   }
 
   void myapp::Edge::DrawEdge() {
-     // cinder::gl::color(0, 1, 1);
-     // cinder::gl::drawSolidRect(cinder::Rectf(30, 10, 60, 20));
     cinder::gl::color(0, 1, 1);
     cinder::vec2 cinder_s = cinder::vec2(Conversions::ConvertToPixels(m_start.x), Conversions::ConvertToPixels(m_start.y));
     cinder::vec2 cinder_e = cinder::vec2(Conversions::ConvertToPixels(m_end.x), Conversions::ConvertToPixels(m_end.y));

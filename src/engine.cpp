@@ -41,6 +41,10 @@ const size_t total_num_balls = 7;
     points.push_back(point);
   }
 
+  vector<cinder::vec2> Engine::GetTempEdges() {
+    return points;
+  }
+
   void Engine::DrawTempEdges() {
     if (points.empty()) {
           return;

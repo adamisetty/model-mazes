@@ -25,6 +25,7 @@ class Engine {
     vector<myapp::Ball> GetAllBalls();
     myapp::Surfaces GetSurfaces();
     void AddTempEdges(cinder::vec2 point);
+    vector<cinder::vec2> GetTempEdges();
     void DrawTempEdges();
     void ActivateBalls();
 
