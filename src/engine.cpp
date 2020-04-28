@@ -23,6 +23,12 @@ const size_t total_num_balls = 7;
     }
   }
 
+  void Engine::ActivateBalls() {
+    for (myapp::Ball ball: all_balls) {
+      ball.ActivateBall();
+    }
+  }
+
   vector<myapp::Ball> Engine::GetAllBalls() {
     return all_balls;
   }
@@ -31,12 +37,21 @@ const size_t total_num_balls = 7;
     return surfaces;
   }
 
-  vector<cinder::vec2> Engine::GetTempEdges() {
-    return points;
-  }
-
   void Engine::AddTempEdges(cinder::vec2 point) {
     points.push_back(point);
+  }
+
+  void Engine::DrawTempEdges() {
+    if (points.empty()) {
+          return;
+    }
+    for (size_t i = 1; i < points.size(); i = i + 2) {
+      cinder::gl::drawLine(points[i], points[i - 1]);
+    }
+    for (cinder::vec2 point: points) {
+      cinder::gl::color(1, 1, 0);
+      cinder::gl::drawSolidCircle(point, 2.0);
+    }
   }
 
 }

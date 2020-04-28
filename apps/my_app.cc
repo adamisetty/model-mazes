@@ -19,7 +19,7 @@ using std::string;
 using cinder::Rectf;
 using cinder::vec2;
 
-const double kDrawTime = 20;
+const double kDrawTime = 10;
 const seconds kLevelTime = seconds(30);
 const size_t app_size_ = 600;
 
@@ -34,6 +34,7 @@ MyApp::MyApp()
   current_pos = b2Vec2(0, 0);
   click_counter = 0;
   add_counter = 0;
+  flag_activate_ball = false;
   }
 
 
@@ -46,7 +47,9 @@ void MyApp::update() {
   int32 vel_iter = 3;
   int32 pos_iter = 5;
   my_wrld.Step(time_step, vel_iter, pos_iter);
-  if (game_timer.getSeconds() > kDrawTime) {
+  if (game_timer.getSeconds() > kDrawTime && !flag_activate_ball) {
+    flag_activate_ball = true;
+    engine_.ActivateBalls();
     current_state_ = GameState::kBallsMoving;
   }
 }
@@ -66,7 +69,7 @@ void MyApp::mouseDown(cinder::app::MouseEvent event) {
     engine_.AddTempEdges(cinder::vec2(event.getX(), event.getY()));
     if (click_counter % 2 == 0) {
       current_pos = b2Vec2(event.getX(), event.getY());
-      engine_.GetSurfaces().AddToEdges(current_click, current_pos);
+      //engine_.GetSurfaces().AddToEdges(current_click, current_pos);
       add_counter = add_counter + 1;
     } else {
       current_click = b2Vec2(event.getX(), event.getY());
@@ -76,8 +79,10 @@ void MyApp::mouseDown(cinder::app::MouseEvent event) {
 }
 
 void MyApp::mouseMove(cinder::app::MouseEvent event) {
-  if (click_counter % 2 == 1) {
-    current_pos = b2Vec2(event.getX(), event.getY());
+  if (current_state_ == GameState::kDrawing) {
+    if (click_counter % 2 == 1) {
+      current_pos = b2Vec2(event.getX(), event.getY());
+    }
   }
 }
 
@@ -89,26 +94,8 @@ void MyApp::DrawBall() {
 }
 
 void MyApp::DrawSurfaces() {
-  if (add_counter % 2 == 1) {
-      cinder::gl::color(1, 1, 0);
-      cinder::gl::drawSolidRect(cinder::Rectf(20, 10, 50, 20));
-  } else if (add_counter %2 == 0) {
-      cinder::gl::color(1, 0, 0);
-      cinder::gl::drawSolidRect(cinder::Rectf(20, 10, 50, 20));
-  }
   engine_.GetSurfaces().DrawBox();
-
-  vector<cinder::vec2> points = engine_.GetTempEdges();
-  if (points.empty()) {
-      return;
-  }
-  for (size_t i = 1; i < points.size(); i = i + 2) {
-    cinder::gl::drawLine(points[i], points[i - 1]);
-  }
-  for (cinder::vec2 point: points) {
-    cinder::gl::color(1, 1, 0);
-    cinder::gl::drawSolidCircle(point, 2.0);
-  }
+  engine_.DrawTempEdges();
 }
 
 void MyApp::DrawUserLines() {

@@ -28,11 +28,11 @@ void Surfaces::CreateBox(b2World &my_world) {
   leftWallBody->CreateFixture(&leftWallShape, 1.0f);
 /*
   b2BodyDef right_wall_def;
-  float32 r_wall_x =  myapp::Conversions::ConvertToMeters(350);//myapp::Conversions::ConvertToMeters(screen_size - buffer);
+  float32 r_wall_x =  myapp::Conversions::ConvertToMeters(450);//myapp::Conversions::ConvertToMeters(screen_size - buffer);
   float32 r_wall_y = myapp::Conversions::ConvertToMeters(screen_size/2);
   right_wall_def.position.Set(r_wall_x, r_wall_y);
   rightWallBody = my_world.CreateBody(&right_wall_def);
-  rightWallShape.SetAsBox(r_wall_x, r_wall_y);
+  rightWallShape.SetAsBox(l_wall_y, r_wall_y);
   rightWallBody->CreateFixture(&rightWallShape, 1.0f);*/
 }
 
@@ -68,21 +68,31 @@ void Surfaces::DrawBox() {
 }
 
 void Surfaces::AddToEdges(b2Vec2 start, b2Vec2 end) {
-  edge_points.push_back(start);
+  /*edge_points.push_back(start);
   edge_points.push_back(end);
   b2Vec2 b2_start  = b2Vec2(Conversions::ConvertToMeters(start.x), Conversions::ConvertToMeters(start.y));
   b2Vec2 b2_end  = b2Vec2(Conversions::ConvertToMeters(end.x), Conversions::ConvertToMeters(end.y));
   myapp::Edge next_edge;
   next_edge.initialize(*my_wrld, b2_start, b2_end);
-  drawn_edges.push_back(next_edge);
+  drawn_edges.push_back(next_edge);*/
+}
+
+void Surfaces::SetEdges(vector<cinder::vec2> points) {
+    for (size_t i = 1; i < points.size(); i = i + 2) {
+        b2Vec2 b2_start  = b2Vec2(Conversions::ConvertToMeters(points[i].x), Conversions::ConvertToMeters(points[i].y));
+        b2Vec2 b2_end  = b2Vec2(Conversions::ConvertToMeters(points[i - 1].x), Conversions::ConvertToMeters(points[i - 1].y));
+        myapp::Edge next_edge;
+        next_edge.initialize(*my_wrld, b2_start, b2_end);
+        drawn_edges.push_back(next_edge);
+    }
 }
 
 void Surfaces::DrawEdges() {
-    if (edge_points.empty()) {
-        cinder::gl::color(0, 1, 1);
-        cinder::gl::drawSolidRect(cinder::Rectf(30, 10, 60, 20));
-    } else  {
-        cinder::gl::color(0, 0, 1);
+  if (edge_points.empty()) {
+    cinder::gl::color(0, 1, 1);
+    cinder::gl::drawSolidRect(cinder::Rectf(30, 10, 60, 20));
+  } else  {
+     cinder::gl::color(0, 0, 1);
         cinder::gl::drawSolidRect(cinder::Rectf(30, 10, 60, 20));
     }
   for (myapp::Edge edge: drawn_edges) {

@@ -24,6 +24,7 @@ class Ball {
     b2Body* GetBody();
     b2CircleShape GetShape();
     void DrawSingleBall();
+    void ActivateBall();
 
   private:
     b2Body* circleBody;

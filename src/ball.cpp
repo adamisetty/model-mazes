@@ -20,7 +20,8 @@ namespace myapp {
     circle.m_p = b2Vec2(start_x, start_y);
     location = circle.m_p;
     b2BodyDef circleDef;
-    circleDef.type = b2_dynamicBody;
+    //circleDef.type = b2_dynamicBody;
+
     circleDef.position.Set(location.x, location.y);
     circleBody = my_world.CreateBody(&circleDef);
 
@@ -29,6 +30,10 @@ namespace myapp {
     fixDef.restitution = 0.1f;
     fixDef.density = 1.0f;
     circleBody->CreateFixture(&fixDef);
+  }
+
+  void Ball::ActivateBall() {
+    circleBody->SetType(b2_dynamicBody);
   }
 
   b2Body* Ball::GetBody() {

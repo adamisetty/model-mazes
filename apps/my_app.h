@@ -43,6 +43,7 @@ class MyApp : public cinder::app::App {
   size_t add_counter;
   b2Vec2 current_click;
   b2Vec2 current_pos;
+  bool flag_activate_ball;
 };
 
 
