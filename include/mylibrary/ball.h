@@ -19,7 +19,7 @@ namespace myapp {
 class Ball {
   public:
     Ball();
-    void initialize(b2World &my_world);
+    void initialize(b2World *my_world);
     b2Vec2 GetLocation();
     b2Body* GetBody();
     b2CircleShape GetShape();

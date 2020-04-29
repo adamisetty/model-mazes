@@ -9,31 +9,37 @@ namespace myapp {
 
   Ball::Ball() {}
 
-  void Ball::initialize(b2World &my_world) {
+  void Ball::initialize(b2World *my_world) {
     //randomize color
     color_values.push_back((rand() % 10 + 1) /10.0);
     color_values.push_back((rand() % 10 + 1) /10.0);
     color_values.push_back((rand() % 10 + 1) /10.0);
     circle.m_radius = myapp::Conversions::ConvertToMeters(radius);
-    float32 start_x = myapp::Conversions::ConvertToMeters((rand() % 40 + 300));
-    float32 start_y = myapp::Conversions::ConvertToMeters(radius*2);
+    float32 start_x = myapp::Conversions::ConvertToMeters((rand() % 400 + 100));
+
+    float32 start_y = myapp::Conversions::ConvertToMeters(rand() % 50 + 20);
     circle.m_p = b2Vec2(start_x, start_y);
     location = circle.m_p;
+    circle.m_p = b2Vec2(0, 0);
+
     b2BodyDef circleDef;
     //circleDef.type = b2_dynamicBody;
 
     circleDef.position.Set(location.x, location.y);
-    circleBody = my_world.CreateBody(&circleDef);
+    circleBody = my_world->CreateBody(&circleDef);
 
     b2FixtureDef fixDef;
     fixDef.shape = &circle;
-    fixDef.restitution = 0.1f;
+    fixDef.restitution = 0.5f;
     fixDef.density = 1.0f;
     circleBody->CreateFixture(&fixDef);
   }
 
   void Ball::ActivateBall() {
+    b2Vec2 start = location;
     circleBody->SetType(b2_dynamicBody);
+    circle.m_p = start;
+    std::cout << "activate";
   }
 
   b2Body* Ball::GetBody() {

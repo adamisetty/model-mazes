@@ -17,7 +17,7 @@ namespace myapp {
 class Surfaces{
   public:
     Surfaces();
-    void CreateBox(b2World &my_world);
+    void CreateBox(b2World *my_world);
     void DrawBox();
     void DrawEdges();
     void SetEdges(vector<cinder::vec2> points);

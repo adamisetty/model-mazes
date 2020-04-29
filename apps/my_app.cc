@@ -57,8 +57,9 @@ void MyApp::update() {
 
 void MyApp::draw() {
   cinder::gl::clear();
-  DrawBall();
   DrawSurfaces();
+  std::cout << "drew surfaces";
+  DrawBall();
   DrawUserLines();
 }
 

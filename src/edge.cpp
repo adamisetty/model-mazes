@@ -15,7 +15,7 @@ namespace myapp {
     b2FixtureDef fixDef;
     fixDef.shape = &edgeShape;
     fixDef.restitution = 0.5f;
-    fixDef.density = 1.0f;
+    fixDef.density = 0.0f;
     edgeBody->CreateFixture(&fixDef);
     m_start = start;
     m_end = end;
