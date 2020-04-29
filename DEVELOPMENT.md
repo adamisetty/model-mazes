@@ -1,10 +1,66 @@
 # Development
 
 ---
-Currently, my game, Falling Fun, works to create a set number of small balls. These small balls drop to the ground with the force of gravity, and bounce against eachother if they interact with eachother. 
+- **4/17/20**
+  - imports Box2d libaray into project
+  - creates a world instance 
+  - Needs to complete the following 
+  
+  [x] Creates box 2d world and basic b2Body
+  
+  [ ] Create box around Cinder screen, as a boundry
+  
+  [ ] Need to drop multiple small balls from top of screen
+  
+  [ ] Give user the ability to draw edges themselves
+  
+  [ ] Need to create edges that the balls will bounce off
 
-I create a central engine class which communicates with my_app.cc (which contains the cinder aspect). The engine class connects with a class containing the small balls and a class containing the solid edges, which is just the ground right now. 
+- **4/18/20**
+  - Figures out how cinder coordinates line up with box2d coordinates
+  - Creates circle body, as main player of game
 
-Now, the game creates small balls in a range. Additionally, it creates a border around the Cinder screen (comprising of a right wall and a left wall), used so that the balls do not go out of range of the screen. 
+- **4/21/20**
+  - Having issues with dynamic object colliding with static object
+  - Small ball presumes to have force in an unknown direction
+  - Needs to complete the following 
+  
+  [ ] Create box around Cinder screen, as a boundry
+  
+  [ ] Need to drop multiple small balls from top of screen
+  
+  [ ] Give user the ability to draw edges themselves
+  
+  [ ] Need to create edges that the balls will bounce off
 
-Additionally, there is much improved class heirarchy. Now the app creates and engine class which passes in the box2d world object. From the engine, the small balls and all the walls are created. 
+**4/25/20**
+  - Takes position of user mouse to draw lines
+  - The final line that the user draws is not displayed
+
+**4/26/20**
+  - Converts user drawn lines into box2d objects
+  - Balls still do not collide properly with the drawn edges
+  - Balls now correctly collide with the ground fixture
+  - Needs to complete the following 
+  
+  [ ] Create box around Cinder screen, as a boundry
+  
+  [x] Need to drop multiple small balls from top of screen
+  
+  [x] Give user the ability to draw edges themselves
+  
+  [ ] Need to create edges that the balls will bounce off
+  
+  [ ] Fixes an end target for balls to hit, to determine if player has won
+
+**4/28/20** 
+  - Ball now collides correctly with right and left walls
+  - still is having issues colliding with the edge objects
+  - Needs to complete the following 
+  
+  [x] Create box around Cinder screen, as a boundry
+  
+  [ ] Need to create edges that the balls will bounce off
+  
+  [ ] Fixes an end target for balls to hit, to determine if player has won
+ 
