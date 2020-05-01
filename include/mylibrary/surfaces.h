@@ -7,6 +7,7 @@
 #include <cinder/gl/gl.h>
 #include <mylibrary/edge.h>
 #include <mylibrary/conversions.h>
+#include <cmath>
 #ifndef FINALPROJECT_SURFACES_H
 #define FINALPROJECT_SURFACES_H
 
@@ -30,7 +31,11 @@ class Surfaces{
     b2Body* rightWallBody;
     b2PolygonShape rightWallShape;
     vector<myapp::Edge> drawn_edges;
-    vector<b2Vec2> edge_points;
+  b2Body* edgeBody;
+  b2PolygonShape edgeShape;
+  b2Vec2 m_start = b2Vec2(20, 400);
+  b2Vec2 m_end = b2Vec2(450, 550);
+  vector<b2Vec2> edge_points;
 };
 
 
