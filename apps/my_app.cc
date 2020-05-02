@@ -18,6 +18,8 @@ using std::chrono::system_clock;
 using std::string;
 using cinder::Rectf;
 using cinder::vec2;
+using cinder::Color;
+
 
 const double kDrawTime = 10;
 const seconds kLevelTime = seconds(30);
@@ -92,6 +94,10 @@ void MyApp::DrawBall() {
   for (myapp::Ball ball: current_balls) {
     ball.DrawSingleBall();
   }
+  size_t score = engine_.GetScore();
+  string string1 = std::to_string(score);
+  cinder::vec2 location = vec2(550, 10);
+  PrintText(string1, location, 20);
 }
 
 void MyApp::DrawSurfaces() {
@@ -107,5 +113,15 @@ void MyApp::DrawUserLines() {
               vec2(current_click.x, current_click.y));
     }
   }
+}
+
+void MyApp::PrintText(string text, cinder::vec2 location, size_t size) {
+  auto box = cinder::TextBox();
+  box.setText(text);
+  box.setSize(glm::ivec2(50, 50));
+  box.setFont(cinder::Font("Arial", size));
+  const auto surface = box.render();
+  const auto texture = cinder::gl::Texture::create(surface);
+  cinder::gl::draw(texture, location);
 }
 }  // namespace myapp

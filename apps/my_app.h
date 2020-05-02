@@ -3,6 +3,7 @@
 #ifndef FINALPROJECT_APPS_MYAPP_H_
 #define FINALPROJECT_APPS_MYAPP_H_
 
+#include <string>
 #include <cinder/app/App.h>
 #include <cinder/gl/gl.h>
 #include <mylibrary/engine.h>
@@ -33,6 +34,7 @@ class MyApp : public cinder::app::App {
   void DrawBall();
   void DrawSurfaces();
   void DrawUserLines();
+  void PrintText(string text, cinder::vec2 location, size_t size);
 
  private:
   myapp::Engine engine_;
