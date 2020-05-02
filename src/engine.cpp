@@ -6,11 +6,13 @@
 namespace myapp {
 const size_t total_num_balls = 20;
 const size_t buffer = 8;
+const size_t screen_size = 600;
 
   Engine::Engine(b2World &this_wrld) {
     my_wrld = &this_wrld;
     start_x = rand() % 240 + 10;
     end_x = rand() % 380 + 300;
+    end_y = screen_size - buffer * 2;
     score = 0;
   }
 
@@ -35,7 +37,7 @@ const size_t buffer = 8;
 
   void Engine::CalculateScore() {
     for (myapp::Ball ball : all_balls) {
-      if (ball.CheckFinished(cinder::vec2(end_x, 600 - buffer*2))) {
+      if (ball.CheckFinished(cinder::vec2(end_x, end_y))) {
         score++;
         ball.DiminishBody();
       }
@@ -65,7 +67,7 @@ const size_t buffer = 8;
 
   void Engine::DrawTempEdges() {
     cinder::gl::color(0, 1, 0);
-    cinder::vec2 end_point = cinder::vec2(end_x, 600 - buffer*2);
+    cinder::vec2 end_point = cinder::vec2(end_x, end_y);
     cinder::gl::drawSolidRect(cinder::Rectf(end_point.x - buffer, end_point.y - buffer,
                                             end_point.x + buffer, end_point.y + buffer));
     if (points.empty()) {

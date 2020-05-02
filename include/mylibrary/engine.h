@@ -39,6 +39,7 @@ class Engine {
     vector<cinder::vec2> points;
     float32 start_x;
     float32 end_x;
+    float32 end_y;
     size_t score;
 };
 

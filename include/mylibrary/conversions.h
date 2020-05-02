@@ -7,8 +7,8 @@
 namespace myapp {
   class Conversions{
     public:
-      static float32 ConvertToPixels(float32 b2_number);
-      static float32 ConvertToMeters(float32 cinder_number);
+      static float32 ToPixels(float32 b2_number);
+      static float32 ToMeters(float32 cinder_number);
   };
 }  // namespace falling_fun
 

@@ -20,9 +20,6 @@ class Ball {
     Ball();
     void initialize(b2World *my_world, float32 start_x);
     ~Ball();
-    b2Vec2 GetLocation();
-    b2Body* GetBody();
-    b2CircleShape GetShape();
     void DrawSingleBall();
     void ActivateBall();
     bool CheckFinished(cinder::vec2 finish_loc);

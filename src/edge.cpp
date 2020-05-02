@@ -23,10 +23,10 @@ namespace myapp {
 
   void myapp::Edge::DrawEdge() {
     cinder::gl::color(0, 1, 1);
-    cinder::vec2 c_start = cinder::vec2(Conversions::ConvertToPixels(m_start.x),
-                                  Conversions::ConvertToPixels(m_start.y));
-    cinder::vec2 c_end = cinder::vec2(Conversions::ConvertToPixels(m_end.x),
-                                  Conversions::ConvertToPixels(m_end.y));
+    cinder::vec2 c_start = cinder::vec2(Conversions::ToPixels(m_start.x),
+                                  Conversions::ToPixels(m_start.y));
+    cinder::vec2 c_end = cinder::vec2(Conversions::ToPixels(m_end.x),
+                                  Conversions::ToPixels(m_end.y));
     cinder::gl::drawLine(c_start, c_end);
   }
 

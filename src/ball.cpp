@@ -4,6 +4,8 @@
 #include "mylibrary/ball.h"
 
 namespace myapp {
+
+  using cinder::vec2;
   const float32 radius = 7.5;
   const size_t buffer = 10;
   const float32 finish_buffer = 8;
@@ -15,10 +17,10 @@ namespace myapp {
     color_vals.push_back((rand() % 10 + 1) /10.0);
     color_vals.push_back((rand() % 10 + 1) /10.0);
     color_vals.push_back((rand() % 10 + 1) /10.0);
-    circle.m_radius = myapp::Conversions::ConvertToMeters(radius);
-    s_x = myapp::Conversions::ConvertToMeters(s_x);
-    float32 start_x = s_x + myapp::Conversions::ConvertToMeters(rand() % buffer);
-    float32 start_y = myapp::Conversions::ConvertToMeters(rand() % (buffer*3));
+    circle.m_radius = myapp::Conversions::ToMeters(radius);
+    s_x = myapp::Conversions::ToMeters(s_x);
+    float32 start_x = s_x + myapp::Conversions::ToMeters(rand() % buffer);
+    float32 start_y = myapp::Conversions::ToMeters(rand() % (buffer*3));
     circle.m_p = b2Vec2(start_x, start_y);
     location = circle.m_p;
     circle.m_p = b2Vec2(0, 0);
@@ -40,22 +42,10 @@ namespace myapp {
     circle.m_p = start;
   }
 
-  b2Body* Ball::GetBody() {
-    return circleBody;
-  }
-
-  b2CircleShape Ball::GetShape() {
-    return circle;
-  }
-
-  b2Vec2 Ball::GetLocation() {
-    return location;
-  }
-
   bool Ball::CheckFinished(cinder::vec2 finish_loc) {
     b2Vec2 curr_loc = circleBody->GetPosition();
-    cinder::vec2 c_loc = cinder::vec2(myapp::Conversions::ConvertToPixels(curr_loc.x),
-                                      myapp::Conversions::ConvertToPixels(curr_loc.y));
+    vec2 c_loc = vec2(myapp::Conversions::ToPixels(curr_loc.x),
+                      myapp::Conversions::ToPixels(curr_loc.y));
     //checking if this ball has reached the finishing location
     bool cond = abs(c_loc.x - finish_loc.x) <= finish_buffer &&
                 abs(c_loc.y - finish_loc.y) <= finish_buffer;
@@ -70,10 +60,10 @@ namespace myapp {
   void Ball::DrawSingleBall() {
     cinder::gl::color(color_vals[0], color_vals[1], color_vals[2]);
     b2Vec2 curr_loc = circleBody->GetPosition();
-    cinder::vec2 c_loc = cinder::vec2(myapp::Conversions::ConvertToPixels(curr_loc.x),
-                                       myapp::Conversions::ConvertToPixels(curr_loc.y));
-    cinder::gl::drawSolidCircle(cinder::vec2(c_loc[0], c_loc[1]),
-                        myapp::Conversions::ConvertToPixels(circle.m_radius));
+    vec2 c_loc = vec2(myapp::Conversions::ToPixels(curr_loc.x),
+                      myapp::Conversions::ToPixels(curr_loc.y));
+    cinder::gl::drawSolidCircle(vec2(c_loc[0], c_loc[1]),
+          myapp::Conversions::ToPixels(circle.m_radius));
   }
 
   Ball::~Ball() = default;
