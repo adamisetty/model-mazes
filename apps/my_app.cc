@@ -22,8 +22,11 @@ using cinder::Color;
 
 
 const double kDrawTime = 10;
-const seconds kLevelTime = seconds(30);
+const double kLevelTime = 40;
 const size_t app_size_ = 600;
+const size_t num_balls = 20;
+
+const cinder::vec2 top_right = vec2(490, 10);
 
 using cinder::app::KeyEvent;
 
@@ -31,7 +34,7 @@ MyApp::MyApp()
 : current_state_{GameState::kDrawing},
   my_wrld{b2Vec2(0.0f, 7.0f)},
   engine_{my_wrld}
-  {game_timer.start();
+  { game_timer.start();
   current_click = b2Vec2(0, 0);
   current_pos = b2Vec2(0, 0);
   click_counter = 0;
@@ -49,23 +52,30 @@ void MyApp::update() {
   int32 vel_iter = 3;
   int32 pos_iter = 5;
   my_wrld.Step(time_step, vel_iter, pos_iter);
+
+  size_t score = engine_.GetScore();
   if (game_timer.getSeconds() > kDrawTime && !flag_activate_ball) {
     flag_activate_ball = true;
     engine_.GetSurfaces().SetEdges(engine_.GetTempEdges());
     engine_.ActivateBalls();
     current_state_ = GameState::kBallsMoving;
   }
+  if (score == num_balls || game_timer.getSeconds() > kLevelTime + kDrawTime) {
+    current_state_ = GameState::kGameOver;
+  }
 }
 
 void MyApp::draw() {
   cinder::gl::clear();
-  DrawSurfaces();
-  std::cout << "drew surfaces";
-  DrawBall();
-  DrawUserLines();
+  if (current_state_ != GameState::kGameOver) {
+    DrawSurfaces();
+    DrawBall();
+    DrawUserLines();
+    DrawScore();
+  } else {
+    DrawGameOver();
+  }
 }
-
-void MyApp::keyDown(KeyEvent event) { }
 
 void MyApp::mouseDown(cinder::app::MouseEvent event) {
   if (current_state_ == GameState::kDrawing) {
@@ -94,10 +104,6 @@ void MyApp::DrawBall() {
   for (myapp::Ball ball: current_balls) {
     ball.DrawSingleBall();
   }
-  size_t score = engine_.GetScore();
-  string string1 = std::to_string(score);
-  cinder::vec2 location = vec2(550, 10);
-  PrintText(string1, location, 20);
 }
 
 void MyApp::DrawSurfaces() {
@@ -112,6 +118,24 @@ void MyApp::DrawUserLines() {
       cinder::gl::drawLine(vec2(current_pos.x, current_pos.y),
               vec2(current_click.x, current_click.y));
     }
+  }
+}
+
+void MyApp::DrawScore() {
+  size_t score = engine_.GetScore();
+  string score_string = "Score: " + std::to_string(score);
+  PrintText(score_string, top_right, 20);
+}
+
+void MyApp::DrawGameOver() {
+  if (engine_.GetScore() == num_balls) {
+    cinder::gl::color(1, 1, 0);
+    string winner = "Congrats!";
+    PrintText(winner, top_right, 20);
+  } else {
+    cinder::gl::color(1, 0, 0);
+    string loser = "Time's up:(";
+    PrintText(loser, top_right, 20);
   }
 }
 

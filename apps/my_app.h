@@ -25,7 +25,6 @@ class MyApp : public cinder::app::App {
   void setup() override;
   void update() override;
   void draw() override;
-  void keyDown(cinder::app::KeyEvent) override;
   void mouseDown(cinder::app::MouseEvent event) override;
   void mouseMove(cinder::app::MouseEvent event) override;
 
@@ -34,6 +33,8 @@ class MyApp : public cinder::app::App {
   void DrawBall();
   void DrawSurfaces();
   void DrawUserLines();
+  void DrawScore();
+  void DrawGameOver();
   void PrintText(string text, cinder::vec2 location, size_t size);
 
  private:

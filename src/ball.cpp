@@ -57,11 +57,12 @@ namespace myapp {
     cinder::vec2 c_loc = cinder::vec2(myapp::Conversions::ConvertToPixels(curr_loc.x),
                                       myapp::Conversions::ConvertToPixels(curr_loc.y));
     //checking if this ball has reached the finishing location
-    bool cond = abs(c_loc.x - finish_loc.x) <= finish_buffer && abs(c_loc.y - finish_loc.y) <= finish_buffer;
+    bool cond = abs(c_loc.x - finish_loc.x) <= finish_buffer &&
+                abs(c_loc.y - finish_loc.y) <= finish_buffer;
     return cond;
   }
 
-  void Ball::DiminishBody() {;
+  void Ball::DiminishBody() {
     circleBody->SetTransform(b2Vec2(-radius, 0), 0);
     circleBody->SetType(b2_staticBody);
   }
