@@ -29,20 +29,25 @@ class Engine {
     void AddTempEdges(cinder::vec2 point);
     vector<cinder::vec2> GetTempEdges();
     void DrawTempEdges();
+    void DrawEndBlock();
     void ActivateBalls();
     size_t GetScore();
 
   private:
-    b2World *my_wrld;
-    vector<myapp::Ball> all_balls;
     void CreateBalls(size_t number);
     void CalculateScore();
+
+
+  private:
+    b2World *my_wrld;
+    vector<myapp::Ball> all_balls;
     myapp::Surfaces surfaces;
     vector<cinder::vec2> points;
     float32 start_x;
     float32 end_x;
     float32 end_y;
     size_t score;
+
 };
 
 }   //namespace falling_fun

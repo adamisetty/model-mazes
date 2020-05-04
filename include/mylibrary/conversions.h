@@ -11,7 +11,7 @@ using std::vector;
     public:
       static float32 ToPixels(float32 b2_number);
       static float32 ToMeters(float32 cinder_number);
-      static vector<double> ColorChooser();
+      static vector<double> ColorChooser(int position);
       static vector<double> ToCinderRBG(vector<double> regular_RBG);
   };
 }  // namespace falling_fun

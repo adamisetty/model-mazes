@@ -2,6 +2,7 @@
 
 #include "mylibrary/edge.h"
 namespace myapp {
+
   myapp::Edge::Edge() {}
 
   void myapp::Edge::initialize(b2World *my_world, b2Vec2 start, b2Vec2 end) {
@@ -19,13 +20,5 @@ namespace myapp {
     m_end = end;
   }
 
-  void myapp::Edge::DrawEdge() {
-    cinder::gl::color(0, 1, 1);
-    cinder::vec2 c_start = cinder::vec2(Conversions::ToPixels(m_start.x),
-                                  Conversions::ToPixels(m_start.y));
-    cinder::vec2 c_end = cinder::vec2(Conversions::ToPixels(m_end.x),
-                                  Conversions::ToPixels(m_end.y));
-    cinder::gl::drawLine(c_start, c_end);
-  }
 
 }

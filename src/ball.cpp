@@ -9,8 +9,9 @@ namespace myapp {
 
   void Ball::initialize(b2World *my_world, float32 s_x) {
     //randomize color
-    color_vals = myapp::Conversions::ColorChooser();
+    color_vals = myapp::Conversions::ColorChooser(-1);
     color_vals = myapp::Conversions::ToCinderRBG(color_vals);
+
     circle.m_radius = myapp::Conversions::ToMeters(radius);
     s_x = myapp::Conversions::ToMeters(s_x);
     float32 start_x = s_x + myapp::Conversions::ToMeters(rand() % buffer);

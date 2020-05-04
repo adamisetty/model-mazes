@@ -14,11 +14,11 @@
 namespace myapp{
 
 class Edge{
+
   public:
     Edge();
     void initialize(b2World *my_world, b2Vec2 start, b2Vec2 end);
-    void DrawEdge();
-private:
+  private:
     b2Body* edgeBody;
     b2PolygonShape edgeShape;
     b2Vec2 m_start;

@@ -2,9 +2,11 @@
 #include "mylibrary/surfaces.h"
 
 namespace myapp {
+
 const size_t screen_size = 600;
 const size_t buffer = 5;
-const vector<double> purple{.811, .419, .839};
+const vector<double> purple = myapp::Conversions::ToCinderRBG
+    (myapp::Conversions::ColorChooser(2));
 
 Surfaces::Surfaces() {}
 
@@ -41,8 +43,6 @@ void Surfaces::CreateBox(b2World *my_world) {
 }
 
 void Surfaces::DrawBox() {
-  //First draws the user edges if there are any
-  DrawEdges();
 
   cinder::gl::color(purple[0], purple[1], purple[2]);
   //Draws Ground
@@ -84,10 +84,5 @@ void Surfaces::SetEdges(vector<cinder::vec2> points) {
   }
 }
 
-void Surfaces::DrawEdges() {
-  for (myapp::Edge edge: drawn_edges) {
-    edge.DrawEdge();
-  }
-}
 
 }

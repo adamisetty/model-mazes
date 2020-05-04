@@ -1,7 +1,7 @@
 // Copyright (c) 2020 Ankitha Damisetty. All rights reserved.
 
 #include "my_app.h"
-
+#include "mylibrary/conversions.h"
 #include <chrono>
 #include <string>
 #include <vector>
@@ -30,6 +30,12 @@ const int32 pos_iter = 5;
 const float32 time_step = 1.0/60.0f;
 const size_t font_size = 20;
 const glm::ivec2 font_box_size = glm::ivec2(85, 50);
+
+const vector<double> green = myapp::Conversions::ToCinderRBG
+    (myapp::Conversions::ColorChooser(19));
+const vector<double> blue = myapp::Conversions::ToCinderRBG
+    (myapp::Conversions::ColorChooser(8));
+const double gray = 0.3;
 
 MyApp::MyApp()
 : current_state_{GameState::kDrawing},
@@ -65,7 +71,7 @@ void MyApp::update() {
 }
 
 void MyApp::draw() {
-  cinder::gl::clear();
+  cinder::gl::clear(cinder::Color(gray, gray, gray), true);
   if (current_state_ != GameState::kGameOver) {
     DrawSurfaces();
     DrawBall();
@@ -117,13 +123,14 @@ void MyApp::DrawBall() {
 
 void MyApp::DrawSurfaces() {
   engine_.GetSurfaces().DrawBox();
+  engine_.DrawEndBlock();
   engine_.DrawTempEdges();
 }
 
 void MyApp::DrawUserLines() {
   if (current_state_ == GameState::kDrawing) {
     if (click_counter % 2 == 1) {
-      cinder::gl::color(0, 1, 0);
+      cinder::gl::color(green[0], green[1], green[2]);
       cinder::gl::drawLine(vec2(current_pos.x, current_pos.y),
               vec2(current_click.x, current_click.y));
     }
@@ -131,7 +138,7 @@ void MyApp::DrawUserLines() {
 }
 
 void MyApp::DrawScore() {
-  cinder::gl::color(0, 0, 1);
+  cinder::gl::color(blue[0], blue[1], blue[2]);
   size_t score = engine_.GetScore();
   string score_string = "Score: " + std::to_string(score);
   PrintText(score_string, top_right, font_size);

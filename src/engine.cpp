@@ -3,6 +3,11 @@
 
 namespace myapp {
 
+const vector<double> blue = myapp::Conversions::ToCinderRBG
+    (myapp::Conversions::ColorChooser(8));
+const vector<double> green = myapp::Conversions::ToCinderRBG
+    (myapp::Conversions::ColorChooser(19));
+
   Engine::Engine(b2World &this_wrld) {
     my_wrld = &this_wrld;
     start_x = rand() % 240 + 10;
@@ -60,19 +65,28 @@ namespace myapp {
     return score;
   }
 
-  void Engine::DrawTempEdges() {
-    cinder::gl::color(0, 1, 0);
+  void Engine::DrawEndBlock() {
+    cinder::gl::color(blue[0], blue[1], blue[2]);
+
     cinder::vec2 end_point = cinder::vec2(end_x, end_y);
-    cinder::gl::drawSolidRect(cinder::Rectf(end_point.x - buffer, end_point.y - buffer,
-                                            end_point.x + buffer, end_point.y + buffer));
+    cinder::gl::drawSolidRect(cinder::Rectf(end_point.x - buffer,
+                                            end_point.y - buffer,
+                                            end_point.x + buffer,
+                                            end_point.y + buffer));
+  }
+
+  void Engine::DrawTempEdges() {
     if (points.empty()) {
-          return;
+      return;
     }
+
+    cinder::gl::color(blue[0], blue[1], blue[2]);
+
     for (size_t i = 1; i < points.size(); i = i + 2) {
       cinder::gl::drawLine(points[i], points[i - 1]);
     }
     for (cinder::vec2 point: points) {
-      cinder::gl::color(1, 1, 0);
+      cinder::gl::color(green[0], green[1], green[2]);
       cinder::gl::drawSolidCircle(point, 2.0);
     }
   }
