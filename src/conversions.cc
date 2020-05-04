@@ -12,13 +12,15 @@ namespace myapp {
   }
 
   vector<double> Conversions::ColorChooser(int position) {
-    size_t num_colors = 20;
+    //Specific values of colors that form a pastel color scheme
     vector<vector<double>> colors{{197, 113, 227}, {193, 179, 215},
         {165, 137, 193}, {227, 113, 172}, {251, 182, 209}, {249, 140, 182},
         {113, 200, 227}, {154, 206, 233}, {111, 183, 214}, {191, 213, 232},
         {148, 168, 208}, {117, 137, 191}, {113, 227, 132}, {181, 255, 174},
         {145, 210, 144}, {109, 180, 201}, {134, 207, 190}, {72, 181, 163},
         {191, 228, 118}, {133, 202, 93}};
+    size_t num_colors = 20;
+
     if (position >= 0 && position < num_colors) {
       return colors[position];
     } else{

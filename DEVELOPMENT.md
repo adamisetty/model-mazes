@@ -48,10 +48,23 @@
   - [x] Create box around Cinder screen, as a boundry
   
  
- **5/1/20**
+**5/1/20**
    - Creates edge objects from user input
    - Decides to use Polygon body and rotate rather than edge body
    - Need to complete the following:
    - [ ] Complete testing for conversion methods
    - [ ] Remove excess methods from individual classes 
-    
+   - [ ] Adds a color palette to game    
+   
+**5/3/20**
+   - Adds a color scheme to entire game 
+   - Removes excess accessor methods
+   - [x] Complete testing for conversion methods
+   - [x] Remove excess methods from individual classes 
+   - [x] Adds a color palette to game
+   - [ ] Add clarification comments for all files
+   - [ ] Write README.md
+
+**5/4/20**
+
+- f

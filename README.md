@@ -1,21 +1,40 @@
-# Final Project
+# Falling Fun
 
 [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![docs](https://img.shields.io/badge/docs-yes-brightgreen)](docs/README.md)
 
-Read [this document](https://cliutils.gitlab.io/modern-cmake/chapters/basics/structure.html) to understand the project
-layout.
+
 
 **Author**: Ankitha Damisetty - [`ankithad@illinois.edu`](mailto:ankithad@illinois.edu)
 
 ### Overview
-I will create a dynamic game that takes the user through challenges of increasing difficulty. The goal of each challenge is for a small ball that begins at the top of the screen, to get to a specific point on the bottom of the screen. The player can draw lines on the screen with their cursor to create solid surfaces for the ball to move through. There will be a time limit that the player has to prepare their path before the ball is dropped from the top of the screen to the bottom. This game is inspired by two games that I enjoyed playing when I was young.
+This is a game that allows the user to control the motion of many small balls by 
+drawing solid edges with their mouse. This game uses the Box2d cinder block to 
+control the motion of the balls as if they are interacting with hard surfaces and
+feel the force of gravity as in a real world. 
 
-### Libraries
-I will be using the [Box2D](https://github.com/sansumbrella/suBox2D) library to manage the motion of my ball. It will react differently based on how fast it hits a surface and at what angle that force is felt on the ball. 
+The player must be careful and deliberate as they draw the lines, because no ball
+can be left behind if the player wants to win. Once the game begins, the user is 
+given a specific amount drawing time, where they can use their mouse to draw
+edges. After the time is up, the balls will drop from their starting point (a
+cluster at the top of the screen). The target is displayed as a small block at
+the bottom of the screen. The user wins if all the balls hit this block in the 
+allotted playing time, otherwise they lose.  
 
-### Timeline
-For the first week, I will aim to create my ball object and more importantly I will implement code for how the player can interact with the screen. They should be able to click and drag to create solid surfaces. 
-For the second week, I will work on moving the ball naturally. It should react differently for different forces it feels and based on what speed it is currently moving at. I will also work on setting the time limit on my game.
-For the third week I will work on having the game run together and implementing multiple levels. The first level will be a simple blank screen, but the harder levels will include solid obstacles.
-If I have extra time, I will focus on allowing an array of obstacles in different levels. For example, there could be a teleportation tool, that allows the ball to enter in on one side and come out on the other side. 
+### Set Up
+
+This is a Cinder application, and requires the installation of Cinder. You can 
+find the installation instructions [here](https://libcinder.org/download). 
+If you are using a WindowsOS, you will need Visual Studio 15. Make sure you 
+build Cinder on your device before cloning this project. You should make a cinder
+folder to store this project and others. 
+
+This project uses the Cinder block [Box2D](https://github.com/sansumbrella/suBox2D).
+You do not need to fork this repository since it is built into Cinder. 
+Once you you have built Cinder on your IDE, you should clone this project into 
+a folder titled "falling_fun" in your cinder folder. 
+Now open your src/CMakeLists.txt file in this project. 
+
+Here, there is a section of code "ci_make_library", under here there is the word
+"BLOCKS", next to this word type "Box2D" with the correct capitalization. Now
+rebuild this project, and you should be able to run correctly. You should see 
+all of the box2D .cpp files appear in your project. Now you are set to play this game!

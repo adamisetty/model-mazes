@@ -3,7 +3,6 @@
 #define CATCH_CONFIG_MAIN
 
 #include <catch2/catch.hpp>
-#include <cinder/Rand.h>
 #include <Box2D/Box2D.h>
 #include <mylibrary/conversions.h>
 

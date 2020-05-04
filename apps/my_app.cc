@@ -63,9 +63,12 @@ void MyApp::update() {
   my_wrld.Step(time_step, vel_iter, pos_iter);
 
   size_t score = engine_.GetScore();
+  //should only be true at one iteration of update, marks end of drawing time
   if (game_timer.getSeconds() > kDrawTime && !flag_activate_ball) {
     flag_activate_ball = true;
+    //user drawn lines become edge objects and bodies in the world
     engine_.GetSurfaces().SetEdges(engine_.GetTempEdges());
+    //All balls turn from static bodies to dynamic bodies
     engine_.ActivateBalls();
     current_state_ = GameState::kBallsMoving;
   }
@@ -87,13 +90,16 @@ void MyApp::draw() {
 }
 
 void MyApp::mouseDown(cinder::app::MouseEvent event) {
+  //All mouse action only happens in the drawing state
   if (current_state_ == GameState::kDrawing) {
     click_counter++;
     engine_.AddTempEdges(cinder::vec2(event.getX(), event.getY()));
+    //the user has already clicked once, this is second point for the edge
     if (click_counter % 2 == 0) {
       current_pos = b2Vec2(event.getX(), event.getY());
       add_counter++;
-    } else {
+    } // otherwise, this is the first point for the edge
+    else {
       current_click = b2Vec2(event.getX(), event.getY());
       current_pos = current_click;
     }
@@ -102,6 +108,7 @@ void MyApp::mouseDown(cinder::app::MouseEvent event) {
 
 void MyApp::mouseMove(cinder::app::MouseEvent event) {
   if (current_state_ == GameState::kDrawing) {
+    //updates current_pos only if the user has marked first point of an edge
     if (click_counter % 2 == 1) {
       current_pos = b2Vec2(event.getX(), event.getY());
     }
@@ -112,7 +119,7 @@ void MyApp::PrintText(string text, cinder::vec2 location, size_t size) {
   auto box = cinder::TextBox();
   box.setText(text);
   box.setSize(font_box_size);
-  box.setFont(cinder::Font("Arial", size));
+  box.setFont(cinder::Font(font_style, size));
   const auto surface = box.render();
   const auto texture = cinder::gl::Texture::create(surface);
   cinder::gl::draw(texture, location);
@@ -133,6 +140,7 @@ void MyApp::DrawSurfaces() {
 
 void MyApp::DrawUserLines() {
   if (current_state_ == GameState::kDrawing) {
+    //only draws a line if user has completed first click in drawing edge
     if (click_counter % 2 == 1) {
       cinder::gl::color(green[0], green[1], green[2]);
       cinder::gl::drawLine(vec2(current_pos.x, current_pos.y),
@@ -149,6 +157,7 @@ void MyApp::DrawScore() {
 }
 
 void MyApp::DrawGameOver() {
+  //User wins if they have gotten all balls into the ending platform
   if (engine_.GetScore() == num_balls) {
     cinder::gl::color(green[0], green[1], green[2]);
     string winner = "Congrats!";

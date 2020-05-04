@@ -14,9 +14,20 @@ using namespace std;
 
 namespace myapp {
 
+/**
+ * Class manages all the solid surfaces set and created by the game
+ */
 class Surfaces{
   public:
+    /**
+     * Default constructor, does not initialize any variables
+     */
     Surfaces();
+
+    /**
+     * Creates box around screen composed of ground and two
+     * @param my_world
+     */
     void CreateBox(b2World *my_world);
     void DrawBox();
     void SetEdges(vector<cinder::vec2> points);
