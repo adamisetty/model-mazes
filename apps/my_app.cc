@@ -28,13 +28,17 @@ const cinder::vec2 middle = vec2(265, 300);
 const int32 vel_iter = 3;
 const int32 pos_iter = 5;
 const float32 time_step = 1.0/60.0f;
+
 const size_t font_size = 20;
 const glm::ivec2 font_box_size = glm::ivec2(85, 50);
+const string font_style = "Arial";
 
 const vector<double> green = myapp::Conversions::ToCinderRBG
     (myapp::Conversions::ColorChooser(19));
 const vector<double> blue = myapp::Conversions::ToCinderRBG
     (myapp::Conversions::ColorChooser(8));
+const vector<double> pink = myapp::Conversions::ToCinderRBG
+    (myapp::Conversions::ColorChooser(5));
 const double gray = 0.3;
 
 MyApp::MyApp()
@@ -146,11 +150,11 @@ void MyApp::DrawScore() {
 
 void MyApp::DrawGameOver() {
   if (engine_.GetScore() == num_balls) {
-    cinder::gl::color(0, 1, 0);
+    cinder::gl::color(green[0], green[1], green[2]);
     string winner = "Congrats!";
-    PrintText(winner, middle, 20);
+    PrintText(winner, middle, font_size);
   } else {
-    cinder::gl::color(1, 0, 0);
+    cinder::gl::color(pink[0], pink[1], pink[2]);
     string loser = "Time's up:(";
     PrintText(loser, middle, font_size);
   }

@@ -7,7 +7,8 @@
 
 namespace myapp {
 using std::vector;
-  class Conversions{
+
+  class Conversions {
     public:
       static float32 ToPixels(float32 b2_number);
       static float32 ToMeters(float32 cinder_number);

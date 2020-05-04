@@ -12,39 +12,54 @@
 
 namespace myapp {
 
+/**
+ * Describes current state of game, changes with elapsed time
+ */
 enum class GameState {
+  /**
+   * The state while the user is able to draw lines on their screen
+   */
   kDrawing,
+  /**
+   * The state when the balls have been released and are falling down
+   */
   kBallsMoving,
+  /**
+   * The state after level time is elapsed, displays game result
+   */
   kGameOver,
 };
 
+/**
+ * Cinder app class, used to run and display application
+ */
 class MyApp : public cinder::app::App {
- public:
-  MyApp();
-  void setup() override;
-  void update() override;
-  void draw() override;
-  void mouseDown(cinder::app::MouseEvent event) override;
-  void mouseMove(cinder::app::MouseEvent event) override;
+  public:
+    MyApp();
+    void setup() override;
+    void update() override;
+    void draw() override;
+    void mouseDown(cinder::app::MouseEvent event) override;
+    void mouseMove(cinder::app::MouseEvent event) override;
 
- private:
-  void DrawBall();
-  void DrawSurfaces();
-  void DrawUserLines();
-  void DrawScore();
-  void DrawGameOver();
-  void PrintText(string text, cinder::vec2 location, size_t size);
+  private:
+    void DrawBall();
+    void DrawSurfaces();
+    void DrawUserLines();
+    void DrawScore();
+    void DrawGameOver();
+    void PrintText(string text, cinder::vec2 location, size_t size);
 
- private:
-  myapp::Engine engine_;
-  b2World my_wrld;
-  GameState current_state_;
-  cinder::Timer game_timer;
-  size_t click_counter;
-  size_t add_counter;
-  b2Vec2 current_click;
-  b2Vec2 current_pos;
-  bool flag_activate_ball;
+  private:
+    myapp::Engine engine_;
+    b2World my_wrld;
+    GameState current_state_;
+    cinder::Timer game_timer;
+    size_t click_counter;
+    size_t add_counter;
+    b2Vec2 current_click;
+    b2Vec2 current_pos;
+    bool flag_activate_ball;
 };
 
 
