@@ -2,15 +2,12 @@
 
 #include "my_app.h"
 
-#include <cinder/gl/draw.h>
-#include <cinder/gl/gl.h>
-#include <cinder/app/App.h>
-
 #include <chrono>
 #include <string>
 #include <vector>
 
 using namespace std;
+
 namespace myapp {
 
 using std::chrono::seconds;
@@ -19,22 +16,26 @@ using std::string;
 using cinder::Rectf;
 using cinder::vec2;
 using cinder::Color;
-
+using cinder::app::KeyEvent;
 
 const double kDrawTime = 10;
-const double kLevelTime = 40;
-const size_t app_size_ = 600;
+const double kLevelTime = 20;
 const size_t num_balls = 20;
 
+const b2Vec2 gravity = b2Vec2(0.0f, 7.0f);
 const cinder::vec2 top_right = vec2(490, 10);
-
-using cinder::app::KeyEvent;
+const cinder::vec2 middle = vec2(265, 300);
+const int32 vel_iter = 3;
+const int32 pos_iter = 5;
+const float32 time_step = 1.0/60.0f;
+const size_t font_size = 20;
+const glm::ivec2 font_box_size = glm::ivec2(85, 50);
 
 MyApp::MyApp()
 : current_state_{GameState::kDrawing},
-  my_wrld{b2Vec2(0.0f, 7.0f)},
+  my_wrld{gravity},
   engine_{my_wrld}
-  { game_timer.start();
+  {game_timer.start();
   current_click = b2Vec2(0, 0);
   current_pos = b2Vec2(0, 0);
   click_counter = 0;
@@ -48,9 +49,7 @@ void MyApp::setup() {
 }
 
 void MyApp::update() {
-  float32 time_step = 1.0/60.0f;
-  int32 vel_iter = 3;
-  int32 pos_iter = 5;
+
   my_wrld.Step(time_step, vel_iter, pos_iter);
 
   size_t score = engine_.GetScore();
@@ -83,7 +82,7 @@ void MyApp::mouseDown(cinder::app::MouseEvent event) {
     engine_.AddTempEdges(cinder::vec2(event.getX(), event.getY()));
     if (click_counter % 2 == 0) {
       current_pos = b2Vec2(event.getX(), event.getY());
-      add_counter = add_counter + 1;
+      add_counter++;
     } else {
       current_click = b2Vec2(event.getX(), event.getY());
       current_pos = current_click;
@@ -97,6 +96,16 @@ void MyApp::mouseMove(cinder::app::MouseEvent event) {
       current_pos = b2Vec2(event.getX(), event.getY());
     }
   }
+}
+
+void MyApp::PrintText(string text, cinder::vec2 location, size_t size) {
+  auto box = cinder::TextBox();
+  box.setText(text);
+  box.setSize(font_box_size);
+  box.setFont(cinder::Font("Arial", size));
+  const auto surface = box.render();
+  const auto texture = cinder::gl::Texture::create(surface);
+  cinder::gl::draw(texture, location);
 }
 
 void MyApp::DrawBall() {
@@ -122,30 +131,22 @@ void MyApp::DrawUserLines() {
 }
 
 void MyApp::DrawScore() {
+  cinder::gl::color(0, 0, 1);
   size_t score = engine_.GetScore();
   string score_string = "Score: " + std::to_string(score);
-  PrintText(score_string, top_right, 20);
+  PrintText(score_string, top_right, font_size);
 }
 
 void MyApp::DrawGameOver() {
   if (engine_.GetScore() == num_balls) {
-    cinder::gl::color(1, 1, 0);
+    cinder::gl::color(0, 1, 0);
     string winner = "Congrats!";
-    PrintText(winner, top_right, 20);
+    PrintText(winner, middle, 20);
   } else {
     cinder::gl::color(1, 0, 0);
     string loser = "Time's up:(";
-    PrintText(loser, top_right, 20);
+    PrintText(loser, middle, font_size);
   }
 }
 
-void MyApp::PrintText(string text, cinder::vec2 location, size_t size) {
-  auto box = cinder::TextBox();
-  box.setText(text);
-  box.setSize(glm::ivec2(50, 50));
-  box.setFont(cinder::Font("Arial", size));
-  const auto surface = box.render();
-  const auto texture = cinder::gl::Texture::create(surface);
-  cinder::gl::draw(texture, location);
-}
 }  // namespace myapp

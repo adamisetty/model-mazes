@@ -1,22 +1,16 @@
-//
-// Created by Ankitha Damisetty on 4/19/2020.
-//
+// Copyright (c) 2020 Ankitha Damisetty. All rights reserved.
 #include "mylibrary/ball.h"
 
 namespace myapp {
 
   using cinder::vec2;
-  const float32 radius = 7.5;
-  const size_t buffer = 10;
-  const float32 finish_buffer = 8;
 
   Ball::Ball() {}
 
   void Ball::initialize(b2World *my_world, float32 s_x) {
     //randomize color
-    color_vals.push_back((rand() % 10 + 1) /10.0);
-    color_vals.push_back((rand() % 10 + 1) /10.0);
-    color_vals.push_back((rand() % 10 + 1) /10.0);
+    color_vals = myapp::Conversions::ColorChooser();
+    color_vals = myapp::Conversions::ToCinderRBG(color_vals);
     circle.m_radius = myapp::Conversions::ToMeters(radius);
     s_x = myapp::Conversions::ToMeters(s_x);
     float32 start_x = s_x + myapp::Conversions::ToMeters(rand() % buffer);

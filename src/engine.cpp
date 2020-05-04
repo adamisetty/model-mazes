@@ -1,12 +1,7 @@
-//
-// Created by Ankitha Damisetty on 4/19/2020.
-//
+// Copyright (c) 2020 Ankitha Damisetty. All rights reserved.
 #include "mylibrary/engine.h"
 
 namespace myapp {
-const size_t total_num_balls = 20;
-const size_t buffer = 8;
-const size_t screen_size = 600;
 
   Engine::Engine(b2World &this_wrld) {
     my_wrld = &this_wrld;

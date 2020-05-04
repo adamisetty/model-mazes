@@ -24,12 +24,12 @@ class Surfaces{
     void SetEdges(vector<cinder::vec2> points);
   private:
     b2World *my_wrld;
-    b2Body* groundBody;
-    b2PolygonShape groundShape;
-    b2Body* leftWallBody;
-    b2PolygonShape leftWallShape;
-    b2Body* rightWallBody;
-    b2PolygonShape rightWallShape;
+    b2Body* ground_body;
+    b2PolygonShape ground_shape;
+    b2Body* left_wall_body;
+    b2PolygonShape left_wall_shape;
+    b2Body* right_wall_body;
+    b2PolygonShape right_wall_shape;
     vector<myapp::Edge> drawn_edges;
 };
 

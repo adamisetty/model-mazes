@@ -15,7 +15,6 @@ namespace myapp {
 enum class GameState {
   kDrawing,
   kBallsMoving,
-  kCountDown,
   kGameOver,
 };
 
@@ -27,7 +26,6 @@ class MyApp : public cinder::app::App {
   void draw() override;
   void mouseDown(cinder::app::MouseEvent event) override;
   void mouseMove(cinder::app::MouseEvent event) override;
-
 
  private:
   void DrawBall();

@@ -1,6 +1,4 @@
-//
-// Created by Ankitha Damisetty on 4/18/2020.
-//
+// Copyright (c) 2020 Ankitha Damisetty. All rights reserved.
 
 #ifndef FINALPROJECT_ENGINE_CC_H
 #define FINALPROJECT_ENGINE_CC_H
@@ -16,6 +14,10 @@
 using namespace std;
 
 namespace myapp {
+
+const size_t total_num_balls = 20;
+const size_t buffer = 8;
+const size_t screen_size = 600;
 
 class Engine {
 

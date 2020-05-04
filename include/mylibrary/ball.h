@@ -1,6 +1,4 @@
-//
-// Created by Ankitha Damisetty on 4/18/2020.
-//
+// Copyright (c) 2020 Ankitha Damisetty. All rights reserved.
 #include <vector>
 #include <random>
 #include <Box2D/Box2D.h>
@@ -16,6 +14,11 @@ using std::vector;
 namespace myapp {
 
 class Ball {
+
+  const float32 radius = 7.5;
+  const size_t buffer = 10;
+  const float32 finish_buffer = 8;
+
   public:
     Ball();
     void initialize(b2World *my_world, float32 start_x);
@@ -29,7 +32,7 @@ class Ball {
     b2Body* circleBody;
     b2CircleShape circle;
     b2Vec2 location;
-    std::vector<float> color_vals;
+    std::vector<double> color_vals;
 };
-} // namespace falling_fun
+} // namespace myapp
 #endif //FINALPROJECT_BALL_H

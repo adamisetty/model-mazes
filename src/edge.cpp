@@ -1,6 +1,4 @@
-//
-// Created by Ankitha Damisetty on 4/26/2020.
-//
+// Copyright (c) 2020 Ankitha Damisetty. All rights reserved.
 
 #include "mylibrary/edge.h"
 namespace myapp {
