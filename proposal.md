@@ -27,4 +27,5 @@ For the second week, I will implement solid surfaces around the border of the
 screen and work on getting user input to draw surfaces. 
 
 For the third week, I will make sure the user drawn solid surfaces are working
-as expected and allowing score to be calculated. 
+as expected and allowing score to be calculated. If I have time, I will add a 
+color scheme to my game. 

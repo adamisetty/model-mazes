@@ -20,7 +20,7 @@ void SetUp(App::Settings* settings) {
 
   settings->setWindowSize(kWidth, kHeight);
   settings->setResizable(false);
-  settings->setTitle("My CS 126 Application");
+  settings->setTitle("Falling Fun");
 }
 
 }  // namespace falling_fun

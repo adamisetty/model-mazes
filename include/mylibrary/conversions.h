@@ -9,7 +9,7 @@ namespace myapp {
 using std::vector;
 
 /**
- * Class with only static methods, used to combat the differences in units.
+ * Class, with only static methods, used to combat the differences in units.
  * Box2d (the library used for physics simulation) measures each cinder pixel as
  * one meter, which is too large for accurate simulations.
  */

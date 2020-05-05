@@ -7,6 +7,7 @@ const size_t screen_size = 600;
 const size_t buffer = 5;
 const vector<double> purple = myapp::Conversions::ToCinderRBG
     (myapp::Conversions::ColorChooser(2));
+const float32 density = 0.0f;
 
 Surfaces::Surfaces() {}
 
@@ -20,7 +21,7 @@ void Surfaces::CreateBox(b2World *my_world) {
   ground_def.position.Set(x_pos, y_pos);
   ground_body = my_world->CreateBody(&ground_def);
   ground_shape.SetAsBox(x_pos, myapp::Conversions::ToMeters(buffer));
-  ground_body->CreateFixture(&ground_shape, 0.0f);
+  ground_body->CreateFixture(&ground_shape, density);
 
   //creates left wall body
   b2BodyDef left_wall_def;
@@ -29,7 +30,7 @@ void Surfaces::CreateBox(b2World *my_world) {
   left_wall_def.position.Set(l_wall_x, l_wall_y);
   left_wall_body = my_world->CreateBody(&left_wall_def);
   left_wall_shape.SetAsBox(l_wall_x, l_wall_y);
-  left_wall_body->CreateFixture(&left_wall_shape, 0.0f);
+  left_wall_body->CreateFixture(&left_wall_shape, density);
 
   //creates right wall body
   b2BodyDef right_wall_def;
@@ -39,7 +40,7 @@ void Surfaces::CreateBox(b2World *my_world) {
   right_wall_body = my_world->CreateBody(&right_wall_def);
   //both right and left wall fixtures have same dimensions
   right_wall_shape.SetAsBox(l_wall_x, l_wall_y);
-  right_wall_body->CreateFixture(&right_wall_shape, 0.0f);
+  right_wall_body->CreateFixture(&right_wall_shape, density);
 }
 
 void Surfaces::DrawBox() {

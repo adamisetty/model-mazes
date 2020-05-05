@@ -24,7 +24,7 @@ using cinder::vec2;
     float32 start_x = s_x + myapp::Conversions::ToMeters(rand() % buffer);
     float32 start_y = myapp::Conversions::ToMeters(rand() % y_buffer);
     location = b2Vec2(start_x, start_y);
-    //must set m_p at (0, 0) because it represents center with respect to fixture
+    //sets m_p to (0, 0) because it represents center with respect to fixture
     circle.m_p = b2Vec2(0, 0);
 
     b2BodyDef circleDef;
@@ -53,7 +53,7 @@ using cinder::vec2;
   }
 
   void Ball::DiminishBody() {
-    //moving the ball to some negative x, out of scope
+    //moving the ball to some negative x, no interference with other bodies
     circleBody->SetTransform(b2Vec2(-radius, 0), 0);
     circleBody->SetType(b2_staticBody);
   }

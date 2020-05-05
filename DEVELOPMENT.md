@@ -68,5 +68,10 @@
 **5/4/20**
 
    - Adds comments to header files and clarifications in .ccp files
-   - [x] Add clarification comments for all files
+   - [ ] Add clarification comments for all files
    - [x] Write README.md
+
+**5/5/20**
+
+   - Adds final comments to header files and clarifications in .ccp files
+   - [x] Add clarification comments for all files

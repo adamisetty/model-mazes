@@ -13,7 +13,7 @@ namespace myapp {
   }
 
   vector<double> Conversions::ColorChooser(int position) {
-    //Specific values of colors that form a pastel color scheme
+    //Specific RBG values of colors that form a pastel color scheme
     vector<vector<double>> colors{{197, 113, 227}, {193, 179, 215},
         {165, 137, 193}, {227, 113, 172}, {251, 182, 209}, {249, 140, 182},
         {113, 200, 227}, {154, 206, 233}, {111, 183, 214}, {191, 213, 232},
@@ -32,6 +32,7 @@ namespace myapp {
   }
 
   vector<double> Conversions::ToCinderRBG(vector<double> regular_RBG) {
+    //cinder color function uses 1/255 ratio for RBG values
     double converter = 255;
     for (size_t i = 0; i < regular_RBG.size(); i++) {
       regular_RBG[i] = regular_RBG[i]/converter;

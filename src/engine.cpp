@@ -56,20 +56,20 @@ const vector<double> green = myapp::Conversions::ToCinderRBG
     }
   }
 
-  vector<myapp::Ball> Engine::GetAllBalls() {
-    return all_balls;
-  }
-
-  myapp::Surfaces Engine::GetSurfaces() {
-    return surfaces;
-  }
-
   void Engine::AddTempEdges(cinder::vec2 point) {
     points.push_back(point);
   }
 
   vector<cinder::vec2> Engine::GetTempEdges() {
     return points;
+  }
+
+  vector<myapp::Ball> Engine::GetAllBalls() {
+    return all_balls;
+  }
+
+  myapp::Surfaces Engine::GetSurfaces() {
+    return surfaces;
   }
 
   size_t Engine::GetScore() {
@@ -88,10 +88,10 @@ const vector<double> green = myapp::Conversions::ToCinderRBG
   }
 
   void Engine::DrawTempEdges() {
+    //if there are no drawn edges, no action should be taken
     if (points.empty()) {
       return;
     }
-
     cinder::gl::color(blue[0], blue[1], blue[2]);
     size_t endpoint_radius = 2;
 
@@ -100,7 +100,7 @@ const vector<double> green = myapp::Conversions::ToCinderRBG
     }
     for (cinder::vec2 point: points) {
       cinder::gl::color(green[0], green[1], green[2]);
-      //Creates the click point, so user can see where the edge has started
+      //Creates the click point, so user can see the edge start/end
       cinder::gl::drawSolidCircle(point, endpoint_radius);
     }
   }
