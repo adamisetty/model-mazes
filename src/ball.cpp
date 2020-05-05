@@ -2,8 +2,14 @@
 #include "mylibrary/ball.h"
 
 namespace myapp {
+const float32 radius = 7.5;
+const size_t buffer = 10;
+const size_t y_buffer = 20;
+const float32 finish_buffer = 8;
+const float32 restitution = 0.5f;
+const float32 density = 1.0f;
 
-  using cinder::vec2;
+using cinder::vec2;
 
   Ball::Ball() {}
 
@@ -13,11 +19,12 @@ namespace myapp {
     color_vals = myapp::Conversions::ToCinderRBG(color_vals);
 
     circle.m_radius = myapp::Conversions::ToMeters(radius);
+    //converts the starting_x from pixels to meters
     s_x = myapp::Conversions::ToMeters(s_x);
     float32 start_x = s_x + myapp::Conversions::ToMeters(rand() % buffer);
-    float32 start_y = myapp::Conversions::ToMeters(rand() % (buffer*3));
-    circle.m_p = b2Vec2(start_x, start_y);
-    location = circle.m_p;
+    float32 start_y = myapp::Conversions::ToMeters(rand() % y_buffer);
+    location = b2Vec2(start_x, start_y);
+    //must set m_p at (0, 0) because it represents center with respect to fixture
     circle.m_p = b2Vec2(0, 0);
 
     b2BodyDef circleDef;
@@ -26,15 +33,13 @@ namespace myapp {
 
     b2FixtureDef fixDef;
     fixDef.shape = &circle;
-    fixDef.restitution = 0.5f;
-    fixDef.density = 1.0f;
+    fixDef.restitution = restitution;
+    fixDef.density = density;
     circleBody->CreateFixture(&fixDef);
   }
 
   void Ball::ActivateBall() {
-    b2Vec2 start = location;
     circleBody->SetType(b2_dynamicBody);
-    circle.m_p = start;
   }
 
   bool Ball::CheckFinished(cinder::vec2 finish_loc) {
@@ -48,6 +53,7 @@ namespace myapp {
   }
 
   void Ball::DiminishBody() {
+    //moving the ball to some negative x, out of scope
     circleBody->SetTransform(b2Vec2(-radius, 0), 0);
     circleBody->SetType(b2_staticBody);
   }

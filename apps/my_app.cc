@@ -79,6 +79,7 @@ void MyApp::update() {
 
 void MyApp::draw() {
   cinder::gl::clear(cinder::Color(gray, gray, gray), true);
+
   if (current_state_ != GameState::kGameOver) {
     DrawSurfaces();
     DrawBall();

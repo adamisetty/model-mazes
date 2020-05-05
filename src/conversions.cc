@@ -3,6 +3,7 @@
 #include <mylibrary/conversions.h>
 
 namespace myapp {
+
   float32 myapp::Conversions::ToPixels(float32 b2_number) {
     return b2_number * 50.0f;
   }
@@ -21,6 +22,7 @@ namespace myapp {
         {191, 228, 118}, {133, 202, 93}};
     size_t num_colors = 20;
 
+    //returns specific color if a valid index is provided
     if (position >= 0 && position < num_colors) {
       return colors[position];
     } else{

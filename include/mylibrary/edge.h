@@ -21,8 +21,6 @@ class Edge{
   private:
     b2Body* edgeBody;
     b2PolygonShape edgeShape;
-    b2Vec2 m_start;
-    b2Vec2 m_end;
 };
 }
 #endif //FINALPROJECT_EDGE_H

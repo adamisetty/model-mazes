@@ -67,4 +67,6 @@
 
 **5/4/20**
 
-- f
+   - Adds comments to header files and clarifications in .ccp files
+   - [x] Add clarification comments for all files
+   - [x] Write README.md
