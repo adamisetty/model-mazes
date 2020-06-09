@@ -5,7 +5,7 @@
 namespace myapp {
 
 float32 myapp::Conversions::ToPixels(float32 b2_number) {
-  return b2_number * 50.0f;
+  return b2_number * 50.00f;
 }
 
 float32 myapp::Conversions::ToMeters(float32 cinder_number) {
