@@ -7,10 +7,11 @@
 #include <cinder/app/App.h>
 #include <cinder/gl/gl.h>
 #include <Box2D/Box2D.h>
+#include <mylibrary/engine.h>
 
 using std::string;
 
-namespace myapp {
+namespace traffic_rush {
 
 /**
  * Describes current state of game, changes with elapsed time
@@ -85,6 +86,8 @@ class MyApp : public cinder::app::App {
      * Stores the current GameState of this game, updates with elapsed time
      */
     GameState current_state_;
+    Engine engine_;
+
 };
 
 

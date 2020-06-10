@@ -7,7 +7,7 @@
 
 using namespace std;
 
-namespace myapp {
+namespace traffic_rush {
 
 using std::chrono::seconds;
 using std::chrono::system_clock;
@@ -19,14 +19,7 @@ using cinder::app::KeyEvent;
 
 const double kDrawTime = 10;
 const double kLevelTime = 20;
-const size_t num_balls = 20;
 
-const b2Vec2 gravity = b2Vec2(0.0f, 7.0f);
-const cinder::vec2 top_right = vec2(490, 10);
-const cinder::vec2 middle = vec2(265, 300);
-const int32 vel_iter = 3;
-const int32 pos_iter = 5;
-const float32 time_step = 1.0/60.0f;
 
 const size_t font_size = 20;
 const glm::ivec2 font_box_size = glm::ivec2(85, 50);
@@ -41,7 +34,7 @@ void MyApp::setup() {
 }
 
 void MyApp::update() {
-
+  engine_.Step();
 }
 
 void MyApp::draw() {

@@ -10,7 +10,7 @@ using cinder::app::App;
 using cinder::app::RendererGl;
 
 
-namespace myapp {
+namespace traffic_rush {
 
 const int kSamples = 10;
 const int kWidth = 600;
@@ -27,6 +27,6 @@ void SetUp(App::Settings* settings) {
 
 
 // This is a macro that runs the application.
-CINDER_APP(myapp::MyApp,
-           RendererGl(RendererGl::Options().msaa(myapp::kSamples)),
-           myapp::SetUp)
+CINDER_APP(traffic_rush::MyApp,
+           RendererGl(RendererGl::Options().msaa(traffic_rush::kSamples)),
+           traffic_rush::SetUp)
