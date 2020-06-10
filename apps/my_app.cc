@@ -1,7 +1,6 @@
 // Copyright (c) 2020 Ankitha Damisetty. All rights reserved.
 
 #include "my_app.h"
-#include "mylibrary/conversions.h"
 #include <chrono>
 #include <string>
 #include <vector>
@@ -33,87 +32,25 @@ const size_t font_size = 20;
 const glm::ivec2 font_box_size = glm::ivec2(85, 50);
 const string font_style = "Arial";
 
-const vector<double> green = myapp::Conversions::ToCinderRBG
-    (myapp::Conversions::ColorChooser(19));
-const vector<double> blue = myapp::Conversions::ToCinderRBG
-    (myapp::Conversions::ColorChooser(8));
-const vector<double> pink = myapp::Conversions::ToCinderRBG
-    (myapp::Conversions::ColorChooser(5));
-const double gray = 0.3;
+MyApp::MyApp() {
 
-MyApp::MyApp()
-: current_state_{GameState::kDrawing},
-  my_wrld{gravity},
-  engine_{my_wrld}
-  {game_timer.start();
-  current_click = b2Vec2(0, 0);
-  current_pos = b2Vec2(0, 0);
-  click_counter = 0;
-  add_counter = 0;
-  flag_activate_ball = false;
-  }
+}
 
 
 void MyApp::setup() {
-  engine_.Setup();
 }
 
 void MyApp::update() {
 
-  my_wrld.Step(time_step, vel_iter, pos_iter);
-
-  size_t score = engine_.GetScore();
-  //should only be true at one iteration of update, marks end of drawing time
-  if (game_timer.getSeconds() > kDrawTime && !flag_activate_ball) {
-    flag_activate_ball = true;
-    //user drawn lines become edge objects and bodies in the world
-    engine_.GetSurfaces().SetEdges(engine_.GetTempEdges());
-    //All balls turn from static bodies to dynamic bodies
-    engine_.ActivateBalls();
-    current_state_ = GameState::kBallsMoving;
-  }
-  if (score == num_balls || game_timer.getSeconds() > kLevelTime + kDrawTime) {
-    current_state_ = GameState::kGameOver;
-  }
 }
 
 void MyApp::draw() {
-  cinder::gl::clear(cinder::Color(gray, gray, gray), true);
-
-  if (current_state_ != GameState::kGameOver) {
-    DrawSurfaces();
-    DrawBall();
-    DrawUserLines();
-    DrawScore();
-  } else {
-    DrawGameOver();
-  }
 }
 
 void MyApp::mouseDown(cinder::app::MouseEvent event) {
-  //All mouse action only happens in the drawing state
-  if (current_state_ == GameState::kDrawing) {
-    click_counter++;
-    engine_.AddTempEdges(cinder::vec2(event.getX(), event.getY()));
-    //the user has already clicked once, this is second point for the edge
-    if (click_counter % 2 == 0) {
-      current_pos = b2Vec2(event.getX(), event.getY());
-      add_counter++;
-    } // otherwise, this is the first point for the edge
-    else {
-      current_click = b2Vec2(event.getX(), event.getY());
-      current_pos = current_click;
-    }
-  }
 }
 
 void MyApp::mouseMove(cinder::app::MouseEvent event) {
-  if (current_state_ == GameState::kDrawing) {
-    //updates current_pos only if the user has marked first point of an edge
-    if (click_counter % 2 == 1) {
-      current_pos = b2Vec2(event.getX(), event.getY());
-    }
-  }
 }
 
 void MyApp::PrintText(string text, cinder::vec2 location, size_t size) {
@@ -125,49 +62,4 @@ void MyApp::PrintText(string text, cinder::vec2 location, size_t size) {
   const auto texture = cinder::gl::Texture::create(surface);
   cinder::gl::draw(texture, location);
 }
-
-void MyApp::DrawBall() {
-  vector<myapp::Ball> current_balls = engine_.GetAllBalls();
-  for (myapp::Ball ball: current_balls) {
-    ball.DrawSingleBall();
-  }
-}
-
-void MyApp::DrawSurfaces() {
-  engine_.GetSurfaces().DrawBox();
-  engine_.DrawEndBlock();
-  engine_.DrawTempEdges();
-}
-
-void MyApp::DrawUserLines() {
-  if (current_state_ == GameState::kDrawing) {
-    //only draws a line if user has completed first click in drawing edge
-    if (click_counter % 2 == 1) {
-      cinder::gl::color(green[0], green[1], green[2]);
-      cinder::gl::drawLine(vec2(current_pos.x, current_pos.y),
-              vec2(current_click.x, current_click.y));
-    }
-  }
-}
-
-void MyApp::DrawScore() {
-  cinder::gl::color(blue[0], blue[1], blue[2]);
-  size_t score = engine_.GetScore();
-  string score_string = "Score: " + std::to_string(score);
-  PrintText(score_string, top_right, font_size);
-}
-
-void MyApp::DrawGameOver() {
-  //User wins if they have gotten all balls into the ending platform
-  if (engine_.GetScore() == num_balls) {
-    cinder::gl::color(green[0], green[1], green[2]);
-    string winner = "Congrats!";
-    PrintText(winner, middle, font_size);
-  } else {
-    cinder::gl::color(pink[0], pink[1], pink[2]);
-    string loser = "Time's up:(";
-    PrintText(loser, middle, font_size);
-  }
-}
-
 }  // namespace myapp
