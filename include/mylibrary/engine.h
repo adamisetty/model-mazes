@@ -4,6 +4,7 @@
 
 #include <Box2D/Box2D.h>
 #include <vector>
+#include <mylibrary/vehicle.h>
 
 using std::vector;
 const b2Vec2 gravity = b2Vec2(0.0f, 0.0f);
@@ -19,10 +20,11 @@ namespace traffic_rush {
     void SetUp();
     void CreateVehicle();
     void Step();
+    void DrawEngine();
 
    private:
     b2World my_world_;
-    vector<double> all_vehicles_;
+    vector<Vehicle> all_vehicles_;
   };
 }
 #endif  // FINALPROJECT_EXAMPLE_H
