@@ -12,6 +12,6 @@ namespace traffic_rush {
   void Engine::CreateVehicle() {}
 
   void Engine::DrawEngine() {
-    
+
   }
 }
