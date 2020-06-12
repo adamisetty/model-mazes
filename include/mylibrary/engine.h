@@ -4,31 +4,27 @@
 
 #include <Box2D/Box2D.h>
 #include <vector>
+#include <mylibrary/vehicle.h>
 
 using std::vector;
+const b2Vec2 gravity = b2Vec2(0.0f, 0.0f);
+const int32 vel_iter = 3;
+const int32 pos_iter = 5;
+const float32 time_step = 1.0/60.0f;
 
 namespace traffic_rush {
 
 class Engine {
  public:
-  /**
-   * Constructor, initialized once in my_app
-   * @param this_wrld: b2World created in my_app, passed in by reference
-   */
-  Engine(b2World &this_wrld);
-
-  /**
-   * Creates all the small balls and the box around screen, set up of game
-   */
-  void Setup();
-
-  void CreateVehicle() {
-
-  }
+  Engine();
+  void SetUp();
+  void CreateVehicle();
+  void Step();
+  void DrawEngine();
 
  private:
-  b2World *my_world;
-  vector<double> all_vehicles;
+  b2World my_world_;
+  vector<Vehicle> all_vehicles_;
 };
 }
 #endif  // FINALPROJECT_EXAMPLE_H
