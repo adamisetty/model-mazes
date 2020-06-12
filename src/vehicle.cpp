@@ -7,10 +7,11 @@ using cinder::vec2;
 namespace traffic_rush {
   Vehicle::Vehicle() {}
 
-  void Vehicle::Initialize(b2World *this_world_) {
-    int location = 300;
-    shape_.m_p = b2Vec2(Conversions::ToMeters(location),
-        Conversions::ToMeters(location));
+  void Vehicle::Initialize(b2World *this_world_, b2Vec2 start) {
+    //int location = 300;
+    //shape_.m_p = b2Vec2(Conversions::ToMeters(location),
+      //  Conversions::ToMeters(location));
+    shape_.m_p = start;
 
     int radius = 10;
     shape_.m_radius = Conversions::ToMeters(radius);

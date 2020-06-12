@@ -3,10 +3,16 @@
 #define FINALPROJECT_EXAMPLE_H
 
 #include <Box2D/Box2D.h>
-#include <vector>
 #include <mylibrary/vehicle.h>
+#include <mylibrary/conversions.h>
+#include <vector>
+#include <random>
+#include <map>
+
 
 using std::vector;
+using std::map;
+
 const b2Vec2 gravity = b2Vec2(0.0f, 0.0f);
 const int32 vel_iter = 3;
 const int32 pos_iter = 5;
@@ -19,13 +25,16 @@ class Engine {
  public:
   Engine();
   void SetUp();
+  void SetPositions();
   void CreateVehicle();
   void Step();
   void DrawEngine();
+  b2Vec2 GetPosition(size_t position);
 
  private:
   b2World my_world_;
   vector<Vehicle> all_vehicles_;
+  map<int, b2Vec2> start_positions_;
 };
 }
 #endif  // FINALPROJECT_EXAMPLE_H
