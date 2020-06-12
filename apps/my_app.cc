@@ -7,7 +7,7 @@
 
 using namespace std;
 
-namespace myapp {
+namespace traffic_rush {
 
 using std::chrono::seconds;
 using std::chrono::system_clock;

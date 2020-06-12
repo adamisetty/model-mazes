@@ -10,7 +10,7 @@
 
 using std::string;
 
-namespace myapp {
+namespace traffic_rush {
 
 /**
  * Describes current state of game, changes with elapsed time
@@ -85,6 +85,7 @@ class MyApp : public cinder::app::App {
      * Stores the current GameState of this game, updates with elapsed time
      */
     GameState current_state_;
+    
 };
 
 
