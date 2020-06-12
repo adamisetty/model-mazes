@@ -7,11 +7,8 @@ using cinder::vec2;
 namespace traffic_rush {
   Vehicle::Vehicle() {}
 
-  void Vehicle::Initialize(b2World *this_world_, b2Vec2 start) {
-    //int location = 300;
-    //shape_.m_p = b2Vec2(Conversions::ToMeters(location),
-      //  Conversions::ToMeters(location));
-    shape_.m_p = start;
+  void Vehicle::Initialize(b2World *this_world_, b2Vec2 start_p, b2Vec2 start_v) {
+    shape_.m_p = start_p;
 
     int radius = 10;
     shape_.m_radius = Conversions::ToMeters(radius);
@@ -27,6 +24,9 @@ namespace traffic_rush {
     fix_def_.restitution = .1f;
     vehicle_body_->CreateFixture(&fix_def_);
     vehicle_body_->SetType(b2_dynamicBody);
+
+    size_t velocity = (rand() % vel_buffer) + vel_start;
+    vehicle_body_->SetLinearVelocity(b2Vec2(start_v.x * velocity, start_v.y * velocity));
   }
 
   void Vehicle::DrawVehicle() {

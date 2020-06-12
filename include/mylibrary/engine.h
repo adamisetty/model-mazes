@@ -25,16 +25,18 @@ class Engine {
  public:
   Engine();
   void SetUp();
-  void SetPositions();
+  void SetMaps();
   void CreateVehicle();
   void Step();
   void DrawEngine();
   b2Vec2 GetPosition(size_t position);
+  b2Vec2 GetVelocity(size_t position);
 
  private:
   b2World my_world_;
   vector<Vehicle> all_vehicles_;
   map<int, b2Vec2> start_positions_;
+  map<int, b2Vec2> start_velocities_;
 };
 }
 #endif  // FINALPROJECT_EXAMPLE_H

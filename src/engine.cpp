@@ -6,13 +6,12 @@ Engine::Engine():
 }
 
 void Engine::SetUp() {
-  SetPositions();
+  SetMaps();
   CreateVehicle();
 }
 
-void Engine::SetPositions() {
+void Engine::SetMaps() {
   //Sets four positions (bottom, top, left, right)
-
   b2Vec2 top = b2Vec2(Conversions::ToMeters(300), Conversions::ToMeters(50));
   start_positions_.insert({0, top});
   b2Vec2 bottom = b2Vec2(Conversions::ToMeters(300), Conversions::ToMeters(550));
@@ -21,15 +20,27 @@ void Engine::SetPositions() {
   start_positions_.insert({2, left});
   b2Vec2 right = b2Vec2(Conversions::ToMeters(550), Conversions::ToMeters(300));
   start_positions_.insert({3, right});
+
+  //Sets four starting velocities
+  b2Vec2 top_v = b2Vec2(0, 1);
+  start_velocities_.insert({0, top_v});
+  b2Vec2 bottom_v = b2Vec2(0, -1);
+  start_velocities_.insert({1, bottom_v});
+  b2Vec2 left_v = b2Vec2(1, 0);
+  start_velocities_.insert({2, left_v});
+  b2Vec2 right_v = b2Vec2(-1, 0);
+  start_velocities_.insert({3, right_v});
 }
 
 void Engine::CreateVehicle() {
 //want to create periodically
 //needs to give random position/direction
   for (size_t i = 0; i < num_v; i++) {
-    b2Vec2 start = GetPosition(rand() % num_positions);
+    size_t position = rand() % num_positions;
+    b2Vec2 start_p = GetPosition(position);
+    b2Vec2 start_v = GetVelocity(position);
     Vehicle v;
-    v.Initialize(&my_world_, start);
+    v.Initialize(&my_world_, start_p, start_v);
     all_vehicles_.push_back(v);
   }
 }
@@ -47,6 +58,10 @@ void Engine::DrawEngine() {
 
 b2Vec2 Engine::GetPosition(size_t position) {
   return start_positions_.at(position);
+}
+
+b2Vec2 Engine::GetVelocity(size_t position) {
+  return start_velocities_.at(position);
 }
 
 }
