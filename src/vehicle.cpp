@@ -5,9 +5,7 @@
 using cinder::vec2;
 
 namespace traffic_rush {
-  Vehicle::Vehicle() {
-
-  }
+  Vehicle::Vehicle() {}
 
   void Vehicle::Initialize(b2World *this_world_) {
     int location = 300;

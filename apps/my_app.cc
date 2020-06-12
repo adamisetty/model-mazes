@@ -31,6 +31,7 @@ MyApp::MyApp() {
 
 
 void MyApp::setup() {
+  engine_.SetUp();
 }
 
 void MyApp::update() {
@@ -38,6 +39,8 @@ void MyApp::update() {
 }
 
 void MyApp::draw() {
+  cinder::gl::clear();
+  engine_.DrawEngine();
 }
 
 void MyApp::mouseDown(cinder::app::MouseEvent event) {

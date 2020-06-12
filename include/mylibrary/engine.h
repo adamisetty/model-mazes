@@ -11,6 +11,7 @@ const b2Vec2 gravity = b2Vec2(0.0f, 0.0f);
 const int32 vel_iter = 3;
 const int32 pos_iter = 5;
 const float32 time_step = 1.0/60.0f;
+const size_t num_v = 2;
 
 namespace traffic_rush {
 
