@@ -5,6 +5,8 @@
 #include <Box2D/Box2D.h>
 #include <mylibrary/vehicle.h>
 #include <mylibrary/conversions.h>
+#include <cinder/app/App.h>
+#include <cinder/gl/gl.h>
 #include <vector>
 #include <random>
 #include <map>
@@ -37,6 +39,7 @@ class Engine {
   vector<Vehicle> all_vehicles_;
   map<int, b2Vec2> start_positions_;
   map<int, b2Vec2> start_velocities_;
+  cinder::Timer game_timer_;
 };
 }
 #endif  // FINALPROJECT_EXAMPLE_H

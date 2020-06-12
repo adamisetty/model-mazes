@@ -2,7 +2,8 @@
 
 namespace traffic_rush {
 Engine::Engine():
-    my_world_{gravity} {
+  my_world_{gravity} {
+  game_timer_.start();
 }
 
 void Engine::SetUp() {
@@ -35,18 +36,21 @@ void Engine::SetMaps() {
 void Engine::CreateVehicle() {
 //want to create periodically
 //needs to give random position/direction
-  for (size_t i = 0; i < num_v; i++) {
-    size_t position = rand() % num_positions;
-    b2Vec2 start_p = GetPosition(position);
-    b2Vec2 start_v = GetVelocity(position);
-    Vehicle v;
-    v.Initialize(&my_world_, start_p, start_v);
-    all_vehicles_.push_back(v);
-  }
+  size_t position = rand() % num_positions;
+  b2Vec2 start_p = GetPosition(position);
+  b2Vec2 start_v = GetVelocity(position);
+  Vehicle v;
+  v.Initialize(&my_world_, start_p, start_v);
+  all_vehicles_.push_back(v);
 }
 
 void Engine::Step() {
   my_world_.Step(time_step, vel_iter, pos_iter);
+
+  int seconds = game_timer_.getSeconds();
+  if (seconds - (all_vehicles_.size() * 5) == 0) {
+    CreateVehicle();
+  }
 }
 
 
