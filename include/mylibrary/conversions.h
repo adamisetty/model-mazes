@@ -29,6 +29,22 @@ namespace traffic_rush {
      * @return: float32 number measured in meters by box2d
      */
     static float32 ToMeters(float32 cinder_number);
+
+    /**
+       * Contains an array of all colors in game's color pallete, chooses one
+       * @param position: a specific index of a color in the color pallete, will
+       * give random color if position is out of bounds
+       * @return: a vector of doubles (rbg values) of specific color in pallete
+       */
+    static vector<double> ColorChooser(int position);
+
+    /**
+     * Cinder uses decimal values of cinder::gl::color function, used to
+     * convert between the two variations of RBG values
+     * @param regular_RBG: vector of 3 doubles on a 255 scale
+     * @return: vector or 3 doubles on a 1/255 scale
+     */
+    static vector<double> ToCinderRBG(vector<double> regular_RBG);
   };
 }
 
