@@ -26,7 +26,7 @@ const glm::ivec2 font_box_size = glm::ivec2(85, 50);
 const string font_style = "Arial";
 
 MyApp::MyApp() {
-
+  current_state_ = GameState::kPlaying;
 }
 
 
@@ -36,11 +36,16 @@ void MyApp::setup() {
 
 void MyApp::update() {
   engine_.Step();
+  if (!engine_.GetIsPlaying()) {
+    current_state_ = GameState::kGameOver;
+  }
 }
 
 void MyApp::draw() {
   cinder::gl::clear();
-  engine_.DrawEngine();
+  if (current_state_ == GameState::kPlaying) {
+    engine_.DrawEngine();
+  }
 }
 
 void MyApp::mouseDown(cinder::app::MouseEvent event) {

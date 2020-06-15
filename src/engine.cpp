@@ -3,12 +3,14 @@
 namespace traffic_rush {
 Engine::Engine():
   my_world_{gravity} {
+  my_listener_.is_playing_ = true;
   game_timer_.start();
 }
 
 void Engine::SetUp() {
   SetMaps();
   CreateVehicle();
+  my_world_.SetContactListener(&my_listener_);
 }
 
 void Engine::SetMaps() {
@@ -66,6 +68,14 @@ b2Vec2 Engine::GetPosition(size_t position) {
 
 b2Vec2 Engine::GetVelocity(size_t position) {
   return start_velocities_.at(position);
+}
+
+bool Engine::GetIsPlaying() {
+  return my_listener_.is_playing_;
+}
+
+void Engine::MyContactListener::BeginContact(b2Contact *contact) {
+  is_playing_ = false;
 }
 
 }

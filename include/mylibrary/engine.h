@@ -33,6 +33,15 @@ class Engine {
   void DrawEngine();
   b2Vec2 GetPosition(size_t position);
   b2Vec2 GetVelocity(size_t position);
+  bool GetIsPlaying();
+
+ public:
+  class MyContactListener : public b2ContactListener {
+    void BeginContact(b2Contact* contact);
+
+   public:
+    bool is_playing_;
+  };
 
  private:
   b2World my_world_;
@@ -40,6 +49,7 @@ class Engine {
   map<int, b2Vec2> start_positions_;
   map<int, b2Vec2> start_velocities_;
   cinder::Timer game_timer_;
+  MyContactListener my_listener_;
 };
 }
 #endif  // FINALPROJECT_EXAMPLE_H

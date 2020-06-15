@@ -18,14 +18,14 @@ namespace traffic_rush {
  */
 enum class GameState {
   /**
-   * The state while the user is able to draw lines on their screen
+   * The state before the user begins the game
    */
-  kDrawing,
+  kPreparing,
 
   /**
-   * The state when the balls have been released and are falling down
+   * The state when the user is controlling the vehicles
    */
-  kBallsMoving,
+  kPlaying,
 
   /**
    * The state after level time is elapsed, displays game result
@@ -87,6 +87,7 @@ class MyApp : public cinder::app::App {
      */
     GameState current_state_;
     Engine engine_;
+    bool found_collision_;
 
 };
 
