@@ -5,6 +5,7 @@ Engine::Engine():
   my_world_{gravity} {
   my_listener_.is_playing_ = true;
   game_timer_.start();
+  score_ = 0;
 }
 
 void Engine::SetUp() {
@@ -48,12 +49,28 @@ void Engine::CreateVehicle() {
 
 void Engine::Step() {
   my_world_.Step(time_step, vel_iter, pos_iter);
+  UpdateScore();
+
   int seconds = game_timer_.getSeconds();
   if (seconds - (all_vehicles_.size() * 5) == 0) {
     CreateVehicle();
   }
 }
 
+void Engine::UpdateScore() {
+  for(Vehicle v: all_vehicles_) {
+    v.CheckInBounds();
+    if (!v.GetIsDestroyed() && !v.GetIsVisible()) {
+      score_++;
+      v.DestroyVehicle();
+    }
+  }
+
+  //cleaning the list of vehicles
+  if (!all_vehicles_[0].GetIsVisible()) {
+    all_vehicles_.erase(all_vehicles_.cbegin());
+  }
+}
 
 void Engine::DrawEngine() {
   for (Vehicle v: all_vehicles_){
@@ -71,6 +88,10 @@ b2Vec2 Engine::GetVelocity(size_t position) {
 
 bool Engine::GetIsPlaying() {
   return my_listener_.is_playing_;
+}
+
+int Engine::GetScore() {
+  return score_;
 }
 
 void Engine::MyContactListener::BeginContact(b2Contact *contact) {

@@ -18,13 +18,18 @@ namespace traffic_rush {
     // should set initial position and velocity
     void Initialize(b2World *this_world_, b2Vec2 start_p, b2Vec2 start_v);
     void DrawVehicle();
-
+    void CheckInBounds();
+    bool GetIsVisible();
+    bool GetIsDestroyed();
+    void DestroyVehicle();
     //~Vehicle;
 
    private:
     b2CircleShape shape_;
     b2Body *vehicle_body_;
     vector<double> color;
+    bool is_visible_;
+    bool is_destroyed_;
   };
 }
 #endif  // FINALPROJECT_VEHICLE_H

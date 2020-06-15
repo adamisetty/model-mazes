@@ -31,9 +31,11 @@ class Engine {
   void CreateVehicle();
   void Step();
   void DrawEngine();
+  void UpdateScore();
   b2Vec2 GetPosition(size_t position);
   b2Vec2 GetVelocity(size_t position);
   bool GetIsPlaying();
+  int GetScore();
 
  public:
   class MyContactListener : public b2ContactListener {
@@ -50,6 +52,7 @@ class Engine {
   map<int, b2Vec2> start_velocities_;
   cinder::Timer game_timer_;
   MyContactListener my_listener_;
+  int score_;
 };
 }
 #endif  // FINALPROJECT_EXAMPLE_H

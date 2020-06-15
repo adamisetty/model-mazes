@@ -1,4 +1,4 @@
-// Copyright (c) 2020 CS126SP20. All rights reserved.
+// Copyright (c) 2020 Ankitha Damisetty & Nikitha Nagumalli. All rights reserved.
 
 #ifndef FINALPROJECT_APPS_MYAPP_H_
 #define FINALPROJECT_APPS_MYAPP_H_
@@ -88,7 +88,7 @@ class MyApp : public cinder::app::App {
     GameState current_state_;
     Engine engine_;
     bool found_collision_;
-    cinder::gl::TextureRef myImage;
+    cinder::gl::TextureRef background_;
 
 };
 

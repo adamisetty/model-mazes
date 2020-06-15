@@ -1,4 +1,4 @@
-// Copyright (c) 2020 Ankitha Damisetty. All rights reserved.
+// Copyright (c) 2020 Ankitha Damisetty & Nikitha Nagumalli. All rights reserved.
 
 #include "my_app.h"
 #include <chrono>
@@ -32,7 +32,7 @@ MyApp::MyApp() {
 
 void MyApp::setup() {
   engine_.SetUp();
-  myImage = cinder::gl::Texture::create(loadImage(loadAsset("background.jpg")));
+  background_ = cinder::gl::Texture::create(loadImage(loadAsset("background.jpg")));
 
 }
 
@@ -45,11 +45,19 @@ void MyApp::update() {
 
 void MyApp::draw() {
   cinder::gl::clear();
+
   cinder::gl::color(1, 1, 1);
-  cinder::gl::draw(myImage, getWindowBounds());
+  cinder::gl::draw(background_, getWindowBounds());
+
+  int curr_score_ = engine_.GetScore();
+  string str = std::to_string(curr_score_);
+  cinder::vec2 loc = cinder::vec2(550, 50);
+  PrintText(str, loc, 20);
+
   if (current_state_ == GameState::kPlaying) {
     engine_.DrawEngine();
   }
+
 }
 
 void MyApp::mouseDown(cinder::app::MouseEvent event) {
