@@ -15,13 +15,13 @@ void Engine::SetUp() {
 
 void Engine::SetMaps() {
   //Sets four positions (bottom, top, left, right)
-  b2Vec2 top = b2Vec2(Conversions::ToMeters(300), Conversions::ToMeters(50));
+  b2Vec2 top = b2Vec2(Conversions::ToMeters(265), Conversions::ToMeters(50));
   start_positions_.insert({0, top});
-  b2Vec2 bottom = b2Vec2(Conversions::ToMeters(300), Conversions::ToMeters(550));
+  b2Vec2 bottom = b2Vec2(Conversions::ToMeters(335), Conversions::ToMeters(550));
   start_positions_.insert({1, bottom});
-  b2Vec2 left = b2Vec2(Conversions::ToMeters(50), Conversions::ToMeters(300));
+  b2Vec2 left = b2Vec2(Conversions::ToMeters(50), Conversions::ToMeters(330));
   start_positions_.insert({2, left});
-  b2Vec2 right = b2Vec2(Conversions::ToMeters(550), Conversions::ToMeters(300));
+  b2Vec2 right = b2Vec2(Conversions::ToMeters(550), Conversions::ToMeters(270));
   start_positions_.insert({3, right});
 
   //Sets four starting velocities

@@ -88,6 +88,7 @@ class MyApp : public cinder::app::App {
     GameState current_state_;
     Engine engine_;
     bool found_collision_;
+    cinder::gl::TextureRef myImage;
 
 };
 

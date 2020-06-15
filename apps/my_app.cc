@@ -32,6 +32,8 @@ MyApp::MyApp() {
 
 void MyApp::setup() {
   engine_.SetUp();
+  myImage = cinder::gl::Texture::create(loadImage(loadAsset("background.jpg")));
+
 }
 
 void MyApp::update() {
@@ -43,6 +45,8 @@ void MyApp::update() {
 
 void MyApp::draw() {
   cinder::gl::clear();
+  cinder::gl::color(1, 1, 1);
+  cinder::gl::draw(myImage, getWindowBounds());
   if (current_state_ == GameState::kPlaying) {
     engine_.DrawEngine();
   }
