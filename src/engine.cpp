@@ -48,7 +48,6 @@ void Engine::CreateVehicle() {
 
 void Engine::Step() {
   my_world_.Step(time_step, vel_iter, pos_iter);
-
   int seconds = game_timer_.getSeconds();
   if (seconds - (all_vehicles_.size() * 5) == 0) {
     CreateVehicle();
