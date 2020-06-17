@@ -24,6 +24,7 @@ namespace traffic_rush {
     bool GetIsDestroyed();
     void DestroyVehicle();
     b2Body* GetBody();
+    void ChangeSpeed(bool is_left_);
 
 
    private:
@@ -32,6 +33,7 @@ namespace traffic_rush {
     vector<double> color;
     bool is_visible_;
     bool is_destroyed_;
+    b2Vec2 velocity_vector_;
   };
 }
 #endif  // FINALPROJECT_VEHICLE_H

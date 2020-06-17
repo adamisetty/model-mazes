@@ -28,7 +28,8 @@ namespace traffic_rush {
     vehicle_body_->SetType(b2_dynamicBody);
 
     double velocity = (rand() % vel_buffer) + vel_start;
-    vehicle_body_->SetLinearVelocity(b2Vec2(start_v.x * velocity, start_v.y * velocity));
+    velocity_vector_ = b2Vec2(start_v.x * velocity, start_v.y * velocity);
+    vehicle_body_->SetLinearVelocity(velocity_vector_);
 
     color = Conversions::ColorChooser(-1);
     color = Conversions::ToCinderRBG(color);
@@ -60,6 +61,20 @@ namespace traffic_rush {
 
   bool Vehicle::GetIsDestroyed() {
     return is_destroyed_;
+  }
+
+  void Vehicle::ChangeSpeed(bool is_left_) {
+    if (is_left_) {
+
+      if (vehicle_body_->GetLinearVelocity() == b2Vec2(0, 0)) {
+        vehicle_body_->SetLinearVelocity(velocity_vector_);
+      } else {
+        vehicle_body_->SetLinearVelocity(1.5 * velocity_vector_);
+      }
+
+    } else {
+      vehicle_body_->SetLinearVelocity(b2Vec2(0, 0));
+    }
   }
 
   void Vehicle::DrawVehicle() {

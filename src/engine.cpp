@@ -78,6 +78,19 @@ namespace traffic_rush {
     }
   }
 
+  void Engine::ClickAction(cinder::vec2 position, bool is_left_) {
+    for (Vehicle v: all_vehicles_) {
+      b2Vec2 curr_loc = v.GetBody()->GetPosition();
+      cinder::vec2 c_loc = cinder::vec2(traffic_rush::Conversions::ToPixels(curr_loc.x),
+                        traffic_rush::Conversions::ToPixels(curr_loc.y));
+
+      if ((position.x - c_loc[0] < 10 && position.y - c_loc[1] < 10)) {
+        v.ChangeSpeed(is_left_);
+        break;
+      }
+    }
+  }
+
   b2Vec2 Engine::GetPosition(size_t position) {
     return start_positions_.at(position);
   }
