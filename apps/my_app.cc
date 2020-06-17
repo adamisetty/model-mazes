@@ -27,6 +27,7 @@ const string font_style = "Arial";
 
 MyApp::MyApp() {
   current_state_ = GameState::kPlaying;
+  is_cleared_ = false;
 }
 
 
@@ -40,6 +41,10 @@ void MyApp::update() {
   engine_.Step();
   if (!engine_.GetIsPlaying()) {
     current_state_ = GameState::kGameOver;
+    if (!is_cleared_) {
+      engine_.DestroyEngine();
+      is_cleared_ = true;
+    }
   }
 }
 
@@ -61,6 +66,7 @@ void MyApp::draw() {
 }
 
 void MyApp::mouseDown(cinder::app::MouseEvent event) {
+
 }
 
 void MyApp::mouseMove(cinder::app::MouseEvent event) {

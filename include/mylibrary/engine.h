@@ -36,6 +36,8 @@ class Engine {
   b2Vec2 GetVelocity(size_t position);
   bool GetIsPlaying();
   int GetScore();
+  void ClickAction();
+  void DestroyEngine();
 
  public:
   class MyContactListener : public b2ContactListener {

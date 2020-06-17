@@ -51,6 +51,9 @@ namespace traffic_rush {
     vehicle_body_->SetTransform(b2Vec2(-shape_.m_radius - 3, -shape_.m_radius - 3), 0);
   }
 
+  b2Body * Vehicle:: GetBody() {
+    return vehicle_body_;
+  }
   bool Vehicle::GetIsVisible() {
     return is_visible_;
   }
@@ -67,4 +70,7 @@ namespace traffic_rush {
     cinder::gl::drawSolidCircle(vec2(c_loc[0], c_loc[1]),
                                 traffic_rush::Conversions::ToPixels(shape_.m_radius));
   }
+
+  Vehicle::~Vehicle() = default;
+
 }

@@ -14,6 +14,7 @@ namespace traffic_rush {
   class Vehicle {
    public:
     Vehicle();
+    ~Vehicle();
 
     // should set initial position and velocity
     void Initialize(b2World *this_world_, b2Vec2 start_p, b2Vec2 start_v);
@@ -22,7 +23,8 @@ namespace traffic_rush {
     bool GetIsVisible();
     bool GetIsDestroyed();
     void DestroyVehicle();
-    //~Vehicle;
+    b2Body* GetBody();
+
 
    private:
     b2CircleShape shape_;
