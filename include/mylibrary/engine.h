@@ -10,10 +10,12 @@
 #include <vector>
 #include <random>
 #include <map>
+#include <cinder/app/KeyEvent.h>
 
 
 using std::vector;
 using std::map;
+using cinder::app::KeyEvent;
 
 const b2Vec2 gravity = b2Vec2(0.0f, 0.0f);
 const int32 vel_iter = 3;
@@ -36,7 +38,7 @@ class Engine {
   b2Vec2 GetVelocity(size_t position);
   bool GetIsPlaying();
   int GetScore();
-  void ClickAction(cinder::vec2 position, bool is_left_);
+  void KeyAction(int user_action_);
   void DestroyEngine();
 
  public:
@@ -55,6 +57,7 @@ class Engine {
   cinder::Timer game_timer_;
   MyContactListener my_listener_;
   int score_;
+  Vehicle* current_vehicle_;
 };
 }
 #endif  // FINALPROJECT_EXAMPLE_H

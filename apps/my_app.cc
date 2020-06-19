@@ -64,11 +64,17 @@ namespace traffic_rush {
 
   }
 
-  void MyApp::mouseDown(cinder::app::MouseEvent event) {
+  /*void MyApp::mouseDown(cinder::app::MouseEvent event) {
     engine_.ClickAction(event.getPos(), event.isLeft());
   }
 
   void MyApp::mouseMove(cinder::app::MouseEvent event) {
+  }*/
+
+  void MyApp::keyDown(KeyEvent event) {
+    if (current_state_ == GameState::kPlaying) {
+      engine_.KeyAction(event.getCode());
+    }
   }
 
   void MyApp::PrintText(string text, cinder::vec2 location, size_t size) {

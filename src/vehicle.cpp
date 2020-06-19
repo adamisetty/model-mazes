@@ -8,6 +8,7 @@ namespace traffic_rush {
   Vehicle::Vehicle() {
     is_visible_ = true;
     is_destroyed_ = false;
+    is_target_ = false;
   }
 
   void Vehicle::Initialize(b2World *this_world_, b2Vec2 start_p, b2Vec2 start_v) {
@@ -49,7 +50,15 @@ namespace traffic_rush {
 
   void Vehicle::DestroyVehicle() {
     vehicle_body_->SetType(b2_staticBody);
-    vehicle_body_->SetTransform(b2Vec2(-shape_.m_radius - 3, -shape_.m_radius - 3), 0);
+    vehicle_body_->SetTransform(b2Vec2(-shape_.m_radius -
+    Conversions::ToMeters(700), -shape_.m_radius -
+    Conversions::ToMeters(700)), 0);
+  }
+
+  void Vehicle::MarkTarget() {
+    if (is_visible_) {
+      is_target_ = !is_target_;
+    }
   }
 
   b2Body * Vehicle:: GetBody() {
@@ -82,8 +91,14 @@ namespace traffic_rush {
     b2Vec2 curr_loc = vehicle_body_->GetPosition();
     vec2 c_loc = vec2(traffic_rush::Conversions::ToPixels(curr_loc.x),
                       traffic_rush::Conversions::ToPixels(curr_loc.y));
+    if (is_target_) {
+      cinder::gl::drawSolidCircle(vec2(c_loc[0], c_loc[1]),
+          traffic_rush::Conversions::ToPixels(shape_.m_radius) + 10);
+    }
+
     cinder::gl::drawSolidCircle(vec2(c_loc[0], c_loc[1]),
                                 traffic_rush::Conversions::ToPixels(shape_.m_radius));
+
   }
 
   Vehicle::~Vehicle() = default;

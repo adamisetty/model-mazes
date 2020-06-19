@@ -1,5 +1,7 @@
 #include "mylibrary/engine.h"
 
+#include <cinder/app/KeyEvent.h>
+
 namespace traffic_rush {
   Engine::Engine():
     my_world_{gravity} {
@@ -12,6 +14,8 @@ namespace traffic_rush {
     SetMaps();
     CreateVehicle();
     my_world_.SetContactListener(&my_listener_);
+    current_vehicle_ = &all_vehicles_[0];
+    current_vehicle_->MarkTarget();
   }
 
   void Engine::SetMaps() {
@@ -73,21 +77,64 @@ namespace traffic_rush {
   }
 
   void Engine::DrawEngine() {
-    for (Vehicle v: all_vehicles_){
+    for (Vehicle v: all_vehicles_) {
       v.DrawVehicle();
     }
   }
 
-  void Engine::ClickAction(cinder::vec2 position, bool is_left_) {
-    for (Vehicle v: all_vehicles_) {
-      b2Vec2 curr_loc = v.GetBody()->GetPosition();
-      cinder::vec2 c_loc = cinder::vec2(traffic_rush::Conversions::ToPixels(curr_loc.x),
-                        traffic_rush::Conversions::ToPixels(curr_loc.y));
+  void Engine::KeyAction(int user_action_) {
+    if (!all_vehicles_.empty() && my_listener_.is_playing_) {
+      int minimum_distance_ = Conversions::ToMeters(600);
+      int minimum_index_ = 0;
+      b2Vec2 current_position_ = current_vehicle_->GetBody()->GetPosition();
 
-      if ((position.x - c_loc[0] < 10 && position.y - c_loc[1] < 10)) {
-        v.ChangeSpeed(is_left_);
-        break;
+      for (int i = 0; i < all_vehicles_.size(); i++) {
+        Vehicle* v = &all_vehicles_[i];
+        int v_distance_ = v->GetBody()->GetPosition().y - current_position_.y;
+        int h_distance_ = v->GetBody()->GetPosition().x - current_position_.x;
+        if (user_action_ == KeyEvent::KEY_UP) {
+          if (v_distance_ < 0 && abs(v_distance_) < abs(minimum_distance_)) {
+            minimum_distance_ = v_distance_;
+            minimum_index_ = i;
+          }
+        }
+
+        if (user_action_ == KeyEvent::KEY_DOWN) {
+          if (v_distance_ > 0 && v_distance_ < minimum_distance_) {
+            minimum_distance_ = v_distance_;
+            minimum_index_ = i;
+          }
+        }
+
+        if (user_action_ == KeyEvent::KEY_RIGHT) {
+          if (h_distance_ > 0 && h_distance_ < minimum_distance_) {
+            minimum_distance_ = h_distance_;
+            minimum_index_ = i;
+          }
+        }
+
+        if (user_action_ == KeyEvent::KEY_LEFT) {
+          if (h_distance_ < 0 && abs(h_distance_) < abs(minimum_distance_)) {
+            minimum_distance_ = h_distance_;
+            minimum_index_ = i;
+          }
+        }
       }
+
+      if (minimum_index_ == 0) {
+        for (int i = 0; i < all_vehicles_.size(); i++) {
+          if (current_vehicle_ == &all_vehicles_[i]) {
+            minimum_index_ = i;
+            break;
+          }
+        }
+      }
+
+      current_vehicle_->MarkTarget();
+      all_vehicles_[minimum_index_].MarkTarget();
+      current_vehicle_ = &all_vehicles_[minimum_index_];
+      //all_vehicles_[current_index_].MarkTarget();
+      //current_index_ = minimum_index_;
     }
   }
 

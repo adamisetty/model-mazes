@@ -3,13 +3,16 @@
 #ifndef FINALPROJECT_APPS_MYAPP_H_
 #define FINALPROJECT_APPS_MYAPP_H_
 
-#include <string>
-#include <cinder/app/App.h>
-#include <cinder/gl/gl.h>
 #include <Box2D/Box2D.h>
+#include <cinder/app/App.h>
+#include <cinder/app/KeyEvent.h>
+#include <cinder/gl/gl.h>
 #include <mylibrary/engine.h>
+#include <cinder/app/KeyEvent.h>
+#include <string>
 
 using std::string;
+using cinder::app::KeyEvent;
 
 namespace traffic_rush {
 
@@ -63,13 +66,16 @@ class MyApp : public cinder::app::App {
      * Tracks user mouse click, used when drawing edges on screen
      * @param event: current instance of mouse event, stores position
      */
-    void mouseDown(cinder::app::MouseEvent event) override;
+    //void mouseDown(cinder::app::MouseEvent event) override;
 
     /**
      * Tracks mouse current position, used after mouse click in drawing state
      * @param event: current instance of mouse event, stores position
      */
-    void mouseMove(cinder::app::MouseEvent event) override;
+    //void mouseMove(cinder::app::MouseEvent event) override;
+
+    void keyDown(KeyEvent event) override;
+
 
   private:
 

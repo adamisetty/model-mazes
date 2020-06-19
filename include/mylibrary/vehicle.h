@@ -25,7 +25,7 @@ namespace traffic_rush {
     void DestroyVehicle();
     b2Body* GetBody();
     void ChangeSpeed(bool is_left_);
-
+    void MarkTarget();
 
    private:
     b2CircleShape shape_;
@@ -34,6 +34,7 @@ namespace traffic_rush {
     bool is_visible_;
     bool is_destroyed_;
     b2Vec2 velocity_vector_;
+    bool is_target_;
   };
 }
 #endif  // FINALPROJECT_VEHICLE_H
