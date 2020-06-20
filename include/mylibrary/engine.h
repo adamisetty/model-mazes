@@ -46,21 +46,19 @@ class Engine {
     void BeginContact(b2Contact* contact);
 
    public:
-    bool not_collided_;
+    bool is_playing_;
   };
 
  private:
   b2World my_world_;
   vector<Vehicle> all_vehicles_;
-  map<int, Vehicle> vehicle_map_;
-  int vehicle_count_;
-  int target_vehicle_;
   map<int, b2Vec2> start_positions_;
   map<int, b2Vec2> start_velocities_;
   cinder::Timer game_timer_;
   MyContactListener my_listener_;
   int score_;
   Vehicle* current_vehicle_;
+  int target_index_;
 };
 }
 #endif  // FINALPROJECT_EXAMPLE_H
