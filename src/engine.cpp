@@ -5,9 +5,10 @@
 namespace traffic_rush {
   Engine::Engine():
     my_world_{gravity} {
-    my_listener_.is_playing_ = true;
+    my_listener_.not_collided_ = true;
     game_timer_.start();
     score_ = 0;
+    vehicle_count_ = 0;
   }
 
   void Engine::SetUp() {
@@ -16,6 +17,7 @@ namespace traffic_rush {
     my_world_.SetContactListener(&my_listener_);
     current_vehicle_ = &all_vehicles_[0];
     current_vehicle_->MarkTarget();
+    target_vehicle_ = 0;
   }
 
   void Engine::SetMaps() {
@@ -49,6 +51,9 @@ namespace traffic_rush {
     Vehicle v;
     v.Initialize(&my_world_, start_p, start_v);
     all_vehicles_.push_back(v);
+
+    vehicle_map_.insert({vehicle_count_, v});
+    vehicle_count_++;
   }
 
   void Engine::Step() {
@@ -62,7 +67,7 @@ namespace traffic_rush {
   }
 
   void Engine::UpdateScore() {
-    for(Vehicle v: all_vehicles_) {
+/*    for(Vehicle v: all_vehicles_) {
       v.CheckInBounds();
       if (!v.GetIsDestroyed() && !v.GetIsVisible()) {
         score_++;
@@ -74,6 +79,19 @@ namespace traffic_rush {
     if (!all_vehicles_.empty() && !all_vehicles_[0].GetIsVisible()) {
       all_vehicles_.erase(all_vehicles_.cbegin());
     }
+*/
+    map<int, Vehicle>::iterator itr;
+    for (itr = vehicle_map_.begin(); itr != vehicle_map_.end(); ++itr) {
+      Vehicle v = itr->second;
+      v.CheckInBounds();
+      if (!v.GetIsDestroyed() && !v.GetIsVisible()) {
+        score_++;
+        v.DestroyVehicle();
+      }
+      if (!itr->second.GetIsVisible()) {
+        vehicle_map_.erase(itr);
+      }
+    }
   }
 
   void Engine::DrawEngine() {
@@ -83,58 +101,53 @@ namespace traffic_rush {
   }
 
   void Engine::KeyAction(int user_action_) {
-    if (!all_vehicles_.empty() && my_listener_.is_playing_) {
+    if (my_listener_.not_collided_) {
+      Vehicle target_ = vehicle_map_.at(target_vehicle_);
+      b2Vec2 current_position_ = target_.GetBody()->GetPosition();
+      map<int, Vehicle>::iterator itr;
+      int minimum_index_ = -1;
       int minimum_distance_ = Conversions::ToMeters(600);
-      int minimum_index_ = 0;
-      b2Vec2 current_position_ = current_vehicle_->GetBody()->GetPosition();
 
-      for (int i = 0; i < all_vehicles_.size(); i++) {
-        Vehicle* v = &all_vehicles_[i];
-        int v_distance_ = v->GetBody()->GetPosition().y - current_position_.y;
-        int h_distance_ = v->GetBody()->GetPosition().x - current_position_.x;
+      for (itr = vehicle_map_.begin(); itr != vehicle_map_.end(); ++itr) {
+        Vehicle v = itr->second;
+        int v_distance_ = v.GetBody()->GetPosition().y - current_position_.y;
+        int h_distance_ = v.GetBody()->GetPosition().x - current_position_.x;
         if (user_action_ == KeyEvent::KEY_UP) {
           if (v_distance_ < 0 && abs(v_distance_) < abs(minimum_distance_)) {
             minimum_distance_ = v_distance_;
-            minimum_index_ = i;
+            minimum_index_ = itr->first;
           }
         }
 
         if (user_action_ == KeyEvent::KEY_DOWN) {
           if (v_distance_ > 0 && v_distance_ < minimum_distance_) {
             minimum_distance_ = v_distance_;
-            minimum_index_ = i;
+            minimum_index_ = itr->first;
           }
         }
 
         if (user_action_ == KeyEvent::KEY_RIGHT) {
           if (h_distance_ > 0 && h_distance_ < minimum_distance_) {
             minimum_distance_ = h_distance_;
-            minimum_index_ = i;
+            minimum_index_ = itr->first;
           }
         }
 
         if (user_action_ == KeyEvent::KEY_LEFT) {
           if (h_distance_ < 0 && abs(h_distance_) < abs(minimum_distance_)) {
             minimum_distance_ = h_distance_;
-            minimum_index_ = i;
+            minimum_index_ = itr->first;
           }
         }
       }
 
-      if (minimum_index_ == 0) {
-        for (int i = 0; i < all_vehicles_.size(); i++) {
-          if (current_vehicle_ == &all_vehicles_[i]) {
-            minimum_index_ = i;
-            break;
-          }
-        }
+      if (minimum_index_ == -1) {
+        minimum_index_ = target_vehicle_;
       }
 
-      current_vehicle_->MarkTarget();
-      all_vehicles_[minimum_index_].MarkTarget();
-      current_vehicle_ = &all_vehicles_[minimum_index_];
-      //all_vehicles_[current_index_].MarkTarget();
-      //current_index_ = minimum_index_;
+      vehicle_map_.at(target_vehicle_).MarkTarget();
+      vehicle_map_.at(minimum_index_).MarkTarget();
+      target_vehicle_ = minimum_index_;
     }
   }
 
@@ -147,7 +160,7 @@ namespace traffic_rush {
   }
 
   bool Engine::GetIsPlaying() {
-    return my_listener_.is_playing_;
+    return my_listener_.not_collided_;
   }
 
   int Engine::GetScore() {
@@ -155,7 +168,7 @@ namespace traffic_rush {
   }
 
   void Engine::MyContactListener::BeginContact(b2Contact *contact) {
-    is_playing_ = false;
+    not_collided_ = false;
   }
 
   void Engine::DestroyEngine() {
@@ -164,5 +177,6 @@ namespace traffic_rush {
     }
 
     all_vehicles_.clear();
+    vehicle_map_.clear();
   }
 }
