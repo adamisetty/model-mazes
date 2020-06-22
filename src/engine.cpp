@@ -64,7 +64,7 @@ namespace traffic_rush {
   }
 
   void Engine::UpdateScore() {
-    for(Vehicle v: all_vehicles_) {
+    for (Vehicle v: all_vehicles_) {
       v.CheckInBounds();
       if (!v.GetIsDestroyed() && !v.GetIsVisible()) {
         score_++;
@@ -76,6 +76,20 @@ namespace traffic_rush {
     if (!all_vehicles_.empty() && !all_vehicles_[0].GetIsVisible()) {
       all_vehicles_.erase(all_vehicles_.cbegin());
     }*/
+
+    if (!all_vehicles_[target_index_].GetIsVisible()) {
+      all_vehicles_[target_index_].MarkTarget();
+      for (int i = 0; i < all_vehicles_.size(); i++) {
+        if (all_vehicles_[i].GetIsVisible()) {
+          target_index_ = i;
+          all_vehicles_[target_index_].MarkTarget();
+          break;
+        }
+      }
+    }
+    if (all_vehicles_.size() == 2) {
+      all_vehicles_[1].MarkTarget();
+    }
   }
 
   void Engine::DrawEngine() {
@@ -86,40 +100,42 @@ namespace traffic_rush {
 
   void Engine::KeyAction(int user_action_) {
     if (!all_vehicles_.empty() && my_listener_.is_playing_) {
+
       int minimum_distance_ = Conversions::ToMeters(600);
       int minimum_index_ = -1;
-      //b2Vec2 current_position_ = current_vehicle_->GetBody()->GetPosition();
       b2Vec2 current_position_ = all_vehicles_[target_index_].GetBody()->GetPosition();
 
       for (int i = 0; i < all_vehicles_.size(); i++) {
         Vehicle* v = &all_vehicles_[i];
-        int v_distance_ = v->GetBody()->GetPosition().y - current_position_.y;
-        int h_distance_ = v->GetBody()->GetPosition().x - current_position_.x;
-        if (user_action_ == KeyEvent::KEY_UP) {
-          if (v_distance_ < 0 && abs(v_distance_) < abs(minimum_distance_)) {
-            minimum_distance_ = v_distance_;
-            minimum_index_ = i;
+        if (v->GetIsVisible()) {
+          int v_distance_ = v->GetBody()->GetPosition().y - current_position_.y;
+          int h_distance_ = v->GetBody()->GetPosition().x - current_position_.x;
+          if (user_action_ == KeyEvent::KEY_UP) {
+            if (v_distance_ < 0 && abs(v_distance_) < abs(minimum_distance_)) {
+              minimum_distance_ = v_distance_;
+              minimum_index_ = i;
+            }
           }
-        }
 
-        if (user_action_ == KeyEvent::KEY_DOWN) {
-          if (v_distance_ > 0 && v_distance_ < minimum_distance_) {
-            minimum_distance_ = v_distance_;
-            minimum_index_ = i;
+          if (user_action_ == KeyEvent::KEY_DOWN) {
+            if (v_distance_ > 0 && v_distance_ < minimum_distance_) {
+              minimum_distance_ = v_distance_;
+              minimum_index_ = i;
+            }
           }
-        }
 
-        if (user_action_ == KeyEvent::KEY_RIGHT) {
-          if (h_distance_ > 0 && h_distance_ < minimum_distance_) {
-            minimum_distance_ = h_distance_;
-            minimum_index_ = i;
+          if (user_action_ == KeyEvent::KEY_RIGHT) {
+            if (h_distance_ > 0 && h_distance_ < minimum_distance_) {
+              minimum_distance_ = h_distance_;
+              minimum_index_ = i;
+            }
           }
-        }
 
-        if (user_action_ == KeyEvent::KEY_LEFT) {
-          if (h_distance_ < 0 && abs(h_distance_) < abs(minimum_distance_)) {
-            minimum_distance_ = h_distance_;
-            minimum_index_ = i;
+          if (user_action_ == KeyEvent::KEY_LEFT) {
+            if (h_distance_ < 0 && abs(h_distance_) < abs(minimum_distance_)) {
+              minimum_distance_ = h_distance_;
+              minimum_index_ = i;
+            }
           }
         }
       }

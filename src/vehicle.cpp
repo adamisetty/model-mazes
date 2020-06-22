@@ -56,9 +56,6 @@ namespace traffic_rush {
   }
 
   void Vehicle::MarkTarget() {
-    /*if (is_visible_) {
-      is_target_ = !is_target_;
-    }*/
     is_target_ = !is_target_;
   }
 
