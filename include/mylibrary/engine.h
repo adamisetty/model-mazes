@@ -39,6 +39,7 @@ class Engine {
   bool GetIsPlaying();
   int GetScore();
   void KeyAction(int user_action_);
+  void SpeedAction(int user_action_);
   void DestroyEngine();
 
  public:

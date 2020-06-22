@@ -25,7 +25,7 @@ namespace traffic_rush {
     bool GetIsTarget();
     void DestroyVehicle();
     b2Body* GetBody();
-    void ChangeSpeed(bool is_left_);
+    void ChangeSpeed(bool is_stop_);
     void MarkTarget();
 
    private:

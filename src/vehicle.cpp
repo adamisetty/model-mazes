@@ -74,17 +74,15 @@ namespace traffic_rush {
     return is_target_;
   }
 
-  void Vehicle::ChangeSpeed(bool is_left_) {
-    if (is_left_) {
-
+  void Vehicle::ChangeSpeed(bool is_stop_) {
+    if (is_stop_) {
+      vehicle_body_->SetLinearVelocity(b2Vec2(0, 0));
+    } else {
       if (vehicle_body_->GetLinearVelocity() == b2Vec2(0, 0)) {
         vehicle_body_->SetLinearVelocity(velocity_vector_);
       } else {
-        vehicle_body_->SetLinearVelocity(1.5 * velocity_vector_);
+        vehicle_body_->SetLinearVelocity(1.5 * vehicle_body_->GetLinearVelocity());
       }
-
-    } else {
-      vehicle_body_->SetLinearVelocity(b2Vec2(0, 0));
     }
   }
 
