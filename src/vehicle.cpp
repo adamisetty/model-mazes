@@ -81,7 +81,9 @@ namespace traffic_rush {
       if (vehicle_body_->GetLinearVelocity() == b2Vec2(0, 0)) {
         vehicle_body_->SetLinearVelocity(velocity_vector_);
       } else {
-        vehicle_body_->SetLinearVelocity(1.5 * vehicle_body_->GetLinearVelocity());
+        if (!(abs(vehicle_body_->GetLinearVelocity().x) > 5 || abs(vehicle_body_->GetLinearVelocity().y) > 5)) {
+          vehicle_body_->SetLinearVelocity(1.5 * vehicle_body_->GetLinearVelocity());
+        }
       }
     }
   }
