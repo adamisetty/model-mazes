@@ -37,7 +37,9 @@ namespace traffic_rush {
   }
 
   void MyApp::update() {
-    engine_.Step();
+    if (current_state_ == GameState::kPlaying) {
+      engine_.Step();
+    }
     if (!engine_.GetIsPlaying()) {
       current_state_ = GameState::kGameOver;
       if (!is_cleared_) {

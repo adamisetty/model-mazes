@@ -70,6 +70,10 @@ namespace traffic_rush {
     return is_destroyed_;
   }
 
+  bool Vehicle::GetIsTarget() {
+    return is_target_;
+  }
+
   void Vehicle::ChangeSpeed(bool is_left_) {
     if (is_left_) {
 

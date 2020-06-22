@@ -64,31 +64,22 @@ namespace traffic_rush {
   }
 
   void Engine::UpdateScore() {
-    for (Vehicle v: all_vehicles_) {
-      v.CheckInBounds();
-      if (!v.GetIsDestroyed() && !v.GetIsVisible()) {
+    for (int i = 0; i < all_vehicles_.size(); i++) {
+      all_vehicles_[i].CheckInBounds();
+      if (!all_vehicles_[i].GetIsDestroyed() && !all_vehicles_[i].GetIsVisible()) {
         score_++;
-        v.DestroyVehicle();
-      }
-    }
-/*
-    //cleaning the list of vehicles
-    if (!all_vehicles_.empty() && !all_vehicles_[0].GetIsVisible()) {
-      all_vehicles_.erase(all_vehicles_.cbegin());
-    }*/
-
-    if (!all_vehicles_[target_index_].GetIsVisible()) {
-      all_vehicles_[target_index_].MarkTarget();
-      for (int i = 0; i < all_vehicles_.size(); i++) {
-        if (all_vehicles_[i].GetIsVisible()) {
-          target_index_ = i;
-          all_vehicles_[target_index_].MarkTarget();
-          break;
+        all_vehicles_[i].DestroyVehicle();
+        if (all_vehicles_[i].GetIsTarget()) {
+          all_vehicles_[i].MarkTarget();
+          for (int j = 0; j < all_vehicles_.size(); j++) {
+            if (all_vehicles_[j].GetIsVisible()) {
+              target_index_ = j;
+              all_vehicles_[target_index_].MarkTarget();
+              break;
+            }
+          }
         }
       }
-    }
-    if (all_vehicles_.size() == 2) {
-      all_vehicles_[1].MarkTarget();
     }
   }
 
