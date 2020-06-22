@@ -8,6 +8,8 @@
 using namespace std;
 
 namespace traffic_rush {
+
+  //TODO: leaderboard, stop timer, increasing frequency of vehicles
   using std::chrono::seconds;
   using std::chrono::system_clock;
   using std::string;

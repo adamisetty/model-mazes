@@ -71,7 +71,7 @@ namespace traffic_rush {
         all_vehicles_[i].DestroyVehicle();
       }
     }
-    
+
     if (!all_vehicles_[target_index_].GetIsVisible()) {
       for (int j = 0; j < all_vehicles_.size(); j++) {
         if (all_vehicles_[j].GetIsVisible()) {
