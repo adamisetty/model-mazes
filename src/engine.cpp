@@ -10,7 +10,8 @@ namespace traffic_rush {
     score_ = 0;
   }
 
-  void Engine::SetUp() {
+  void Engine::SetUp(vector<cinder::gl::TextureRef> &vehicle_images_) {
+    my_images_ = vehicle_images_;
     SetMaps();
     CreateVehicle();
     my_world_.SetContactListener(&my_listener_);
@@ -49,7 +50,7 @@ namespace traffic_rush {
     b2Vec2 start_p = GetPosition(position);
     b2Vec2 start_v = GetVelocity(position);
     Vehicle v;
-    v.Initialize(&my_world_, start_p, start_v);
+    v.Initialize(&my_world_, start_p, start_v, my_images_[0]);
     all_vehicles_.push_back(v);
   }
 

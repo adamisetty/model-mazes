@@ -11,7 +11,7 @@ namespace traffic_rush {
     is_target_ = false;
   }
 
-  void Vehicle::Initialize(b2World *this_world_, b2Vec2 start_p, b2Vec2 start_v) {
+  void Vehicle::Initialize(b2World *this_world_, b2Vec2 start_p, b2Vec2 start_v, cinder::gl::TextureRef my_image_) {
     float32 radius = 10;
     shape_.m_radius = Conversions::ToMeters(radius);
 
@@ -32,6 +32,7 @@ namespace traffic_rush {
     velocity_vector_ = b2Vec2(start_v.x * velocity, start_v.y * velocity);
     vehicle_body_->SetLinearVelocity(velocity_vector_);
 
+    vehicle_image_ = my_image_;
     color = Conversions::ColorChooser(-1);
     color = Conversions::ToCinderRBG(color);
   }
@@ -91,6 +92,7 @@ namespace traffic_rush {
   void Vehicle::DrawVehicle() {
     cinder::gl::color(color[0], color[1], color[2]);
     b2Vec2 curr_loc = vehicle_body_->GetPosition();
+
     vec2 c_loc = vec2(traffic_rush::Conversions::ToPixels(curr_loc.x),
                       traffic_rush::Conversions::ToPixels(curr_loc.y));
     if (is_target_) {
@@ -100,6 +102,7 @@ namespace traffic_rush {
 
     cinder::gl::drawSolidCircle(vec2(c_loc[0], c_loc[1]),
                                 traffic_rush::Conversions::ToPixels(shape_.m_radius));
+    cinder::gl::draw(vehicle_image_, vec2(c_loc[0] -50, c_loc[1] - 50));
 
   }
 

@@ -3,6 +3,7 @@
 
 #include <Box2D/Box2D.h>
 #include <mylibrary/conversions.h>
+#include <cinder/gl/gl.h>
 
 #include <random>
 
@@ -17,7 +18,7 @@ namespace traffic_rush {
     ~Vehicle();
 
     // should set initial position and velocity
-    void Initialize(b2World *this_world_, b2Vec2 start_p, b2Vec2 start_v);
+    void Initialize(b2World *this_world_, b2Vec2 start_p, b2Vec2 start_v, cinder::gl::TextureRef my_image_);
     void DrawVehicle();
     void CheckInBounds();
     bool GetIsVisible();
@@ -36,6 +37,7 @@ namespace traffic_rush {
     bool is_destroyed_;
     b2Vec2 velocity_vector_;
     bool is_target_;
+    cinder::gl::TextureRef vehicle_image_;
   };
 }
 #endif  // FINALPROJECT_VEHICLE_H

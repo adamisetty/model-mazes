@@ -28,7 +28,7 @@ namespace traffic_rush {
 class Engine {
  public:
   Engine();
-  void SetUp();
+  void SetUp(vector<cinder::gl::TextureRef> &vehicle_images_);
   void SetMaps();
   void CreateVehicle();
   void Step();
@@ -60,6 +60,7 @@ class Engine {
   int score_;
   Vehicle* current_vehicle_;
   int target_index_;
+  vector<cinder::gl::TextureRef> my_images_;
 };
 }
 #endif  // FINALPROJECT_EXAMPLE_H
