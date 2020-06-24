@@ -11,7 +11,8 @@ namespace traffic_rush {
     is_target_ = false;
   }
 
-  void Vehicle::Initialize(b2World *this_world_, b2Vec2 start_p, b2Vec2 start_v, cinder::gl::TextureRef my_image_) {
+  void Vehicle::Initialize(b2World *this_world_, b2Vec2 start_p, b2Vec2 start_v,
+      cinder::gl::TextureRef my_image_, cinder::gl::TextureRef star) {
     float32 radius = 22;
     shape_.m_radius = Conversions::ToMeters(radius);
 
@@ -33,8 +34,11 @@ namespace traffic_rush {
     vehicle_body_->SetLinearVelocity(velocity_vector_);
 
     vehicle_image_ = my_image_;
+    star_ = star;
     color = Conversions::ColorChooser(-1);
     color = Conversions::ToCinderRBG(color);
+
+    is_vertical = (start_v.x == 0);
   }
 
   void Vehicle::CheckInBounds() {
@@ -95,15 +99,19 @@ namespace traffic_rush {
 
     vec2 c_loc = vec2(traffic_rush::Conversions::ToPixels(curr_loc.x),
                       traffic_rush::Conversions::ToPixels(curr_loc.y));
-    if (is_target_) {
-      cinder::gl::drawSolidCircle(vec2(c_loc[0], c_loc[1]),
-          traffic_rush::Conversions::ToPixels(shape_.m_radius) + 10);
+
+    //cinder::gl::drawSolidCircle(vec2(c_loc[0], c_loc[1]), traffic_rush::Conversions::ToPixels(shape_.m_radius));
+
+    if (is_vertical) {
+      cinder::gl::draw(vehicle_image_, vec2(c_loc[0] - 22, c_loc[1] - 50));
+    } else {
+      cinder::gl::draw(vehicle_image_, vec2(c_loc[0] - 50, c_loc[1] - 22));
     }
 
-    cinder::gl::drawSolidCircle(vec2(c_loc[0], c_loc[1]),
-                                traffic_rush::Conversions::ToPixels(shape_.m_radius));
-    cinder::gl::draw(vehicle_image_, vec2(c_loc[0] - 50, c_loc[1] - 22));
-
+    if (is_target_) {
+      cinder::gl::color(1, 1, 1);
+      cinder::gl::draw(star_, vec2(c_loc[0] - 10, c_loc[1] - 10));
+    }
   }
 
   Vehicle::~Vehicle() = default;

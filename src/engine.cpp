@@ -57,7 +57,7 @@ namespace traffic_rush {
     b2Vec2 start_v = start_velocities_.at(position);//GetVelocity(position);
     cinder::gl::TextureRef car_image = start_images_.at(position);
     Vehicle v;
-    v.Initialize(&my_world_, start_p, start_v, car_image);
+    v.Initialize(&my_world_, start_p, start_v, car_image, start_images_.at(4));
     all_vehicles_.push_back(v);
   }
 
