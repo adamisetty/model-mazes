@@ -34,8 +34,8 @@ namespace traffic_rush {
 
   void MyApp::setup() {
     background_ = cinder::gl::Texture::create(loadImage(loadAsset("background.jpg")));
-    vector<cinder::gl::TextureRef> vehicle_images_{cinder::gl::Texture::create(loadImage(loadAsset("teal_car_.png"))),
-                                                   cinder::gl::Texture::create(loadImage(loadAsset("red_car_.png")))};
+    vector<cinder::gl::TextureRef> vehicle_images_{cinder::gl::Texture::create(loadImage(loadAsset("left_car.png"))),
+                                                   cinder::gl::Texture::create(loadImage(loadAsset("up_car.png")))};
     engine_.SetUp(vehicle_images_);
   }
 
