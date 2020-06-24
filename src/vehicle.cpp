@@ -12,7 +12,7 @@ namespace traffic_rush {
   }
 
   void Vehicle::Initialize(b2World *this_world_, b2Vec2 start_p, b2Vec2 start_v, cinder::gl::TextureRef my_image_) {
-    float32 radius = 10;
+    float32 radius = 22;
     shape_.m_radius = Conversions::ToMeters(radius);
 
     b2BodyDef def_;
@@ -102,7 +102,7 @@ namespace traffic_rush {
 
     cinder::gl::drawSolidCircle(vec2(c_loc[0], c_loc[1]),
                                 traffic_rush::Conversions::ToPixels(shape_.m_radius));
-    cinder::gl::draw(vehicle_image_, vec2(c_loc[0] -50, c_loc[1] - 50));
+    cinder::gl::draw(vehicle_image_, vec2(c_loc[0] - 50, c_loc[1] - 22));
 
   }
 

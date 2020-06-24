@@ -28,14 +28,13 @@ namespace traffic_rush {
 class Engine {
  public:
   Engine();
-  void SetUp(vector<cinder::gl::TextureRef> &vehicle_images_);
+  void SetUp(vector<cinder::gl::TextureRef> &images_);
   void SetMaps();
   void CreateVehicle();
   void Step();
   void DrawEngine();
   void UpdateScore();
-  b2Vec2 GetPosition(size_t position);
-  b2Vec2 GetVelocity(size_t position);
+  cinder::gl::TextureRef GetImage(size_t position);
   bool GetIsPlaying();
   int GetScore();
   void KeyAction(int user_action_);
@@ -55,6 +54,7 @@ class Engine {
   vector<Vehicle> all_vehicles_;
   map<int, b2Vec2> start_positions_;
   map<int, b2Vec2> start_velocities_;
+  map<int, cinder::gl::TextureRef> start_images_;
   cinder::Timer game_timer_;
   MyContactListener my_listener_;
   int score_;

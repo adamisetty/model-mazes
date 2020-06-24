@@ -10,8 +10,8 @@ namespace traffic_rush {
     score_ = 0;
   }
 
-  void Engine::SetUp(vector<cinder::gl::TextureRef> &vehicle_images_) {
-    my_images_ = vehicle_images_;
+  void Engine::SetUp(vector<cinder::gl::TextureRef> &images_) {
+    my_images_ = images_;
     SetMaps();
     CreateVehicle();
     my_world_.SetContactListener(&my_listener_);
@@ -41,16 +41,23 @@ namespace traffic_rush {
     start_velocities_.insert({2, left_v});
     b2Vec2 right_v = b2Vec2(-1, 0);
     start_velocities_.insert({3, right_v});
+
+    start_images_.insert({0, my_images_[2]});
+    start_images_.insert({1, my_images_[1]});
+    start_images_.insert({2, my_images_[3]});
+    start_images_.insert({3, my_images_[0]});
+    start_images_.insert({4, my_images_[4]});
   }
 
   void Engine::CreateVehicle() {
     //want to create periodically
     //needs to give random position/direction
     size_t position = rand() % num_positions;
-    b2Vec2 start_p = GetPosition(position);
-    b2Vec2 start_v = GetVelocity(position);
+    b2Vec2 start_p = start_positions_.at(position);//GetPosition(position);
+    b2Vec2 start_v = start_velocities_.at(position);//GetVelocity(position);
+    cinder::gl::TextureRef car_image = start_images_.at(position);
     Vehicle v;
-    v.Initialize(&my_world_, start_p, start_v, my_images_[0]);
+    v.Initialize(&my_world_, start_p, start_v, car_image);
     all_vehicles_.push_back(v);
   }
 
@@ -153,14 +160,6 @@ namespace traffic_rush {
 
   void Engine::SpeedAction(int user_action_) {
     all_vehicles_[target_index_].ChangeSpeed(user_action_ == KeyEvent::KEY_s);
-  }
-
-  b2Vec2 Engine::GetPosition(size_t position) {
-    return start_positions_.at(position);
-  }
-
-  b2Vec2 Engine::GetVelocity(size_t position) {
-    return start_velocities_.at(position);
   }
 
   bool Engine::GetIsPlaying() {
