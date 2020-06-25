@@ -23,7 +23,7 @@ enum class GameState {
   /**
    * The state before the user begins the game
    */
-  kPreparing,
+  kPause,
 
   /**
    * The state when the user is controlling the vehicles

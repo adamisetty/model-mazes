@@ -66,9 +66,11 @@ namespace traffic_rush {
     UpdateScore();
 
     int seconds = game_timer_.getSeconds();
+
     if (seconds - (all_vehicles_.size() * 5) == 0) {
       CreateVehicle();
     }
+
   }
 
   void Engine::UpdateScore() {

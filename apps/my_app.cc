@@ -83,6 +83,12 @@ namespace traffic_rush {
     if (current_state_ == GameState::kPlaying) {
       engine_.KeyAction(event.getCode());
     }
+
+    if (event.getCode() == KeyEvent::KEY_SPACE && current_state_ == GameState::kPlaying) {
+      current_state_ = GameState::kPause;
+    } else if (event.getCode() == KeyEvent::KEY_SPACE) {
+      current_state_ = GameState::kPlaying;
+    }
   }
 
   void MyApp::PrintText(string text, cinder::vec2 location, size_t size) {
