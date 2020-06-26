@@ -8,7 +8,7 @@
 #include <cinder/app/App.h>
 #include <cinder/gl/gl.h>
 #include <vector>
-#include <random>
+//#include <random>
 #include <map>
 #include <cinder/app/KeyEvent.h>
 
@@ -40,6 +40,7 @@ class Engine {
   void KeyAction(int user_action_);
   void SpeedAction(int user_action_);
   void DestroyEngine();
+  bool CheckProximity(size_t position);
 
  public:
   class MyContactListener : public b2ContactListener {
@@ -61,6 +62,8 @@ class Engine {
   Vehicle* current_vehicle_;
   int target_index_;
   vector<cinder::gl::TextureRef> my_images_;
+  int last_timestamp_;
+  int frequency;
 };
 }
 #endif  // FINALPROJECT_EXAMPLE_H

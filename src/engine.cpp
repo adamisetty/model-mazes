@@ -15,10 +15,10 @@ namespace traffic_rush {
     SetMaps();
     CreateVehicle();
     my_world_.SetContactListener(&my_listener_);
-    //current_vehicle_ = &all_vehicles_[0];
-    //current_vehicle_->MarkTarget();
     target_index_ = 0;
     all_vehicles_[target_index_].MarkTarget();
+    last_timestamp_ = 0;
+    frequency = 8;
   }
 
   void Engine::SetMaps() {
@@ -52,7 +52,11 @@ namespace traffic_rush {
   void Engine::CreateVehicle() {
     //want to create periodically
     //needs to give random position/direction
+
     size_t position = rand() % num_positions;
+    while(!CheckProximity(position)) {
+      position = rand() % num_positions;
+    }
     b2Vec2 start_p = start_positions_.at(position);//GetPosition(position);
     b2Vec2 start_v = start_velocities_.at(position);//GetVelocity(position);
     cinder::gl::TextureRef car_image = start_images_.at(position);
@@ -61,16 +65,39 @@ namespace traffic_rush {
     all_vehicles_.push_back(v);
   }
 
+  bool Engine::CheckProximity(size_t position) {
+    b2Vec2 start_p = start_positions_.at(position);
+    b2Vec2 start_v = start_velocities_.at(position);
+    for (int i = 0; i < all_vehicles_.size(); i++) {
+      if (all_vehicles_[i].GetIsVisible()) {
+        if (start_v.x == 0 &&
+          abs(all_vehicles_[i].GetBody()->GetPosition().y - start_p.y) < Conversions::ToMeters(100)) {
+          return false;
+        } else if (start_v.y == 0 &&
+          abs(all_vehicles_[i].GetBody()->GetPosition().x - start_p.x) < Conversions::ToMeters(100)) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   void Engine::Step() {
     my_world_.Step(time_step, vel_iter, pos_iter);
     UpdateScore();
 
-    int seconds = game_timer_.getSeconds();
+    double time = 2.0 * game_timer_.getSeconds();
+    int seconds = (int) time;
 
-    if (seconds - (all_vehicles_.size() * 5) == 0) {
-      CreateVehicle();
+    if (seconds != last_timestamp_ && seconds % 20 == 0 && frequency > 2) {
+      last_timestamp_ = seconds;
+      frequency--;
     }
 
+    if (seconds != last_timestamp_ && seconds % frequency == 0) {
+      last_timestamp_ = seconds;
+      CreateVehicle();
+    }
   }
 
   void Engine::UpdateScore() {
