@@ -9,7 +9,7 @@ using namespace std;
 
 namespace traffic_rush {
 
-  //TODO: leaderboard, stop timer, increasing frequency of vehicles
+  //TODO: leaderboard, stop timer
   using std::chrono::seconds;
   using std::chrono::system_clock;
   using std::string;
@@ -66,9 +66,9 @@ namespace traffic_rush {
     cinder::vec2 loc = cinder::vec2(550, 50);
     PrintText(str, loc, 20);
 
-    if (current_state_ == GameState::kPlaying) {
+    //if (current_state_ == GameState::kPlaying) {
       engine_.DrawEngine();
-    }
+    //}
 
   }
 
@@ -77,10 +77,15 @@ namespace traffic_rush {
       engine_.KeyAction(event.getCode());
     }
 
-    if (event.getCode() == KeyEvent::KEY_SPACE && current_state_ == GameState::kPlaying) {
-      current_state_ = GameState::kPause;
-    } else if (event.getCode() == KeyEvent::KEY_SPACE) {
-      current_state_ = GameState::kPlaying;
+    if (current_state_ == GameState::kPlaying || current_state_ == GameState::kPause) {
+      if (event.getCode() == KeyEvent::KEY_SPACE &&
+          current_state_ == GameState::kPlaying) {
+        current_state_ = GameState::kPause;
+        engine_.GetTimer().stop();
+      } else if (event.getCode() == KeyEvent::KEY_SPACE) {
+        current_state_ = GameState::kPlaying;
+        engine_.GetTimer().resume();
+      }
     }
   }
 

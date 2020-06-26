@@ -199,6 +199,10 @@ namespace traffic_rush {
     return score_;
   }
 
+  cinder::Timer Engine::GetTimer() {
+    return game_timer_;
+  }
+
   void Engine::MyContactListener::BeginContact(b2Contact *contact) {
     is_playing_ = false;
   }

@@ -37,6 +37,7 @@ class Engine {
   cinder::gl::TextureRef GetImage(size_t position);
   bool GetIsPlaying();
   int GetScore();
+  cinder::Timer GetTimer();
   void KeyAction(int user_action_);
   void SpeedAction(int user_action_);
   void DestroyEngine();
