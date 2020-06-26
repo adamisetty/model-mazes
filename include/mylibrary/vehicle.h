@@ -31,7 +31,7 @@ namespace traffic_rush {
     void MarkTarget();
 
    private:
-    b2CircleShape shape_;
+    b2PolygonShape shape_;
     b2Body *vehicle_body_;
     vector<double> color;
     bool is_visible_;

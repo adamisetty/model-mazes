@@ -13,20 +13,31 @@ namespace traffic_rush {
 
   void Vehicle::Initialize(b2World *this_world_, b2Vec2 start_p, b2Vec2 start_v,
       cinder::gl::TextureRef my_image_, cinder::gl::TextureRef star) {
-    float32 radius = 22;
-    shape_.m_radius = Conversions::ToMeters(radius);
+
+    is_vertical = (start_v.x == 0);
+
+    //float32 radius = 22;
+    //shape_.m_radius = Conversions::ToMeters(radius);
 
     b2BodyDef def_;
     def_.position.Set(start_p.x, start_p.y);
-    shape_.m_p = b2Vec2(0, 0);
+    //shape_.m_p = b2Vec2(0, 0);
+
+    if (is_vertical) {
+      shape_.SetAsBox(Conversions::ToMeters(20), Conversions::ToMeters(45));
+    } else {
+      shape_.SetAsBox(Conversions::ToMeters(45), Conversions::ToMeters(20));
+    }
 
     vehicle_body_ = this_world_->CreateBody(&def_);
+    vehicle_body_->CreateFixture(&shape_, 1.0f);
 
-    b2FixtureDef fix_def_;
+    /*b2FixtureDef fix_def_;
     fix_def_.density = 1.0f;
     fix_def_.shape = &shape_;
     fix_def_.restitution = 0.7f;
-    vehicle_body_->CreateFixture(&fix_def_);
+    vehicle_body_->CreateFixture(&fix_def_);*/
+
     vehicle_body_->SetType(b2_dynamicBody);
 
     double velocity = (rand() % vel_buffer) + vel_start;
@@ -37,8 +48,6 @@ namespace traffic_rush {
     star_ = star;
     color = Conversions::ColorChooser(-1);
     color = Conversions::ToCinderRBG(color);
-
-    is_vertical = (start_v.x == 0);
   }
 
   void Vehicle::CheckInBounds() {
