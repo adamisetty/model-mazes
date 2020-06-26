@@ -5,6 +5,7 @@
 #include <vector>
 #include <random>
 #include <Box2D/Box2D.h>
+#include <chrono>
 
 namespace traffic_rush {
   using std::vector;

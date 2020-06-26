@@ -24,7 +24,10 @@ namespace traffic_rush {
     if (position >= 0 && position < num_colors) {
       return colors[position];
     } else{
-      size_t pos = rand() % num_colors;
+      unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+      std::default_random_engine generator(seed);
+      std::uniform_int_distribution<int> distributionInteger(0, num_colors - 1);
+      size_t pos = distributionInteger(generator);
       return colors[pos];
     }
   }

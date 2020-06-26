@@ -8,7 +8,7 @@
 #include <cinder/app/App.h>
 #include <cinder/gl/gl.h>
 #include <vector>
-//#include <random>
+#include <random>
 #include <map>
 #include <cinder/app/KeyEvent.h>
 
@@ -22,6 +22,7 @@ const int32 vel_iter = 3;
 const int32 pos_iter = 5;
 const float32 time_step = 1.0/60.0f;
 const size_t num_v = 2;
+const unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 
 namespace traffic_rush {
 
@@ -65,6 +66,7 @@ class Engine {
   vector<cinder::gl::TextureRef> my_images_;
   int last_timestamp_;
   int frequency;
+  std::default_random_engine generator;
 };
 }
 #endif  // FINALPROJECT_EXAMPLE_H

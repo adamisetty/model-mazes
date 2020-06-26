@@ -103,6 +103,7 @@ namespace traffic_rush {
   }
 
   void Vehicle::DrawVehicle() {
+
     cinder::gl::color(color[0], color[1], color[2]);
     b2Vec2 curr_loc = vehicle_body_->GetPosition();
 
