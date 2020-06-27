@@ -29,6 +29,7 @@ namespace traffic_rush {
   MyApp::MyApp() {
     current_state_ = GameState::kPlaying;
     is_cleared_ = false;
+    player_name_ = "AnkNik";
   }
 
 

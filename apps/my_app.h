@@ -102,6 +102,7 @@ class MyApp : public cinder::app::App {
     bool is_cleared_;
     cinder::gl::TextureRef background_;
     cinder::gl::TextureRef pause_icon_;
+    std::string player_name_;
 
 };
 
