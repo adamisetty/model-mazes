@@ -9,7 +9,7 @@ using namespace std;
 
 namespace traffic_rush {
 
-  //TODO: leaderboard, stop timer
+  //TODO: leaderboard(game over screen), home screen,
   using std::chrono::seconds;
   using std::chrono::system_clock;
   using std::string;
@@ -34,6 +34,7 @@ namespace traffic_rush {
 
   void MyApp::setup() {
     background_ = cinder::gl::Texture::create(loadImage(loadAsset("background.jpg")));
+    pause_icon_ = cinder::gl::Texture::create(loadImage(loadAsset("pause.png")));
     vector<cinder::gl::TextureRef> images_{cinder::gl::Texture::create(loadImage(loadAsset("left_car.png"))),
                                            cinder::gl::Texture::create(loadImage(loadAsset("up_car.png"))),
                                            cinder::gl::Texture::create(loadImage(loadAsset("down_car.png"))),
@@ -63,13 +64,16 @@ namespace traffic_rush {
 
     int curr_score_ = engine_.GetScore();
     string str = std::to_string(curr_score_);
-    cinder::vec2 loc = cinder::vec2(550, 50);
-    PrintText(str, loc, 20);
+    cinder::vec2 loc = cinder::vec2(535, 50);
+    PrintText(str, loc, 30);
 
     //if (current_state_ == GameState::kPlaying) {
       engine_.DrawEngine();
     //}
 
+    if (current_state_ == GameState::kPaused) {
+      cinder::gl::draw(pause_icon_, vec2(515, 80));
+    }
   }
 
   void MyApp::keyDown(KeyEvent event) {
@@ -77,10 +81,10 @@ namespace traffic_rush {
       engine_.KeyAction(event.getCode());
     }
 
-    if (current_state_ == GameState::kPlaying || current_state_ == GameState::kPause) {
+    if (current_state_ == GameState::kPlaying || current_state_ == GameState::kPaused) {
       if (event.getCode() == KeyEvent::KEY_SPACE &&
           current_state_ == GameState::kPlaying) {
-        current_state_ = GameState::kPause;
+        current_state_ = GameState::kPaused;
         engine_.GetTimer().stop();
       } else if (event.getCode() == KeyEvent::KEY_SPACE) {
         current_state_ = GameState::kPlaying;
@@ -90,6 +94,7 @@ namespace traffic_rush {
   }
 
   void MyApp::PrintText(string text, cinder::vec2 location, size_t size) {
+    cinder::gl::color(Color::gray(0.2));
     auto box = cinder::TextBox();
     box.setText(text);
     box.setSize(font_box_size);

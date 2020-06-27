@@ -57,8 +57,13 @@ namespace traffic_rush {
     std::uniform_int_distribution<int> distributionInteger(0, 3);
 
     size_t position = distributionInteger(generator);
+    int attempt = 0;
     while(!CheckProximity(position)) {
-      position = distributionInteger(generator);
+      attempt++;
+      if (attempt > 5 ) {
+        return;
+      }
+       position = distributionInteger(generator);
     }
     b2Vec2 start_p = start_positions_.at(position);//GetPosition(position);
     b2Vec2 start_v = start_velocities_.at(position);//GetVelocity(position);

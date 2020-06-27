@@ -23,12 +23,17 @@ enum class GameState {
   /**
    * The state before the user begins the game
    */
-  kPause,
+  kHomeScreen,
 
   /**
    * The state when the user is controlling the vehicles
    */
   kPlaying,
+
+  /**
+   *
+   */
+  kPaused,
 
   /**
    * The state after level time is elapsed, displays game result
@@ -96,6 +101,7 @@ class MyApp : public cinder::app::App {
     bool found_collision_;
     bool is_cleared_;
     cinder::gl::TextureRef background_;
+    cinder::gl::TextureRef pause_icon_;
 
 };
 
