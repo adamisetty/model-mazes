@@ -81,6 +81,8 @@ class MyApp : public cinder::app::App {
 
     void keyDown(KeyEvent event) override;
 
+    void DrawHomeScreen();
+
 
   private:
 
@@ -103,6 +105,7 @@ class MyApp : public cinder::app::App {
     cinder::gl::TextureRef background_;
     cinder::gl::TextureRef pause_icon_;
     std::string player_name_;
+    vector<cinder::gl::TextureRef> home_screen_images_;
 
 };
 

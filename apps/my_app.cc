@@ -29,11 +29,17 @@ namespace traffic_rush {
   MyApp::MyApp() {
     current_state_ = GameState::kPlaying;
     is_cleared_ = false;
-    player_name_ = "AnkNik";
   }
 
 
   void MyApp::setup() {
+
+    cinder::gl::color(0,0,0);
+    home_screen_images_.push_back(cinder::gl::Texture::create(loadImage(loadAsset("red_car.png"))));
+    home_screen_images_.push_back(cinder::gl::Texture::create(loadImage(loadAsset("blue_car.png"))));
+    home_screen_images_.push_back(cinder::gl::Texture::create(loadImage(loadAsset("green_car.png"))));
+
+
     background_ = cinder::gl::Texture::create(loadImage(loadAsset("background.jpg")));
     pause_icon_ = cinder::gl::Texture::create(loadImage(loadAsset("pause.png")));
     vector<cinder::gl::TextureRef> images_{cinder::gl::Texture::create(loadImage(loadAsset("left_car.png"))),
@@ -58,10 +64,16 @@ namespace traffic_rush {
   }
 
   void MyApp::draw() {
+
+    /*if (current_state_ == GameState::kHomeScreen) {
+      DrawHomeScreen();
+    }*/
+
     cinder::gl::clear();
 
     cinder::gl::color(1, 1, 1);
     cinder::gl::draw(background_, getWindowBounds());
+
 
     int curr_score_ = engine_.GetScore();
     string str = std::to_string(curr_score_);
@@ -69,7 +81,7 @@ namespace traffic_rush {
     PrintText(str, loc, 30);
 
     //if (current_state_ == GameState::kPlaying) {
-      engine_.DrawEngine();
+    engine_.DrawEngine();
     //}
 
     if (current_state_ == GameState::kPaused) {
@@ -92,6 +104,12 @@ namespace traffic_rush {
         engine_.GetTimer().resume();
       }
     }
+  }
+
+  void MyApp::DrawHomeScreen() {
+    cinder::gl::draw(home_screen_images_[0], vec2(100, 300));
+    cinder::gl::draw(home_screen_images_[1], vec2(200, 100));
+    cinder::gl::draw(home_screen_images_[1], vec2(300, 300));
   }
 
   void MyApp::PrintText(string text, cinder::vec2 location, size_t size) {

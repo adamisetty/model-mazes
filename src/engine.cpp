@@ -4,8 +4,8 @@
 
 namespace traffic_rush {
   Engine::Engine():
-    my_world_{gravity},
-    generator{seed} {
+      my_world_{gravity},
+      generator{seed} {
     my_listener_.is_playing_ = true;
     game_timer_.start();
     score_ = 0;
@@ -63,7 +63,7 @@ namespace traffic_rush {
       if (attempt > 5 ) {
         return;
       }
-       position = distributionInteger(generator);
+      position = distributionInteger(generator);
     }
     b2Vec2 start_p = start_positions_.at(position);//GetPosition(position);
     b2Vec2 start_v = start_velocities_.at(position);//GetVelocity(position);
@@ -79,10 +79,10 @@ namespace traffic_rush {
     for (int i = 0; i < all_vehicles_.size(); i++) {
       if (all_vehicles_[i].GetIsVisible()) {
         if (start_v.x == 0 &&
-          abs(all_vehicles_[i].GetBody()->GetPosition().y - start_p.y) < Conversions::ToMeters(150)) {
+            abs(all_vehicles_[i].GetBody()->GetPosition().y - start_p.y) < Conversions::ToMeters(150)) {
           return false;
         } else if (start_v.y == 0 &&
-          abs(all_vehicles_[i].GetBody()->GetPosition().x - start_p.x) < Conversions::ToMeters(150)) {
+                   abs(all_vehicles_[i].GetBody()->GetPosition().x - start_p.x) < Conversions::ToMeters(150)) {
           return false;
         }
       }
