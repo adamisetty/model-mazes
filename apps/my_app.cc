@@ -9,7 +9,7 @@ using namespace std;
 
 namespace traffic_rush {
 
-  //TODO: leaderboard(game over screen), home screen,
+  //TODO: reset game and timer
   using std::chrono::seconds;
   using std::chrono::system_clock;
   using std::string;
@@ -27,7 +27,7 @@ namespace traffic_rush {
   const string font_style = "Arial";
 
   MyApp::MyApp() {
-    current_state_ = GameState::kPlaying;
+    current_state_ = GameState::kHomeScreen;
     is_cleared_ = false;
   }
 
@@ -58,17 +58,73 @@ namespace traffic_rush {
       current_state_ = GameState::kGameOver;
       if (!is_cleared_) {
         engine_.DestroyEngine();
+        game_over_timer.start();
         is_cleared_ = true;
       }
     }
   }
 
   void MyApp::draw() {
+    switch (current_state_) {
+      case GameState::kHomeScreen :
+        DrawHomeScreen();
+        break;
+      case GameState::kPlaying :
+      case GameState::kPaused :
+        DrawPlayingScreen();
+        break;
+      case GameState::kGameOver :
+        DrawGameOverScreen();
+        break;
+    }
+  }
 
-    /*if (current_state_ == GameState::kHomeScreen) {
-      DrawHomeScreen();
-    }*/
+  void MyApp::keyDown(KeyEvent event) {
+    if (event.getCode() == KeyEvent::KEY_SPACE && current_state_ == GameState::kHomeScreen) {
+      current_state_ = GameState::kPlaying;
+    } else {
+      if (current_state_ == GameState::kPlaying) {
+        engine_.KeyAction(event.getCode());
+      }
 
+      if (current_state_ == GameState::kPlaying ||
+          current_state_ == GameState::kPaused) {
+        if (event.getCode() == KeyEvent::KEY_SPACE &&
+            current_state_ == GameState::kPlaying) {
+          current_state_ = GameState::kPaused;
+          engine_.GetTimer().stop();
+        } else if (event.getCode() == KeyEvent::KEY_SPACE) {
+          current_state_ = GameState::kPlaying;
+          engine_.GetTimer().resume();
+        }
+      }
+    }
+  }
+
+  void MyApp::DrawHomeScreen() {
+    cinder::gl::clear();
+    cinder::gl::color(1, 1, 1);
+    cinder::gl::draw(home_screen_images_[0], vec2(230, 80));
+    cinder::gl::draw(home_screen_images_[1], vec2(30, 80));
+    cinder::gl::draw(home_screen_images_[2], vec2(430, 80));
+    cinder::gl::draw(home_screen_images_[1], vec2(230, 460));
+    cinder::gl::draw(home_screen_images_[2], vec2(30, 460));
+    cinder::gl::draw(home_screen_images_[0], vec2(430, 460));
+
+    PrintText("Tra", vec2(170, 220), 60, vector<float>{1, 1, 0.6f});
+    PrintText("ffic ", vec2(240, 220), 60, vector<float>{1, 1, 0.6f});
+    PrintText("Ru", vec2(320, 220), 60, vector<float>{1, 1, 0.6f});
+    PrintText("sh", vec2(380, 220), 60, vector<float>{1, 1, 0.6f});
+
+    PrintText("Press", vec2(210, 300), 30, vector<float>{1, 1, 1});
+    PrintText("Space", vec2(273, 300), 30, vector<float>{1, 1, 1});
+    PrintText("to", vec2(343, 300), 30, vector<float>{1, 1, 1});
+    PrintText("Start", vec2(230, 330), 30, vector<float>{1, 1, 1});
+    PrintText("Game", vec2(283, 330), 30, vector<float>{1, 1, 1});
+
+  }
+
+  void MyApp::DrawPlayingScreen() {
     cinder::gl::clear();
 
     cinder::gl::color(1, 1, 1);
@@ -78,42 +134,38 @@ namespace traffic_rush {
     int curr_score_ = engine_.GetScore();
     string str = std::to_string(curr_score_);
     cinder::vec2 loc = cinder::vec2(535, 50);
-    PrintText(str, loc, 30);
+    PrintText(str, loc, 30, vector<float>{0.8f, 0.8f, 0.8f});
 
-    //if (current_state_ == GameState::kPlaying) {
+
     engine_.DrawEngine();
-    //}
 
     if (current_state_ == GameState::kPaused) {
       cinder::gl::draw(pause_icon_, vec2(515, 80));
     }
   }
 
-  void MyApp::keyDown(KeyEvent event) {
-    if (current_state_ == GameState::kPlaying) {
-      engine_.KeyAction(event.getCode());
-    }
+  void MyApp::DrawGameOverScreen() {
+    if (game_over_timer.getSeconds() > 3) {
+      cinder::gl::clear(cinder::Color(0.23f, 0.65f, 0.69f), true);
 
-    if (current_state_ == GameState::kPlaying || current_state_ == GameState::kPaused) {
-      if (event.getCode() == KeyEvent::KEY_SPACE &&
-          current_state_ == GameState::kPlaying) {
-        current_state_ = GameState::kPaused;
-        engine_.GetTimer().stop();
-      } else if (event.getCode() == KeyEvent::KEY_SPACE) {
-        current_state_ = GameState::kPlaying;
-        engine_.GetTimer().resume();
+      PrintText("Your", vec2(200, 200), 35, vector<float>{0.2f, 0.2f, 0.2f});
+      PrintText("score", vec2(263, 200), 35, vector<float>{0.2f, 0.2f, 0.2f});
+      PrintText("is", vec2(340, 200), 35, vector<float>{0.2f, 0.2f, 0.2f});
+
+      int curr_score_ = engine_.GetScore();
+      string str = std::to_string(curr_score_);
+      PrintText(str, vec2(370, 200), 35, vector<float>{0.2f, 0.2f, 0.2f});
+
+      if (curr_score_ <= 5) {
+        PrintText(":(", vec2(390, 200), 35, vector<float>{0.2f, 0.2f, 0.2f});
+      } else {
+        PrintText(":)", vec2(400, 200), 35, vector<float>{0.2f, 0.2f, 0.2f});
       }
     }
   }
 
-  void MyApp::DrawHomeScreen() {
-    cinder::gl::draw(home_screen_images_[0], vec2(100, 300));
-    cinder::gl::draw(home_screen_images_[1], vec2(200, 100));
-    cinder::gl::draw(home_screen_images_[1], vec2(300, 300));
-  }
-
-  void MyApp::PrintText(string text, cinder::vec2 location, size_t size) {
-    cinder::gl::color(Color::gray(0.2));
+  void MyApp::PrintText(string text, cinder::vec2 location, size_t size, vector<float> color) {
+    cinder::gl::color(color[0], color[1], color[2]);
     auto box = cinder::TextBox();
     box.setText(text);
     box.setSize(font_box_size);

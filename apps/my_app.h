@@ -10,9 +10,11 @@
 #include <mylibrary/engine.h>
 #include <cinder/app/KeyEvent.h>
 #include <string>
+#include <cinder/Color.h>
 
 using std::string;
 using cinder::app::KeyEvent;
+using cinder::Color;
 
 namespace traffic_rush {
 
@@ -82,6 +84,8 @@ class MyApp : public cinder::app::App {
     void keyDown(KeyEvent event) override;
 
     void DrawHomeScreen();
+    void DrawPlayingScreen();
+    void DrawGameOverScreen();
 
 
   private:
@@ -92,7 +96,7 @@ class MyApp : public cinder::app::App {
      * @param location: vec2 location of text, using cinder coordinates
      * @param size: size of text box that is created
      */
-    void PrintText(string text, cinder::vec2 location, size_t size);
+    void PrintText(string text, cinder::vec2 location, size_t size, vector<float> color);
 
   private:
     /**
@@ -106,6 +110,7 @@ class MyApp : public cinder::app::App {
     cinder::gl::TextureRef pause_icon_;
     std::string player_name_;
     vector<cinder::gl::TextureRef> home_screen_images_;
+    cinder::Timer game_over_timer;
 
 };
 
