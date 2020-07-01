@@ -176,11 +176,11 @@ namespace traffic_rush {
       } else {
         PrintText(":)", vec2(400, 200), 35, vector<float>{0.2f, 0.2f, 0.2f});
       }
-      PrintText("Press", vec2(210, 300), 30, vector<float>{1, 1, 1});
-      PrintText("Space", vec2(273, 300), 30, vector<float>{1, 1, 1});
-      PrintText("to", vec2(343, 300), 30, vector<float>{1, 1, 1});
-      PrintText("go", vec2(235, 330), 30, vector<float>{1, 1, 1});
-      PrintText("Home", vec2(283, 330), 30, vector<float>{1, 1, 1});
+      PrintText("Press", vec2(210, 300), 30, vector<float>{0.2f, 0.2f, 0.2f});
+      PrintText("Space", vec2(273, 300), 30, vector<float>{0.2f, 0.2f, 0.2f});
+      PrintText("to", vec2(343, 300), 30, vector<float>{0.2f, 0.2f, 0.2f});
+      PrintText("go", vec2(245, 330), 30, vector<float>{0.2f, 0.2f, 0.2f});
+      PrintText("Home", vec2(283, 330), 30, vector<float>{0.2f, 0.2f, 0.2f});
     }
   }
 
