@@ -42,6 +42,15 @@ namespace traffic_rush {
 
     background_ = cinder::gl::Texture::create(loadImage(loadAsset("background.jpg")));
     pause_icon_ = cinder::gl::Texture::create(loadImage(loadAsset("pause.png")));
+    /*vector<cinder::gl::TextureRef> images_{cinder::gl::Texture::create(loadImage(loadAsset("left_car.png"))),
+                                           cinder::gl::Texture::create(loadImage(loadAsset("up_car.png"))),
+                                           cinder::gl::Texture::create(loadImage(loadAsset("down_car.png"))),
+                                           cinder::gl::Texture::create(loadImage(loadAsset("right_car.png"))),
+                                           cinder::gl::Texture::create(loadImage(loadAsset("star.png")))};
+    engine_.SetUp(images_);*/
+  }
+
+  void MyApp::SetUpEngine() {
     vector<cinder::gl::TextureRef> images_{cinder::gl::Texture::create(loadImage(loadAsset("left_car.png"))),
                                            cinder::gl::Texture::create(loadImage(loadAsset("up_car.png"))),
                                            cinder::gl::Texture::create(loadImage(loadAsset("down_car.png"))),
@@ -57,7 +66,8 @@ namespace traffic_rush {
     if (!engine_.GetIsPlaying()) {
       current_state_ = GameState::kGameOver;
       if (!is_cleared_) {
-        engine_.DestroyEngine();
+        //engine_.GetTimer()->stop();
+        //engine_.DestroyEngine();
         game_over_timer.start();
         is_cleared_ = true;
       }
@@ -81,21 +91,26 @@ namespace traffic_rush {
 
   void MyApp::keyDown(KeyEvent event) {
     if (event.getCode() == KeyEvent::KEY_SPACE && current_state_ == GameState::kHomeScreen) {
+      SetUpEngine();
       current_state_ = GameState::kPlaying;
+      engine_.GetTimer()->start();
+    } else if (event.getCode() == KeyEvent::KEY_SPACE && current_state_ == GameState::kGameOver) {
+      engine_.ResetEngine();
+      current_state_ = GameState::kHomeScreen;
     } else {
       if (current_state_ == GameState::kPlaying) {
-        engine_.KeyAction(event.getCode());
+          engine_.KeyAction(event.getCode());
       }
 
       if (current_state_ == GameState::kPlaying ||
-          current_state_ == GameState::kPaused) {
+      current_state_ == GameState::kPaused) {
         if (event.getCode() == KeyEvent::KEY_SPACE &&
-            current_state_ == GameState::kPlaying) {
+        current_state_ == GameState::kPlaying) {
           current_state_ = GameState::kPaused;
-          engine_.GetTimer().stop();
+          engine_.GetTimer()->stop();
         } else if (event.getCode() == KeyEvent::KEY_SPACE) {
           current_state_ = GameState::kPlaying;
-          engine_.GetTimer().resume();
+          engine_.GetTimer()->resume();
         }
       }
     }
@@ -161,6 +176,11 @@ namespace traffic_rush {
       } else {
         PrintText(":)", vec2(400, 200), 35, vector<float>{0.2f, 0.2f, 0.2f});
       }
+      PrintText("Press", vec2(210, 300), 30, vector<float>{1, 1, 1});
+      PrintText("Space", vec2(273, 300), 30, vector<float>{1, 1, 1});
+      PrintText("to", vec2(343, 300), 30, vector<float>{1, 1, 1});
+      PrintText("go", vec2(235, 330), 30, vector<float>{1, 1, 1});
+      PrintText("Home", vec2(283, 330), 30, vector<float>{1, 1, 1});
     }
   }
 

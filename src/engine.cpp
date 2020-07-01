@@ -6,6 +6,7 @@ namespace traffic_rush {
   Engine::Engine():
       my_world_{gravity},
       generator{seed} {
+    my_world_.SetContactListener(&my_listener_);
     my_listener_.is_playing_ = true;
     game_timer_.start();
     score_ = 0;
@@ -15,7 +16,7 @@ namespace traffic_rush {
     my_images_ = images_;
     SetMaps();
     CreateVehicle();
-    my_world_.SetContactListener(&my_listener_);
+    //my_world_.SetContactListener(&my_listener_);
     target_index_ = 0;
     all_vehicles_[target_index_].MarkTarget();
     last_timestamp_ = 0;
@@ -207,8 +208,8 @@ namespace traffic_rush {
     return score_;
   }
 
-  cinder::Timer Engine::GetTimer() {
-    return game_timer_;
+  cinder::Timer* Engine::GetTimer() {
+    return &game_timer_;
   }
 
   void Engine::MyContactListener::BeginContact(b2Contact *contact) {
@@ -219,7 +220,14 @@ namespace traffic_rush {
     for (int i = 0; i < all_vehicles_.size(); i++) {
       my_world_.DestroyBody(all_vehicles_[i].GetBody());
     }
-
     all_vehicles_.clear();
+    start_positions_.clear();
+    start_velocities_.clear();
+  }
+
+  void Engine::ResetEngine() {
+    DestroyEngine();
+    my_listener_.is_playing_ = true;
+    score_ = 0;
   }
 }

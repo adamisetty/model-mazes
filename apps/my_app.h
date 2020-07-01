@@ -86,6 +86,7 @@ class MyApp : public cinder::app::App {
     void DrawHomeScreen();
     void DrawPlayingScreen();
     void DrawGameOverScreen();
+    void SetUpEngine();
 
 
   private:
