@@ -24,7 +24,6 @@ namespace traffic_rush {
     void CheckInBounds();
     bool GetIsVisible();
     bool GetIsDestroyed();
-    bool GetIsTarget();
     void DestroyVehicle();
     b2Body* GetBody();
     void ChangeSpeed(bool is_stop_);

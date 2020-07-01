@@ -16,7 +16,6 @@ namespace traffic_rush {
     my_images_ = images_;
     SetMaps();
     CreateVehicle();
-    //my_world_.SetContactListener(&my_listener_);
     target_index_ = 0;
     all_vehicles_[target_index_].MarkTarget();
     last_timestamp_ = 0;
@@ -66,8 +65,8 @@ namespace traffic_rush {
       }
       position = distributionInteger(generator);
     }
-    b2Vec2 start_p = start_positions_.at(position);//GetPosition(position);
-    b2Vec2 start_v = start_velocities_.at(position);//GetVelocity(position);
+    b2Vec2 start_p = start_positions_.at(position);
+    b2Vec2 start_v = start_velocities_.at(position);
     cinder::gl::TextureRef car_image = start_images_.at(position);
     Vehicle v;
     v.Initialize(&my_world_, start_p, start_v, car_image, start_images_.at(4));

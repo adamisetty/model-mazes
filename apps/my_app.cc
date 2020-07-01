@@ -9,7 +9,6 @@ using namespace std;
 
 namespace traffic_rush {
 
-  //TODO: reset game and timer
   using std::chrono::seconds;
   using std::chrono::system_clock;
   using std::string;
@@ -18,11 +17,6 @@ namespace traffic_rush {
   using cinder::Color;
   using cinder::app::KeyEvent;
 
-  const double kDrawTime = 10;
-  const double kLevelTime = 20;
-
-
-  const size_t font_size = 20;
   const glm::ivec2 font_box_size = glm::ivec2(85, 50);
   const string font_style = "Arial";
 

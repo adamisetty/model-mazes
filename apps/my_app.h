@@ -68,21 +68,7 @@ class MyApp : public cinder::app::App {
      * Called in a continuous loop, displays all shapes on cinder application
      */
     void draw() override;
-
-    /**
-     * Tracks user mouse click, used when drawing edges on screen
-     * @param event: current instance of mouse event, stores position
-     */
-    //void mouseDown(cinder::app::MouseEvent event) override;
-
-    /**
-     * Tracks mouse current position, used after mouse click in drawing state
-     * @param event: current instance of mouse event, stores position
-     */
-    //void mouseMove(cinder::app::MouseEvent event) override;
-
     void keyDown(KeyEvent event) override;
-
     void DrawHomeScreen();
     void DrawPlayingScreen();
     void DrawGameOverScreen();
@@ -105,17 +91,13 @@ class MyApp : public cinder::app::App {
      */
     GameState current_state_;
     Engine engine_;
-    bool found_collision_;
     bool is_cleared_;
     cinder::gl::TextureRef background_;
     cinder::gl::TextureRef pause_icon_;
-    std::string player_name_;
     vector<cinder::gl::TextureRef> home_screen_images_;
     cinder::Timer game_over_timer;
 
 };
-
-
 }  // namespace myapp
 
 #endif  // FINALPROJECT_APPS_MYAPP_H_

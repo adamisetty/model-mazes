@@ -84,10 +84,6 @@ namespace traffic_rush {
     return is_destroyed_;
   }
 
-  bool Vehicle::GetIsTarget() {
-    return is_target_;
-  }
-
   void Vehicle::ChangeSpeed(bool is_stop_) {
     if (is_stop_) {
       vehicle_body_->SetLinearVelocity(b2Vec2(0, 0));

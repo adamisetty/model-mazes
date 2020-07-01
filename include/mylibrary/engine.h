@@ -21,7 +21,6 @@ const b2Vec2 gravity = b2Vec2(0.0f, 0.0f);
 const int32 vel_iter = 3;
 const int32 pos_iter = 5;
 const float32 time_step = 1.0/60.0f;
-const size_t num_v = 2;
 const unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 
 namespace traffic_rush {
@@ -35,7 +34,6 @@ class Engine {
   void Step();
   void DrawEngine();
   void UpdateScore();
-  cinder::gl::TextureRef GetImage(size_t position);
   bool GetIsPlaying();
   int GetScore();
   cinder::Timer* GetTimer();
@@ -62,7 +60,6 @@ class Engine {
   cinder::Timer game_timer_;
   MyContactListener my_listener_;
   int score_;
-  Vehicle* current_vehicle_;
   int target_index_;
   vector<cinder::gl::TextureRef> my_images_;
   int last_timestamp_;
